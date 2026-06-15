@@ -1,0 +1,66 @@
+{# ---------------------------- Layout ---------------------------- #}
+{% extends 'front/layouts/base.html.twig' %}
+
+{# ---------------------------- Title ---------------------------- #}
+{% block title %}
+    Accueil
+{% endblock %}
+
+{# ---------------------------- CSS ---------------------------- #}
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('css/navbar.css') }}" />
+    <link rel="stylesheet" href="{{ asset('css/home.css') }}" />
+    <link rel="stylesheet" href="{{ asset('css/footer.css') }}" />
+{% endblock %}
+
+{# ---------------------------- Body ---------------------------- #}
+{% block body %}
+    {{ include('front/partials/_navbar.html.twig') }}
+
+    <main class="mb-5">
+      <div class="container pt-5">
+        <div class="row">
+          <div class="col-lg-12 d-flex flex-column align-items-center justify-content-center">
+            <h1 class="mt-1 mb-5 text-center">Bonjour {{ app.user.getUserFullName() }}</h1>
+            <img src="{{ asset('img/bell.png') }}" alt="bell" width="20%" />
+
+            {% if app.user.hasSubmittedApplication %}
+              <a href="{{ path('app_details') }}" class="btn btn-primary btn-lg mt-5">Voir les details de ma candidature</a>
+            {% else %}
+              <a href="{{ path('app_submission') }}" class="btn btn-success btn-lg mt-5">Créer ma candidature maintenant</a>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    </main>
+
+    {{ include('front/partials/_footer.html.twig') }}
+    
+{% endblock %}
+
+{# ---------------------------- JS ---------------------------- #}
+{% block javascripts %}
+
+  {# sweetalert2 CDN #}
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11" {{ add_nonce()|raw }}></script>
+
+  {# Custom Alert #}
+  <script src="{{ asset('js/customAlert.js') }}" {{ add_nonce()|raw }}></script>
+
+  {# Notification Flashes #}
+  <script {{ add_nonce()|raw }}>
+    document.addEventListener('DOMContentLoaded', (event) => {
+      {% for label, messages in app.flashes %}
+        {% for message in messages %}
+          showAlert(
+            "",
+            "{{ message|e('js') }}",
+            "{{ label == 'success' ? 'success' : 'error' }}"
+          )
+        {% endfor %}
+      {% endfor %}
+    });
+  </script>
+    
+{% endblock %}
+

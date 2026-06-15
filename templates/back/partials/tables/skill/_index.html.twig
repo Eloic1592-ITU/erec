@@ -1,0 +1,65 @@
+<table id="data-list" class="table table-striped nowrap" style="width: 100%">
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Nom</th>
+        <th>Statut</th>
+        <th>Actions</th>
+        <th>Détails</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for skill in skills %}
+        <tr>
+            <td>{{ skill.getId() }}</td>
+            <td>{{ skill.getName() }}</td>
+            <td>
+                {% if not skill.isDeleted() %}
+                    <span class="badge text-bg-success rounded-pill">Activé</span> 
+                {% else %}
+                    <span class="badge text-bg-danger rounded-pill">Desactivé</span>
+                {% endif %}
+            </td>
+            <td>
+                <div class="d-flex justify-content-end gap-1">
+                    <button 
+                        class="btn-action bg-warning" 
+                        data-bs-toggle="modal" 
+                        data-bs-target="#skill-{{ skill.getId() }}"
+                    >
+                        <i class="bx bx-edit"></i> 
+                        <span>Modifier</span>
+                    </button>
+
+                    {% if not skill.isDeleted() %}
+                        <button 
+                            class="btn-action btn-state bg-danger delete-skill"
+                            data-state="désactiver cette compétence" 
+                            data-url="{{ path('admin_skill_disable', {'id': skill.getId()}) }}"
+                        >
+                            <span>Désactiver</span>
+                        </button>
+                    {% else %}
+                        <button 
+                            class="btn-action btn-state bg-success delete-skill"
+                            data-state="réactiver cette compétence" 
+                            data-url="{{ path('admin_skill_activate', {'id': skill.getId()}) }}"
+                        >
+                            <span>Activer</span>
+                        </button>
+                    {% endif %}
+                </div>
+            </td>
+            <td><a class='btn btn-warning btn-sm bg-warning text-white w-100' href='#'><i class='bx bx-info-circle me-2'></i>Voir plus</a></td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+
+{# Modal for Adding new item #}
+{{ include('back/partials/modals/_newSkill.html.twig') }}
+
+{# Modals for Editing each items #}
+{% for skillForm in skillForms %}
+    {{ include('back/partials/modals/_editSkill.html.twig') }}
+{% endfor %}

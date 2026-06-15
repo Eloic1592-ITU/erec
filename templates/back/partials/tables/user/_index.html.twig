@@ -1,0 +1,76 @@
+<table id="data-list" class="table table-striped nowrap" style="width: 100%">
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Nom</th>
+        <th>Prénom(s)</th>
+        <th>Date de Naissance</th>
+        <th>Email</th>
+        <th>CIN</th>
+        <th>Roles</th>
+        <th>Statut</th>
+        <th>Actions</th>
+        <th>Détails</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for user in users %}
+        <tr>
+            <td>{{ user.getId() }}</td>
+            <td>{{ user.getLastName() }}</td>
+            <td>{{ user.getFirstName() }}</td>
+            <td>{{ user.getBirthDate()|date('d/m/Y') }}</td>
+            <td>{{ user.getEmail() }}</td>
+            <td>{{ user.getCin() }}</td>
+            <td>
+                {% set roles = user.getRoles() %}
+
+                {% if roles|length > 1 %}
+                    Administrateur
+                {% else %}
+                    {% if user.getHasSubmittedApplication() %}
+                        Candidat
+                    {% else %}
+                        Utilisateur
+                    {% endif %}
+                {% endif %}
+            </td>
+            <td>
+                {% if not user.isDeleted() %}
+                    <span class="badge text-bg-success rounded-pill">Activé</span> 
+                {% else %}
+                    <span class="badge text-bg-danger rounded-pill">Desactivé</span>
+                {% endif %}
+            </td>
+            <td>
+                <div class="d-flex justify-content-center gap-1">
+                    {% if roles|length > 1 %}
+                        {# Le statut d'un Admin ne peut etre changer #}
+                    {% else %}
+                        {% if not user.isDeleted() %}
+                            <button 
+                                class="btn-action btn-state bg-danger delete-user"
+                                data-state="désactiver cet utilisateur" 
+                                data-url="{{ path('admin_user_disable', {'id': user.getId()}) }}"
+                            >
+                                <span>Désactiver</span>
+                            </button>
+                        {% else %}
+                            <button 
+                                class="btn-action btn-state bg-success delete-user"
+                                data-state="réactiver cet utilisateur" 
+                                data-url="{{ path('admin_user_activate', {'id': user.getId()}) }}"
+                            >
+                                <span>Activer</span>
+                            </button>
+                        {% endif %}
+                    {% endif %}
+                </div>
+            </td>
+            <td><a class='btn btn-warning btn-sm bg-warning text-white w-100' href='#'><i class='bx bx-info-circle me-2'></i>Voir plus</a></td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+
+{{ include('partials/modals/_positions.html.twig') }}

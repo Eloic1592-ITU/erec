@@ -1,0 +1,64 @@
+{% if workExperiences %}
+<div class="p-4 p-lg-5 mb-4 bg-white rounded-4 strong-shadow" data-aos="fade-up" data-aos-duration="500" data-aos-easing="ease-in-out" data-aos-once="true">    
+    <div id="recap6" class="d-flex flex-column gap-2">
+        <h5 class="text-primary border-bottom mt-2 mb-0 pb-2">Expériences professionnelles</h5>
+
+        {% for workExperience in workExperiences %}
+        <div class="d-flex flex-column gap-1">
+            <div class="info-group">
+                <div class="info">
+                    <p class="info-label">Poste occupé</p>
+                    <p class="info-value">{{ workExperience.getPosition() }}</p>
+                </div>
+                <div class="info">
+                    <p class="info-label">Organisme ou Société</p>
+                    <p class="info-value">{{ workExperience.getOrganization() }}</p>
+                </div>
+            </div>
+            <div class="info-group">
+                <div class="info">
+                    <p class="info-label">Lieu</p>
+                    <p class="info-value">{{ workExperience.getLocation() }}</p>
+                </div>
+                <div class="info">
+                    <p class="info-label">Début</p>
+                    <p class="info-value">{{ workExperience.getStartDate()|date('d/m/Y') }}</p>
+                </div>
+            </div>
+            <div class="info-group">
+                <div class="info">
+                    <p class="info-label">Fin</p>
+                    <p class="info-value">{{ workExperience.getEndDate()|date('d/m/Y') }}</p>
+                </div>
+                <div class="info">
+                    <p class="info-label">Personne de référence</p>
+                    <p class="info-value">{{ workExperience.getReferenceName() }}</p>
+                </div>
+            </div>
+            <div class="info-group">
+                <div class="info">
+                    <p class="info-label">Fonction de la personne de référence</p>
+                    <p class="info-value">{{ workExperience.getReferencePosition() }}</p>
+                </div>
+                <div class="info">
+                    <p class="info-label">e-mail de la personne de référence</p>
+                    <p class="info-value">{{ workExperience.getReferenceEmail() }}</p>
+                </div>
+            </div>
+            <div class="info-group">
+                <div class="info">
+                    <p class="info-label">Téléphone de la personne de référence</p>
+                    <p class="info-value">{{ workExperience.getReferencePhone() }}</p>
+                </div>
+                <div class="info">
+                    <p class="info-label">Voir l'attestation de travail</p>
+                    <a href="{{ asset('uploads/attestation-de-travail/' ~ workExperience.getWorkFilename()) }}" class="btn btn-primary mt-2" target="_blank">
+                        Aperçu l'attestation de travail
+                    </a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endif %}

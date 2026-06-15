@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="fr" class="h-100">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- x-icon -->
+    <link rel="icon" href="{{ asset('img/logo-bcm.png') }}" type="image/x-icon" />
+
+    <title>BFM | e-recrutement | {% block title %}{% endblock %}</title>
+
+    {# Vendor CSS #}
+    <link rel="stylesheet" href="{{ asset('vendor/aos/aos.css') }}">
+    <link rel="stylesheet" href="{{ asset('vendor/font-awesome/css/all.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('vendor/boxicons/css/boxicons.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('vendor/bootstrap/css/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('vendor/animate/animate.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/loader.css') }}" />
+    <link rel="stylesheet" href="{{ asset('css/backToTop.css') }}" />
+
+    {# Custom CSS #}
+    <link rel="stylesheet" href="{{ asset('css/index.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/customSweetalert.css') }}">
+
+    {# Extra CSS #}
+    {% block stylesheets %}{% endblock %}
+</head>
+<body class="d-flex flex-column h-100">
+    
+    {{ include('partials/_loader.html.twig') }}
+
+    {% block body %}{% endblock %}
+
+    {{ include('partials/_back_to_top.html.twig') }}
+
+    {# AOS #}
+    <script src="{{ asset('vendor/aos/aos.js') }}" {{ add_nonce()|raw }}></script>
+
+    {# Vendor JS #}
+    <script src="{{ asset('vendor/bootstrap/js/bootstrap.bundle.min.js') }}" {{ add_nonce()|raw }}></script>
+
+    {# Full Page Loader #}
+    <script src="{{ asset('js/fullPageLoader.js') }}" {{ add_nonce()|raw }}></script>
+
+    {# Back to top script #}
+    <script src="{{ asset('js/backToTop.js') }}" {{ add_nonce()|raw }}></script>
+
+    {# Extra JS #}
+    {% block javascripts %}{% endblock %}
+</body>
+</html>

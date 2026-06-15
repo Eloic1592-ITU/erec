@@ -1,0 +1,26 @@
+<table id="data-list" class="table table-striped nowrap" style="width: 100%">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Thème</th>
+            <th>Organisation ou Société</th>
+            <th>Année de stage</th>
+            <th>Durée</th> 
+            <th>Le Stagiaire</th> 
+            <th>Détails</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for internship in internships %}
+            <tr>
+                <td>{{ internship.getId() }}</td>
+                <td>{{ internship.getTheme() }}</td>
+                <td>{{ internship.getOrganization() }}</td>
+                <td>{{ internship.getInternshipYear() }}</td>
+                <td>{{ internship.getDuration() }} mois</td>
+                <td>{{ internship.user.getLastName() }} {{ internship.user.getFirstName() }}</td>
+                <td><a class='btn btn-warning btn-sm bg-warning text-white w-100' href='#'><i class='bx bx-info-circle me-2'></i>Voir plus</a></td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>

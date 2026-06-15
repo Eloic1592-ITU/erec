@@ -1,0 +1,113 @@
+<div class="my-4 work-experience-form">
+    {{ form_start(form, {
+        'attr': {
+            'id': 'work-experience-' ~ form.vars.value.id,
+            'class': 'needs-validation',
+            'novalidate': '',
+            'data-edit-url': work_experience_edit_url,
+            'data-delete-url': work_experience_delete_url,
+        }
+    }) }}
+        
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="mb-3">
+                    {{ form_label(form.position) }} <span class="star">*</span>
+                    {{ form_widget(form.position) }}
+                    {{ form_errors(form.position) }}
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="mb-3">
+                    {{ form_label(form.organization) }} <span class="star">*</span>
+                    {{ form_widget(form.organization) }}
+                    {{ form_errors(form.organization) }}
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="mb-3">
+                    {{ form_label(form.location) }} <span class="star">*</span>
+                    {{ form_widget(form.location) }}
+                    {{ form_errors(form.location) }}
+                </div>
+            </div>  
+        </div>
+
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="mb-3">
+                    {{ form_label(form.start_date) }} <span class="star">*</span>
+                    {{ form_widget(form.start_date) }}
+                    {{ form_errors(form.start_date) }}
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="mb-3">
+                    {{ form_label(form.end_date) }} <span class="star">*</span>
+                    {{ form_widget(form.end_date) }}
+                    {{ form_errors(form.end_date) }}
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="mb-3">
+                    {{ form_label(form.workFile) }} <span class="star">*</span>
+                    {{ form_widget(form.workFile) }}
+                    {{ form_errors(form.workFile) }}
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="mb-3">
+                    <label class="form-label">Personne de référence <span class="star">*</span></label>
+                    <div class="row mb-0 mb-lg-3">
+                        <div class="col-lg-6 mb-3 mb-lg-0">
+                            {{ form_widget(form.reference_name) }}
+                        </div>
+                        <div class="col-lg-6 mb-3 mb-lg-0">
+                            {{ form_widget(form.reference_position) }}
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-6">
+                            {{ form_widget(form.reference_phone) }}
+                            <div class="form-text mb-3 mb-lg-0">
+                                Veuillez utiliser l'un des formats suivants : 032 XX XXX XX ou +261 32 XX XXX XX
+                            </div>
+                        </div>
+                        <div class="col-lg-6 mb-3 mb-lg-0">
+                            {{ form_widget(form.reference_email) }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="d-flex justify-content-between">
+            <button 
+                type="submit" 
+                class="btn btn-primary d-flex align-items-center gap-1"
+            >
+                <i class="bx bx-edit"></i> 
+                <span class="d-none d-lg-flex">Mettre à jour ce poste</span>
+            </button>
+            <button 
+                type="button" 
+                class="btn btn-danger d-flex align-items-center gap-1 delete-work-experience" 
+                data-id="{{ workExperience.id }}" 
+                data-url="{{ path('app_work_experience_delete', {'id': workExperience.id}) }}"
+            >
+                <i class="bx bx-trash"></i> 
+                <span class="d-none d-lg-flex">Supprimer ce poste</span>
+            </button>
+        </div>
+
+    {{ form_end(form) }}
+</div>

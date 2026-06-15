@@ -1,0 +1,23 @@
+{% if document %}
+<div class="p-4 p-lg-5 mb-4 bg-white rounded-4 strong-shadow" data-aos="fade-up" data-aos-duration="500" data-aos-easing="ease-in-out" data-aos-once="true">   
+    <div id="recap1" class="d-flex flex-column gap-2">
+        <h5 class="text-primary border-bottom mt-2 mb-0 pb-2">CV et Lettre de motivation</h5>
+        <div class="d-flex flex-column gap-1">
+            <div class="info-group">
+                <div class="info">
+                    <p class="info-label">Mon CV</p>
+                    <a href="{{ asset('uploads/cv/' ~ document.getCvFilename()) }}" class="btn btn-primary mt-2 w-100" target="_blank">
+                        Aperçu de mon CV
+                    </a>
+                </div>
+                <div class="info">
+                    <p class="info-label">Ma lettre de motivation</p>
+                    <a href="{{ asset('uploads/lm/' ~ document.getLmFilename()) }}" class="btn btn-primary mt-2 w-100" target="_blank">
+                        Aperçu de ma lettre de motivation
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}

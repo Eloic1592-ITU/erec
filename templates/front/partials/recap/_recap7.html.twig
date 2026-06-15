@@ -1,0 +1,252 @@
+{% if otherInfo %}
+<div class="p-4 p-lg-5 mb-4 bg-white rounded-4 strong-shadow" data-aos="fade-up" data-aos-duration="500" data-aos-easing="ease-in-out" data-aos-once="true">      
+    <div id="recap1">
+        <div class="d-flex flex-column gap-2">
+            <h5 class="text-primary border-bottom mt-2 mb-0 pb-2">Niveau de langue</h5>
+
+            <div class="d-flex d-lg-none flex-column gap-3">
+                <div class="info-group">
+                    <div class="info">
+                        <p class="info-label">Niveau de lecture</p>
+                        <p class="info-value">{{ otherInfo.getMalagasyReadingLevel() }}</p>
+                    </div>
+                    <div class="info">
+                        <p class="info-label">Communication écrite</p>
+                        <p class="info-value">{{ otherInfo.getMalagasyWritingLevel() }}</p>
+                    </div>
+                </div>
+                <div class="info-group">
+                    <div class="info">
+                        <p class="info-label">Communication orale</p>
+                        <p class="info-value">{{ otherInfo.getMalagasySpeakingLevel() }}</p>
+                    </div>
+                    <div class="info">
+                        <p class="info-label">Niveau de lecture</p>
+                        <p class="info-value">{{ otherInfo.getFrenchReadingLevel() }}</p>
+                    </div>
+                </div>
+                <div class="info-group">
+                    <div class="info">
+                        <p class="info-label">Communication écrite</p>
+                        <p class="info-value">{{ otherInfo.getFrenchWritingLevel() }}</p>
+                    </div>
+                    <div class="info">
+                        <p class="info-label">Communication orale</p>
+                        <p class="info-value">{{ otherInfo.getFrenchSpeakingLevel() }}</p>
+                    </div>
+                </div>
+                <div class="info-group">
+                    <div class="info">
+                        <p class="info-label">Niveau de lecture</p>
+                        <p class="info-value">{{ otherInfo.getEnglishReadingLevel() }}</p>
+                    </div>
+                    <div class="info">
+                        <p class="info-label">Communication écrite</p>
+                        <p class="info-value">{{ otherInfo.getEnglishWritingLevel() }}</p>
+                    </div>
+                </div>
+                <div class="info-group">
+                    <div class="info">
+                        <p class="info-label">Communication orale</p>
+                        <p class="info-value">{{ otherInfo.getEnglishSpeakingLevel() }}</p>
+                    </div>
+
+                    {% if otherInfo.getOtherLanguageName() %}
+                    <div class="info">
+                        <p class="info-label">Niveau de lecture</p>
+                        <p class="info-value">{{ otherInfo.getOtherLanguageReadingLevel() }}</p>
+                    </div>
+                    {% endif %}
+                </div>
+
+                {% if otherInfo.getOtherLanguageName() %}
+                <div class="info-group">
+                    <div class="info">
+                        <p class="info-label">Communication écrite {{ otherInfo.getOtherLanguageName() }}</p>
+                        <p class="info-value">{{ otherInfo.getOtherLanguageWritingLevel() }}</p>
+                    </div>
+                    <div class="info">
+                        <p class="info-label">Communication orale {{ otherInfo.getOtherLanguageName() }}</p>
+                        <p class="info-value">{{ otherInfo.getOtherLanguageSpeakingLevel() }}</p>
+                    </div>
+                </div>
+                {% endif %}
+            </div>
+
+            <div class="d-none d-lg-block row">
+                <div class="col-lg-12">
+                    <table class="table language-lvl w-100">
+                        <thead>
+                            <tr>
+                                <th scope="col">Langue</th>
+                                <th scope="col">Niveau de lecture</th>
+                                <th scope="col">Communication écrite</th>
+                                <th scope="col">Communication orale</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <th scope="row">Malagasy</th>
+                                <td>{{ otherInfo.getMalagasyReadingLevel() }}</td>
+                                <td>{{ otherInfo.getMalagasyWritingLevel() }}</td>
+                                <td>{{ otherInfo.getMalagasySpeakingLevel() }}</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">Français</th>
+                                <td>{{ otherInfo.getFrenchReadingLevel() }}</td>
+                                <td>{{ otherInfo.getFrenchWritingLevel() }}</td>
+                                <td>{{ otherInfo.getFrenchSpeakingLevel() }}</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">Anglais</th>
+                                <td>{{ otherInfo.getEnglishReadingLevel() }}</td>
+                                <td>{{ otherInfo.getEnglishWritingLevel() }}</td>
+                                <td>{{ otherInfo.getEnglishSpeakingLevel() }}</td>
+                            </tr>
+
+                            {% if otherInfo.getOtherLanguageName() %}
+                            <tr>
+                                <th scope="row">{{ otherInfo.getOtherLanguageName() }}</th>
+                                <td>{{ otherInfo.getOtherLanguageReadingLevel() }}</td>
+                                <td>{{ otherInfo.getOtherLanguageWritingLevel() }}</td>
+                                <td>{{ otherInfo.getOtherLanguageSpeakingLevel() }}</td>
+                            </tr>
+                            {% endif %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="d-flex flex-column gap-2">
+            <h5 class="text-primary border-bottom mt-2 mb-0 pb-2">Compétences en Informatique Bureautique</h5>
+
+            <div class="d-flex d-lg-none flex-column gap-3">
+                <div class="info-group">
+                    <div class="info">
+                        <p class="info-label">Microsoft Word</p>
+                        <p class="info-value">{{ otherInfo.getMicrosoftWordLevel() }}</p>
+                    </div>
+                    <div class="info">
+                        <p class="info-label">Microsoft Excel</p>
+                        <p class="info-value">{{ otherInfo.getMicrosoftExcelLevel() }}</p>
+                    </div>
+                </div>
+                <div class="info-group">
+                    <div class="info">
+                        <p class="info-label">Microsoft PowerPoint</p>
+                        <p class="info-value">{{ otherInfo.getMicrosoftPowerPointLevel() }}</p>
+                    </div>
+                    <div class="info">
+                        <p class="info-label">Microsoft OneNote</p>
+                        <p class="info-value">{{ otherInfo.getMicrosoftOneNoteLevel() }}</p>
+                    </div>
+                </div>
+                <div class="info-group">
+                    <div class="info">
+                        <p class="info-label">Microsoft Outlook</p>
+                        <p class="info-value">{{ otherInfo.getMicrosoftOutlookLevel() }}</p>
+                    </div>
+                    <div class="info">
+                        <p class="info-label">Microsoft Publisher</p>
+                        <p class="info-value">{{ otherInfo.getMicrosoftPublisherLevel() }}</p>
+                    </div>
+                </div>
+                <div class="info-group">
+                    <div class="info">
+                        <p class="info-label">Microsoft Access</p>
+                        <p class="info-value">{{ otherInfo.getMicrosoftAccessLevel() }}</p>
+                    </div>
+                    <div class="info">
+                        <p class="info-label">Microsoft Visio</p>
+                        <p class="info-value">{{ otherInfo.getMicrosoftVisioLevel() }}</p>
+                    </div>
+                </div>
+                <div class="info-group">
+                    <div class="info">
+                        <p class="info-label">Microsoft Project</p>
+                        <p class="info-value">{{ otherInfo.getMicrosoftProjectLevel() }}</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="d-none d-lg-block row">
+                <div class="col-lg-12">
+                    <table class="table language-lvl w-100">
+                        <thead>
+                            <tr>
+                                <th scope="col">Technologie</th>
+                                <th scope="col">Niveau</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Microsoft Word</td>
+                                <td>{{ otherInfo.getMicrosoftWordLevel() }}</td>
+                            </tr>
+
+                            <tr>
+                                <td>Microsoft Excel</td>
+                                <td>{{ otherInfo.getMicrosoftExcelLevel() }}</td>
+                            </tr>
+                                
+                            <tr>
+                                <td>Microsoft PowerPoint</td>
+                                <td>{{ otherInfo.getMicrosoftPowerPointLevel() }}</td>
+                            </tr>
+
+                            <tr>
+                                <td>Microsoft OneNote</td>
+                                <td>{{ otherInfo.getMicrosoftOneNoteLevel() }}</td>
+                            </tr>
+
+                            <tr>
+                                <td>Microsoft Outlook</td>
+                                <td>{{ otherInfo.getMicrosoftOutlookLevel() }}</td>
+                            </tr>
+
+                            <tr>
+                                <td>Microsoft Publisher</td>
+                                <td>{{ otherInfo.getMicrosoftPublisherLevel() }}</td>
+                            </tr>
+
+                            <tr>
+                                <td>Microsoft Access</td>
+                                <td>{{ otherInfo.getMicrosoftAccessLevel() }}</td>
+                            </tr>
+
+                            <tr>
+                                <td>Microsoft Visio</td>
+                                <td>{{ otherInfo.getMicrosoftVisioLevel() }}</td>
+                            </tr>
+
+                            <tr>
+                                <td>Microsoft Project</td>
+                                <td>{{ otherInfo.getMicrosoftProjectLevel() }}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="d-flex flex-column gap-2">
+            <h5 class="text-primary border-bottom mt-2 mb-0 pb-2">Autres compétences informatiques</h5>
+            <div class="tags">
+                {% for skill in otherInfo.otherSkills %}
+                <span class="tag">{{ skill }}</span>
+                {% endfor %}
+            </div>
+        </div>
+
+        <div class="d-flex flex-column gap-2 mt-4">
+            <h5 class="text-primary border-bottom mt-2 mb-0 pb-2">Autres compétences non informatiques</h5>
+            <div class="tags">
+                {% for skillOth in otherInfo.otherNotInfoSkills|split(',') %}
+                    <span class="tag">{{ skillOth }}</span>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}

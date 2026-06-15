@@ -1,0 +1,43 @@
+<!-- Add marital status -->
+
+<div
+  id="marital-status-modal"
+  class="modal modal-sm fade"
+  data-bs-backdrop="static"
+  data-bs-keyboard="false"
+  tabindex="-1"
+  aria-hidden="true"
+>
+  {{ form_start(newMaritalStatusForm, {
+    'attr': {
+      'id': 'marital-status-new',
+      'class': 'needs-validation',
+      'novalidate': '',
+    }
+  }) }}
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header px-4">
+          {{ form_label(newMaritalStatusForm.name) }}
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body text-start p-3">
+          {{ form_widget(newMaritalStatusForm.name) }}
+        </div>
+        <div class="modal-footer d-flex flex-nowrap gap-1 border-0 pb-4 px-4 pt-0">
+          <button id="marital-status-new-submit" type="submit" type="button" class="btn btn-primary w-100 d-flex justify-content-center align-items-center gap-2 m-0">
+            <i class="bx bx-check"></i> <span class="">Enregistrer</span>
+          </button>
+
+          <button id="marital-status-new-loader" class="btn btn-primary m-0 w-100 d-none" type="button" disabled>
+            <span class="spinner-border spinner-border-sm" aria-hidden="true"></span>
+            <span role="status">Enregistrement...</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  {{ form_end(newMaritalStatusForm) }}
+</div>
+
+
+

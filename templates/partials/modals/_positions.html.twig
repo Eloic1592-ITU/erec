@@ -1,0 +1,31 @@
+<div 
+  id="positionsModal" 
+  class="modal fade" 
+  data-bs-backdrop="static" 
+  data-bs-keyboard="false" 
+  tabindex="-1" 
+  aria-labelledby="positionsModalLabel" 
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-scrollable modal-lg">
+    <div class="modal-content rounded-4">
+      <div class="modal-header px-4">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Choisissez le poste qui vous convient</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body p-3">
+        <div class="d-flex flex-column gap-2">
+          {% if positions is defined and positions %}
+            {% for position in positions %}  
+              <a class="position" href="{{ path('app_registeration', { 'ref': position.getReference() }) }}">
+                {{ position.getName() }}
+                <i class='bx bx-right-arrow-alt'></i>
+              </a>
+            {% endfor %}
+          {% endif %}
+        </div>
+        
+      </div>
+    </div>
+  </div>
+</div>

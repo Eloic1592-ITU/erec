@@ -1,0 +1,56 @@
+{{ 
+    form_start(form, {
+        'attr': { 
+            'id': "edit-profile-form",
+            'class': "needs-validation",
+            'novalidate': "",
+            'method': 'post', 
+        }
+    }) 
+}}
+    <div class="mb-3">
+        {{ form_label(form.last_name) }}
+        {{ form_widget(form.last_name) }}  
+        <div class="invalid-feedback">
+            {{ form_errors(form.last_name) }}
+        </div>
+    </div>
+    <div class="mb-3">
+        {{ form_label(form.first_name) }}
+        {{ form_widget(form.first_name) }}
+        <div class="invalid-feedback">
+            {{ form_errors(form.first_name) }}
+        </div>
+    </div>
+    <div class="mb-3">
+        {{ form_label(form.birth_date) }}
+        {{ form_widget(form.birth_date) }}
+        <div class="invalid-feedback">
+            {{ form_errors(form.birth_date) }}
+        </div>
+    </div>
+    <div>
+        {{ form_label(form.plainPassword) }}
+        <div class="input-group flex-nowrap">
+            {{ form_widget(form.plainPassword) }}
+            <span class="input-group-text input-group-text-end show-pass"><i class='bx bx-show'></i></span>
+            <span class="input-group-text input-group-text-end hide-pass d-none"><i class='bx bx-hide'></i></span>
+        </div>
+        <div class="invalid-feedback">
+            {{ form_errors(form.plainPassword) }}
+        </div>
+    </div>
+    <div class="form-text mb-3">
+        Pour des raisons de sécurité, vous devez entrer votre mot de passe pour valider la modification.
+    </div>
+
+    <div class="d-flex justify-content-end">
+        <button id="edit-profile-submit" type="submit" class="btn btn-primary">Enregistrer</button>
+
+        <button id="edit-profile-loader" class="btn btn-primary d-none" type="button" disabled>
+            <span class="spinner-border spinner-border-sm" aria-hidden="true"></span>
+            <span role="status">Enregistrement...</span>
+        </button>
+    </div>
+{{ form_end(form) }}
+

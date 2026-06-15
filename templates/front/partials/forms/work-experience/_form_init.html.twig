@@ -1,0 +1,261 @@
+{# Yes or No Question ou "yon" #}
+<div class="yon my-4 text-center">
+    <p>Avez-vous déjà occupé un poste ?</p>
+    <div class="my-4 d-flex align-items-center justify-content-center gap-2">
+        <button type="button" class="show-alert-btn btn btn-outline-danger d-flex align-items-center gap-1">
+        <i class="bx bx-x"></i> Non
+        </button>
+        <button type="button" class="form-items-btn btn btn-outline-primary d-flex align-items-center gap-1">
+        <i class="bx bx-check"></i> Oui
+        </button>
+    </div>
+</div>
+
+{# Message d'alert #}
+{{ include('front/partials/steps/_step_alert_success.html.twig') }}
+
+<div class="form-items">
+    {# Formulaires d'édition pour les postes existants #}
+    <div id="work-experience-forms" class="step-4-forms">
+        {% if workExperienceForms is empty %}
+            {# ... #}
+        {% else %}
+            <h4 class="border-bottom mt-4 pb-2">Mes postes enregistrés</h4>
+        {% endif %}
+
+        {% for workExperienceForm in workExperienceForms %}
+            <div class="my-4 work-experience-form">
+                {{ form_start(workExperienceForm, {
+                    'attr': {
+                        'id': 'work-experience-' ~ workExperienceForm.vars.value.id,
+                        'class': 'needs-validation',
+                        'novalidate': '',
+                    }
+                }) }}
+                
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="mb-3">
+                                {{ form_label(workExperienceForm.position) }} <span class="star">*</span>
+                                {{ form_widget(workExperienceForm.position) }}
+                                {{ form_errors(workExperienceForm.position) }}
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="mb-3">
+                                {{ form_label(workExperienceForm.organization) }} <span class="star">*</span>
+                                {{ form_widget(workExperienceForm.organization) }}
+                                {{ form_errors(workExperienceForm.organization) }}
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="mb-3">
+                                {{ form_label(workExperienceForm.location) }} <span class="star">*</span>
+                                {{ form_widget(workExperienceForm.location) }}
+                                {{ form_errors(workExperienceForm.location) }}
+                            </div>
+                        </div>  
+                    </div>
+
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="mb-3">
+                                {{ form_label(workExperienceForm.start_date) }} <span class="star">*</span>
+                                {{ form_widget(workExperienceForm.start_date) }}
+                                {{ form_errors(workExperienceForm.start_date) }}
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="mb-3">
+                                {{ form_label(workExperienceForm.end_date) }} <span class="star">*</span>
+                                {{ form_widget(workExperienceForm.end_date) }}
+                                {{ form_errors(workExperienceForm.end_date) }}
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="mb-3">
+                                {{ form_label(workExperienceForm.workFile) }}
+                                {{ form_widget(workExperienceForm.workFile) }}
+                                {{ form_errors(workExperienceForm.workFile) }}
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="mb-3">
+                                <label class="form-label">Personne de référence <span class="star">*</span></label>
+                                <div class="row mb-0 mb-lg-3">
+                                    <div class="col-lg-6 mb-3 mb-lg-0">
+                                        {{ form_widget(workExperienceForm.reference_name) }}
+                                    </div>
+                                    <div class="col-lg-6 mb-3 mb-lg-0">
+                                        {{ form_widget(workExperienceForm.reference_position) }}
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-6">
+                                        {{ form_widget(workExperienceForm.reference_phone) }}
+                                        <div class="form-text mb-3 mb-lg-0">
+                                            Veuillez utiliser l'un des formats suivants : 032 XX XXX XX ou +261 32 XX XXX XX
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6 mb-3 mb-lg-0">
+                                        {{ form_widget(workExperienceForm.reference_email) }}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                
+                    <div class="d-flex justify-content-between">
+                        <button 
+                            type="submit" 
+                            class="btn btn-primary d-flex align-items-center gap-1"
+                        >
+                            <i class="bx bx-edit"></i> 
+                            <span class="d-none d-lg-flex">Mettre à jour ce poste</span>
+                        </button>
+                        <button 
+                            type="button" 
+                            class="btn btn-danger d-flex align-items-center gap-1 delete-work-experience" 
+                            data-id="{{ workExperienceForm.vars.value.id }}" 
+                            data-url="{{ path('app_work_experience_delete', {'id': workExperienceForm.vars.value.id}) }}"
+                        >
+                            <i class="bx bx-trash"></i> <span class="d-none d-lg-flex">Supprimer ce poste</span>
+                        </button>
+                    </div>
+                    
+                {{ form_end(workExperienceForm) }}
+            </div>
+        {% endfor %}
+    </div>
+
+    {# Formulaire pour ajouter un nouveau poste #}
+    <div class="new-work-experience-form">
+        <div class="d-flex flex-column flex-md-row justify-content-between align-items-center mb-4 border-bottom mt-4 pb-3 gap-4">
+            <h4 class="mb-0">Ajouter un poste</h4>
+
+            <button 
+                id="remove-all-work-experiences-form" 
+                type="button" 
+                class="remove-all-form btn btn-outline-danger d-flex align-items-center gap-1"
+                data-url="{{ path('app_work_experiences_delete_all') }}"
+            >
+                <i class="bx bx-x"></i> Annuler d'ajout de postes
+            </button>
+        </div>
+
+        {{ form_start(newWorkExperienceForm, {
+            'attr': {
+                'id': 'work-experience-new', 
+                'class': 'needs-validation',
+                'novalidate': '',
+            }
+        }) }}
+            
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="mb-3">
+                        {{ form_label(newWorkExperienceForm.position) }} <span class="star">*</span>
+                        {{ form_widget(newWorkExperienceForm.position) }}
+                        {{ form_errors(newWorkExperienceForm.position) }}
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="mb-3">
+                        {{ form_label(newWorkExperienceForm.organization) }} <span class="star">*</span>
+                        {{ form_widget(newWorkExperienceForm.organization) }}
+                        {{ form_errors(newWorkExperienceForm.organization) }}
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="mb-3">
+                        {{ form_label(newWorkExperienceForm.location) }} <span class="star">*</span>
+                        {{ form_widget(newWorkExperienceForm.location) }}
+                        {{ form_errors(newWorkExperienceForm.location) }}
+                    </div>
+                </div>  
+            </div>
+
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="mb-3">
+                        {{ form_label(newWorkExperienceForm.start_date) }} <span class="star">*</span>
+                        {{ form_widget(newWorkExperienceForm.start_date) }}
+                        {{ form_errors(newWorkExperienceForm.start_date) }}
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="mb-3">
+                        {{ form_label(newWorkExperienceForm.end_date) }} <span class="star">*</span>
+                        {{ form_widget(newWorkExperienceForm.end_date) }}
+                        {{ form_errors(newWorkExperienceForm.end_date) }}
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="mb-3">
+                        {{ form_label(newWorkExperienceForm.workFile) }}
+                        {{ form_widget(newWorkExperienceForm.workFile) }}
+                        {{ form_errors(newWorkExperienceForm.workFile) }}
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="mb-3">
+                        <label class="form-label">Personne de référence <span class="star">*</span></label>
+                        <div class="row mb-0 mb-lg-3">
+                            <div class="col-lg-6 mb-3 mb-lg-0">
+                                {{ form_widget(newWorkExperienceForm.reference_name) }}
+                            </div>
+                            <div class="col-lg-6 mb-3 mb-lg-0">
+                                {{ form_widget(newWorkExperienceForm.reference_position) }}
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-6">
+                                {{ form_widget(newWorkExperienceForm.reference_phone) }}
+                                <div class="form-text mb-3 mb-lg-0">
+                                    Veuillez utiliser l'un des formats suivants : 032 XX XXX XX ou +261 32 XX XXX XX
+                                </div>
+                            </div>
+                            <div class="col-lg-6 mb-3 mb-lg-0">
+                                {{ form_widget(newWorkExperienceForm.reference_email) }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        
+            <div class="d-flex justify-content-end">
+                <button 
+                    id="work-experience-new-submit"
+                    type="submit" 
+                    class="add-form btn btn-primary d-flex align-items-center gap-1"
+                >
+                    <i class="bx bx-plus"></i> Ajouter le poste
+                </button>
+            
+                <button id="work-experience-new-loader" class="btn btn-primary d-none" type="button" disabled>
+                    <span class="spinner-border spinner-border-sm" aria-hidden="true"></span>
+                    <span role="status">Enregistrement...</span>
+                </button>
+            </div>
+
+        {{ form_end(newWorkExperienceForm) }}
+    </div>
+</div>

@@ -1,0 +1,32 @@
+<table id="data-list" class="table table-striped nowrap" style="width: 100%">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Diplôme</th>
+            <th>Filière / Domaine</th>
+            <th>Spécialité / Option</th>
+            <th>Etablissement / Institution</th>
+            <th>Année d'obtention du diplôme</th>
+            <th>Télécharger</th>
+            <th>Détails</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for education in candidate.getEducation() %}
+            <tr>
+                <td>{{ education.getId() }}</td>
+                <td>{{ education.degree.getName() }}</td>
+                {% if education.getOtherFieldOfStudy() %}
+                    <td>{{ education.getOtherFieldOfStudy() }}</td>
+                {% else %}
+                    <td>{{ education.fieldOfStudy.getName() }}</td>
+                {% endif %}
+                <td>{{ education.getSpecialty() }}</td>
+                <td>{{ education.getInstitution() }}</td>
+                <td>{{ education.getGraduationYear() }}</td>
+                <td><a class='btn btn-success bg-success text-white w-100' href="{{ asset('uploads/diplome/' ~ education.getDegreeFilename()) }}" target="_blank"><i class='bx bx-download me-1'></i> Télécharger le diplôme</a></td>
+                <td><a class='btn btn-warning btn-sm bg-warning text-white w-100' href='#'><i class='bx bx-info-circle me-2'></i>Voir plus</a></td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>

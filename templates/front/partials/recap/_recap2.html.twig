@@ -1,0 +1,102 @@
+{% if profile %}
+<div class="p-4 p-lg-5 mb-4 bg-white rounded-4 strong-shadow" data-aos="fade-up" data-aos-duration="500" data-aos-easing="ease-in-out" data-aos-once="true">      
+    <div id="recap2" class="d-flex flex-column gap-2">
+        <h5 class="text-primary border-bottom mt-2 mb-0 pb-2">Informations personnelles</h5>
+        <div class="d-flex flex-column gap-1">
+            <div class="info-group">
+                <div class="info">
+                    <p class="info-label">Civilité</p>
+                    <p class="info-value">{{ profile.civility.getName() }}</p>
+                </div>
+                <div class="info">
+                    <p class="info-label">Nom</p>
+                    <p class="info-value">{{ app.user.getLastName() }}</p>
+                </div>
+            </div>
+            <div class="info-group">
+                <div class="info">
+                    <p class="info-label">Prénom(s)</p>
+                    <p class="info-value">{{ app.user.getFirstName() }}</p>
+                </div>
+                <div class="info">
+                    <p class="info-label">Date de naissance</p>
+                    <p class="info-value">{{ app.user.getBirthDate()|date('d/m/Y') }}</p>
+                </div>
+            </div>
+            <div class="info-group">
+                <div class="info">
+                    <p class="info-label">Lieu de naissance</p>
+                    <p class="info-value">{{ profile.getBirthCity() }} - {{ profile.getCountry() }}</p>
+                </div>
+                <div class="info">
+                    <p class="info-label">N° CIN</p>
+                    <p class="info-value">{{ app.user.getCin() }}</p>
+                </div>
+            </div>
+            <div class="info-group">
+                <div class="info">
+                    <p class="info-label">Date de délivrance du CIN</p>
+                    <p class="info-value">{{ profile.getCinIssueDate()|date('d/m/Y') }}</p>
+                </div>
+                <div class="info">
+                    <p class="info-label">Lieu de délivrance</p>
+                    <p class="info-value">{{ profile.getCinIssuePlace() }}</p>
+                </div>
+            </div>
+            <div class="info-group">
+                <div class="info">
+                    <p class="info-label">Adresse</p>
+                    <p class="info-value">{{ profile.getAddress() }}</p>
+                </div>
+                <div class="info">
+                    <p class="info-label">Code postal</p>
+                    <p class="info-value">{{ profile.getPostalCode() }}</p>
+                </div>
+            </div>
+            <div class="info-group">
+                <div class="info">
+                    <p class="info-label">Ville</p>
+                    <p class="info-value">{{ profile.getCity() }}</p>
+                </div>
+                <div class="info">
+                    <p class="info-label">Pays</p>
+                    <p class="info-value">{{ profile.getCountry() }}</p>
+                </div>
+            </div>
+            <div class="info-group">
+                <div class="info">
+                    <p class="info-label">Nationalité</p>
+                    <p class="info-value">{{ profile.getNationality() }}</p>
+                </div>
+                <div class="info">
+                    <p class="info-label">Situation familiale actuelle</p>
+                    <p class="info-value">{{ profile.maritalStatus.getName() }}</p>
+                </div>
+            </div>
+            <div class="info-group">
+                <div class="info">
+                    <p class="info-label">Nombre d'enfants</p>
+                    <p class="info-value">{{ profile.getNumberOfChildren() }}</p>
+                </div>
+                <div class="info">
+                    <p class="info-label">Téléphone 1</p>
+                    <p class="info-value">{{ profile.getPhone1() }}</p>
+                </div>
+            </div>
+            <div class="info-group">
+                {% if profile.getPhone2() %}
+                <div class="info">
+                    <p class="info-label">Téléphone 2</p>
+                    <p class="info-value">{{ profile.getPhone2() }}</p>
+                </div>
+                {% endif %}
+                <div class="info">
+                    <p class="info-label">Courier électronique</p>
+                    <p class="info-value">{{ app.user.getEmail() }}</p>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+</div>
+{% endif %}

@@ -1,0 +1,137 @@
+.navbar {
+  z-index: 50;
+}
+
+.navbar .border-bottom,
+.navbar .border-top {
+  border-color: #4298cc6b !important;
+}
+
+.navbar .navbar-toggler {
+  padding: 0px;
+  border: none;
+}
+
+.navbar .navbar-toggler i {
+  font-size: 32px;
+}
+
+.navbar .dropdown-menu {
+  position: absolute;
+  left: initial;
+  right: 0;
+  margin-top: 16px;
+}
+
+.dropdown-item {
+  padding: 8px 16px;
+  border-radius: 4px;
+}
+
+.navbar .dropdown-toggle, .dropdown-item {
+  color: #6c757d;
+}
+
+.navbar .dropdown-toggle:hover, .dropdown-item:hover, .dropdown-item:active {
+  color: #334155;
+}
+
+.dropdown-item:hover, .dropdown-item:active {
+  background-color: #F8F9FA;
+}
+
+.offcanvas {
+  border: 0px !important;
+  border-top-left-radius: 8px;
+  border-bottom-left-radius: 8px;
+  background-color: #004877;
+}
+
+.offcanvas.offcanvas-end {
+  max-width: 300px;
+}
+
+.offcanvas-header {
+  justify-content: space-between;
+}
+
+.navbar .btn-close {
+  background-image: none;
+  background-color: rgba(255, 255, 255, 0.1);
+  margin: 0 !important;
+  padding: 0px !important;
+  font-size: 24px;
+  color: #c2c7d0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.navbar .btn-close:hover {
+  color: white;
+}
+
+.offcanvas .offcanvas-title {
+  color: white;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.offcanvas .nav-link {
+  border-radius: 4px;
+  padding: 8px 16px;
+  margin-bottom: 4px;
+  color: #c2c7d0;
+}
+
+.offcanvas .nav-link.active,
+.offcanvas .show > .nav-link {
+  background-color: #ce8921;
+  color: white;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24) !important;
+}
+
+.pic {
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #CE8921;
+  border-radius: 100%;
+  margin-left: 8px;
+  display: none;
+}
+
+.pic i {
+  padding: 8px;
+}
+
+/* Small devices (landscape phones, 576px and up) */
+@media (min-width: 576px) {
+}
+
+/* Medium devices (tablets, 768px and up) */
+@media (min-width: 768px) {
+}
+
+/* Large devices (desktops, 992px and up) */
+@media (min-width: 992px) {
+  .navbar-brand {
+    pointer-events: none;
+    opacity: 0;
+  }
+
+  .pic {
+    display: flex;
+  }
+
+  .navbar {
+    margin-left: 250px;
+  }
+}
+
+/* Extra large devices (large desktops, 1200px and up) */
+@media (min-width: 1200px) {
+}

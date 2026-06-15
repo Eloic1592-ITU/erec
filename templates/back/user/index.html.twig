@@ -1,0 +1,135 @@
+{# ---------------------------- Layout ---------------------------- #}
+{% extends 'back/layouts/base.html.twig' %}
+
+{# ---------------------------- Title ---------------------------- #}
+{% block title %}
+    Dashboard | Utilisateurs
+{% endblock %}
+
+{# ---------------------------- CSS ---------------------------- #}
+{% block stylesheets %}
+  <link rel="stylesheet" href="{{ asset('css/back/user.css') }}" />
+  <link rel="stylesheet" href="{{ asset('css/position.css') }}" />
+{% endblock %}
+
+{# ---------------------------- Body ---------------------------- #}
+{% block body %}
+    
+  {{ include('back/partials/_header.html.twig') }}
+
+  <div class="container">
+    <div class="row mb-lg-3">
+      <div class="col-lg-7 d-flex flex-column justify-content-between">
+        <div class="card h-100 px-2">
+          <div class="card-body">
+            <p class="m-0">
+              Cette section vous permet de visualiser, gérer, et administrer les utilisateurs de la plateforme. Cette page est conçue pour fournir un aperçu complet de l'ensemble des utilisateurs inscrits, ainsi que des outils pour administrer les statuts, et les accès des utilisateurs.
+            </p>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-header">
+            <h3 class="card-title">Statistiques des Utilisateurs</h3>
+          </div>
+          <div class="card-body">
+            <ul class="list-group">
+              <li class="list-group-item d-flex justify-content-between align-items-center">
+                Nombre d'administrateurs (Admins)
+                <span class="badge bg-pink rounded-pill">{{ adminCount }}</span>
+              </li>
+              <li class="list-group-item d-flex justify-content-between align-items-center">
+                Nombre d'utilisateurs simples (Utilisateurs)
+                <span class="badge bg-primary rounded-pill">{{ usersOnlyCount }}</span>
+              </li>
+              <li class="list-group-item d-flex justify-content-between align-items-center">
+                Utilisateurs ayant soumis leur candidature (Candidats)
+                <span class="badge bg-teal rounded-pill">{{ submittedUserCount }}</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-5">
+        <div class="card">
+          <div class="card-body">
+            <div id="userRolesChart" style="min-height: 400px;" class="echart"></div>
+          </div>
+        </div>
+          
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="card">
+          <div class="card-header d-flex align-items-center justify-content-between">
+            <h3 class="card-title">Liste de tous les utilisateurs</h3>
+            <button 
+              data-bs-toggle="modal" 
+              data-bs-target="#positionsModal"
+              class="btn btn-primary btn-sm d-flex align-items-center gap-1"
+            >
+              <i class="bx bx-plus"></i> 
+              Ajouter
+            </button>
+          </div>
+          <div class="card-body p-0">
+            {{ include('back/partials/tables/user/_index.html.twig') }}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+    
+{% endblock %}
+
+{# ---------------------------- JS ---------------------------- #}
+{% block javascripts %}
+  
+
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const userRolesChart = echarts.init(document.querySelector("#userRolesChart"));
+      userRolesChart.setOption({
+        tooltip: {
+          trigger: 'item'
+        },
+        legend: {
+          top: '5%',
+          left: 'center'
+        },
+        series: [{
+          name: 'Répartition des rôles',
+          type: 'pie',
+          radius: ['40%', '70%'],
+          avoidLabelOverlap: false,
+          label: {
+            show: false,
+            position: 'center'
+          },
+          emphasis: {
+            label: {
+              show: true,
+              fontSize: '18',
+              fontWeight: 'bold'
+            }
+          },
+          labelLine: {
+            show: false
+          },
+          data: [
+            { value: {{ adminCount }}, name: 'Admins' },
+            { value: {{ usersOnlyCount }}, name: 'Utilisateurs' },
+            { value: {{ submittedUserCount }}, name: 'Candidats' }
+          ],
+          color: [
+            'rgba(255, 99, 132, 0.6)', // Couleur pour Admins
+            'rgba(54, 162, 235, 0.6)',  // Couleur pour Users
+            'rgba(75, 192, 192, 0.6)',  // Couleur pour Candidats
+          ]
+        }]
+      });
+    });
+  </script>
+
+{% endblock %}
+

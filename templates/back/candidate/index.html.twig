@@ -1,0 +1,177 @@
+{# ---------------------------- Layout ---------------------------- #}
+{% extends 'back/layouts/base.html.twig' %}
+
+{# ---------------------------- Title ---------------------------- #}
+{% block title %}
+    Dashboard
+{% endblock %}
+
+{# ---------------------------- CSS ---------------------------- #}
+{% block stylesheets %}
+  <link rel="stylesheet" href="{{ asset('css/back/user.css') }}" />
+{% endblock %}
+
+{# ---------------------------- Body ---------------------------- #}
+{% block body %}
+    
+    {{ include('back/partials/_header.html.twig') }}
+
+    <div class="container">
+
+        <div class="row mb-3">
+            <div class="col-lg-6 d-flex flex-column justify-content-between">
+                <div class="card px-2">
+                    <div class="card-body">
+                        <p class="m-0">
+                            Cette section vous permet de visualiser, gérer, et administrer les candidats inscrits sur la plateforme. Elle est conçue pour offrir un aperçu détaillé des candidatures soumises, ainsi que des outils pour administrer les accès et les statuts des candidats.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="card mb-lg-0">
+                    <div class="card-header">
+                        <h3 class="card-title">Informations Disponibles</h3>
+                    </div>
+                    <div class="card-body">
+                        <ul>
+                            <li><span class="text-primary">Informations Personnelles :</span> Accédez aux données personnelles de chaque candidat, telles que leur nom, âge, et coordonnées.</li>
+                            <li><span class="text-primary">Diplômes :</span> Consultez les diplômes obtenus, avec des détails sur les institutions académiques fréquentées et les spécialisations choisies.</li>
+                            <li><span class="text-primary">Certifications :</span> Visualisez les certifications attestant des compétences supplémentaires des candidats.</li>
+                            <li><span class="text-primary">Stages :</span> Découvrez les stages effectués par les candidats, incluant les entreprises où ils ont travaillé et les responsabilités assumées.</li>
+                            <li><span class="text-primary">Expériences Professionnelles :</span> Parcourez les postes précédemment occupés par les candidats et les compétences mises en œuvre.</li>
+                            <li><span class="text-primary">Compétences :</span> Évaluez les compétences des candidats, incluant les langues maîtrisées et les outils techniques utilisés.</li>
+                            <li><span class="text-success">Documents :</span> Consultez et téléchargez les CV et lettres de motivation des candidats directement depuis cette page.</li>
+                        </ul>
+                        
+                        <p class="px-2">Utilisez cette page pour évaluer rapidement et efficacement les profils des candidats et faire avancer le processus de sélection.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="card h-100">
+                    <div class="card-header">
+                        <h3 class="card-title">Statistique des candidats par postes demandés</h3>
+                    </div>
+                    <div class="card-body d-flex align-items-center">
+                        <div id="positionChart" style="width: 100%; height: 400px;"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Liste de tous les candidats</h3>
+                    </div>
+                    <div class="card-body p-0">
+                        {{ include('back/partials/tables/candidate/_index.html.twig') }}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Statistique des candidats par domaines d'études</h3>
+                    </div>
+                    <div class="card-body p-0">
+                        <div id="studyFieldChart" style="width: 100%; height: 400px;"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Statistique des candidats par diplômes</h3>
+                    </div>
+                    <div class="card-body p-0">
+                        <div id="degreeChart" style="width: 100%; height: 400px;"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+{% endblock %}
+
+{# ---------------------------- JS ---------------------------- #}
+{% block javascripts %}
+    <script>
+        // Initialisation du graphique en secteurs pour les domaines d'études
+        const studyFieldChart = echarts.init(document.getElementById('studyFieldChart'));
+        const studyFieldOption = {
+            tooltip: {
+                trigger: 'item'
+            },
+            series: [
+                {
+                    name: 'Candidats',
+                    type: 'pie',
+                    radius: '50%',
+                    data: {{ studyFieldStats|map(v => { name: v.name, value: v.candidate_count })|json_encode|raw }},
+                    emphasis: {
+                        itemStyle: {
+                            shadowBlur: 10,
+                            shadowOffsetX: 0,
+                            shadowColor: 'rgba(0, 0, 0, 0.5)'
+                        }
+                    }
+                }
+            ]
+        };
+        studyFieldChart.setOption(studyFieldOption);
+
+        // Initialisation du graphique en secteurs pour les diplômes
+        const degreeChart = echarts.init(document.getElementById('degreeChart'));
+        const degreeOption = {
+            tooltip: {
+                trigger: 'item'
+            },
+            series: [
+                {
+                    name: 'Candidats',
+                    type: 'pie',
+                    radius: '50%',
+                    data: {{ degreeStats|map(v => { name: v.name, value: v.candidate_count })|json_encode|raw }},
+                    emphasis: {
+                        itemStyle: {
+                            shadowBlur: 10,
+                            shadowOffsetX: 0,
+                            shadowColor: 'rgba(0, 0, 0, 0.5)'
+                        }
+                    }
+                }
+            ]
+        };
+        degreeChart.setOption(degreeOption);
+
+        // Initialisation du graphique en secteurs pour les postes demandés
+        const positionChart = echarts.init(document.getElementById('positionChart'));
+        const positionOption = {
+            tooltip: {
+                trigger: 'item'
+            },
+            series: [
+                {
+                    name: 'Candidats',
+                    type: 'pie',
+                    radius: '50%',
+                    data: {{ positionStats|map(v => { name: v.name, value: v.candidate_count })|json_encode|raw }},
+                    emphasis: {
+                        itemStyle: {
+                            shadowBlur: 10,
+                            shadowOffsetX: 0,
+                            shadowColor: 'rgba(0, 0, 0, 0.5)'
+                        }
+                    }
+                }
+            ]
+        };
+        positionChart.setOption(positionOption);
+    </script>
+{% endblock %}
+

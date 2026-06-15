@@ -1,0 +1,32 @@
+{% if internships %}
+<div class="p-4 p-lg-5 mb-4 bg-white rounded-4 strong-shadow" data-aos="fade-up" data-aos-duration="500" data-aos-easing="ease-in-out" data-aos-once="true">       
+    <div id="recap5" class="d-flex flex-column gap-2">
+        <h5 class="text-primary border-bottom mt-2 mb-0 pb-2">Stages suivis</h5>
+
+        {% for internship in internships %}
+        <div class="d-flex flex-column gap-1">
+            <div class="info-group">
+                <div class="info">
+                    <p class="info-label">Thème</p>
+                    <p class="info-value">{{ internship.getTheme() }}</p>
+                </div>
+                <div class="info">
+                    <p class="info-label">Organisation ou Société</p>
+                    <p class="info-value">{{ internship.getOrganization() }}</p>
+                </div>
+            </div>
+            <div class="info-group">
+                <div class="info">
+                    <p class="info-label">Année de stage</p>
+                    <p class="info-value">{{ internship.getInternshipYear() }}</p>
+                </div>
+                <div class="info">
+                    <p class="info-label">Durée</p>
+                    <p class="info-value">{{ internship.getDuration() }} mois</p>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endif %}

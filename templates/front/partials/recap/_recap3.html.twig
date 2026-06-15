@@ -1,0 +1,53 @@
+{% if educations %}
+<div class="p-4 p-lg-5 mb-4 bg-white rounded-4 strong-shadow" data-aos="fade-up" data-aos-duration="500" data-aos-easing="ease-in-out" data-aos-once="true">      
+    <div id="recap3" class="d-flex flex-column gap-2">
+        <h5 class="text-primary border-bottom mt-2 mb-0 pb-2">Diplôme académiques</h5>
+
+        {% for education in educations %}
+        <div class="d-flex flex-column gap-1">
+            <div class="info-group">
+                <div class="info">
+                    <p class="info-label">Diplôme</p>
+                    <p class="info-value">{{ education.degree.getName() }}</p>
+                </div>
+
+                {% if education.getOtherFieldOfStudy() %}
+                <div class="info">
+                    <p class="info-label">Filière / Domaine</p>
+                    <p class="info-value">{{ education.getOtherFieldOfStudy() }}</p>
+                </div>
+                {% else %}
+                <div class="info">
+                    <p class="info-label">Filière / Domaine</p>
+                    <p class="info-value">{{ education.fieldOfStudy.getName() }}</p>
+                </div>
+                {% endif %}
+
+            </div>
+            <div class="info-group">
+                <div class="info">
+                    <p class="info-label">Spécialité / Option</p>
+                    <p class="info-value">{{ education.getSpecialty() }}</p>
+                </div>
+                <div class="info">
+                    <p class="info-label">Etablissement / Institution</p>
+                    <p class="info-value">{{ education.getInstitution() }}</p>
+                </div>
+            </div>
+            <div class="info-group">
+                <div class="info">
+                    <p class="info-label">Année d'obtention du diplôme</p>
+                    <p class="info-value">{{ education.getGraduationYear() }}</p>
+                </div>
+                <div class="info">
+                    <p class="info-label">Voir le diplôme</p>
+                    <a href="{{ asset('uploads/diplome/' ~ education.getDegreeFilename()) }}" class="btn btn-primary mt-2" target="_blank">
+                        Aperçu du diplôme
+                    </a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endif %}

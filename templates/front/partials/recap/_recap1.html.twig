@@ -1,0 +1,35 @@
+{% if jobApplication %}
+<div class="p-4 p-lg-5 mb-4 bg-white rounded-4 strong-shadow" data-aos="fade-up" data-aos-duration="500" data-aos-easing="ease-in-out" data-aos-once="true">     
+    <div id="recap1" class="d-flex flex-column gap-2">
+        <h5 class="text-primary border-bottom mt-2 mb-0 pb-2">Poste demandé</h5>
+        <div class="d-flex flex-column gap-1">
+            <div class="info-group">
+                <div class="info">
+                    <p class="info-label">Poste demandé</p>
+                    <p class="info-value">{{ app.user.referencePosition.name }}</p>
+                </div>
+                <div class="info">
+                    <p class="info-label">Lieu d'affectation</p>
+                    <p class="info-value">{{ jobApplication.getPrimaryLocation() }}</p>
+                </div>
+            </div>
+            {% if jobApplication.getSecondaryLocation() or jobApplication.getTertiaryLocation() %}
+            <div class="info-group">
+                {% if jobApplication.getSecondaryLocation() %}
+                <div class="info">
+                    <p class="info-label">2ème lieu d'affectation souhaité</p>
+                    <p class="info-value">{{ jobApplication.getSecondaryLocation() }}</p>
+                </div>
+                {% endif %}
+                {% if jobApplication.getTertiaryLocation() %}
+                <div class="info">
+                    <p class="info-label">3ème lieu d'affectation souhaité</p>
+                    <p class="info-value">{{ jobApplication.getTertiaryLocation() }}</p>
+                </div>
+                {% endif %}
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endif %}

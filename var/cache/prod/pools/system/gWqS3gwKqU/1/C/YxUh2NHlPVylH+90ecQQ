@@ -1,0 +1,63 @@
+<?php //b7ce703513a98dbfb4bb1cbf27870491
+
+return [PHP_INT_MAX, static fn () => \Symfony\Component\VarExporter\Internal\Hydrator::hydrate(
+    $o = [
+        clone (($p = &\Symfony\Component\VarExporter\Internal\Registry::$prototypes)['Doctrine\\ORM\\Query\\ParserResult'] ?? \Symfony\Component\VarExporter\Internal\Registry::p('Doctrine\\ORM\\Query\\ParserResult')),
+        clone ($p['Doctrine\\ORM\\Query\\Exec\\SingleSelectExecutor'] ?? \Symfony\Component\VarExporter\Internal\Registry::p('Doctrine\\ORM\\Query\\Exec\\SingleSelectExecutor')),
+        clone ($p['Doctrine\\ORM\\Query\\ResultSetMapping'] ?? \Symfony\Component\VarExporter\Internal\Registry::p('Doctrine\\ORM\\Query\\ResultSetMapping')),
+    ],
+    null,
+    [
+        'Doctrine\\ORM\\Query\\ParserResult' => [
+            'sqlExecutor' => [
+                $o[1],
+            ],
+            'resultSetMapping' => [
+                $o[2],
+            ],
+        ],
+        'Doctrine\\ORM\\Query\\Exec\\AbstractSqlExecutor' => [
+            'sqlStatements' => [
+                1 => 'SELECT e0_.id AS ID_0, e0_.name AS NAME_1, e0_.reference AS REFERENCE_2, e0_.is_deleted AS IS_DELETED_3 FROM "EREC_POSITION" e0_ WHERE e0_.is_deleted = 0 OR e0_.is_deleted IS NULL',
+            ],
+        ],
+        'stdClass' => [
+            'aliasMap' => [
+                2 => [
+                    'u' => 'App\\Entity\\Position',
+                ],
+            ],
+            'fieldMappings' => [
+                2 => [
+                    'ID_0' => 'id',
+                    'NAME_1' => 'name',
+                    'REFERENCE_2' => 'reference',
+                    'IS_DELETED_3' => 'is_deleted',
+                ],
+            ],
+            'entityMappings' => [
+                2 => [
+                    'u' => null,
+                ],
+            ],
+            'columnOwnerMap' => [
+                2 => [
+                    'ID_0' => 'u',
+                    'NAME_1' => 'u',
+                    'REFERENCE_2' => 'u',
+                    'IS_DELETED_3' => 'u',
+                ],
+            ],
+            'declaringClasses' => [
+                2 => [
+                    'ID_0' => 'App\\Entity\\Position',
+                    'NAME_1' => 'App\\Entity\\Position',
+                    'REFERENCE_2' => 'App\\Entity\\Position',
+                    'IS_DELETED_3' => 'App\\Entity\\Position',
+                ],
+            ],
+        ],
+    ],
+    $o[0],
+    []
+)];

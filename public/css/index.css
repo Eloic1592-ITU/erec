@@ -1,0 +1,301 @@
+@font-face {
+  font-family: "Roboto";
+  src: url("../font/roboto/Roboto-Regular.ttf");
+}
+
+@font-face {
+  font-family: "Roboto-Bold";
+  src: url("../font/roboto/Roboto-Bold.ttf");
+}
+
+@font-face {
+  font-family: "Roboto-Light";
+  src: url("../font/roboto/Roboto-Light.ttf");
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  outline: none !important;
+  box-shadow: none !important;
+  font-family: "Roboto", sans-serif;
+  scroll-behavior: smooth !important;
+}
+
+:root {
+  /* Background Color */
+  --bgDefault: #f9fafb;
+
+  /* Classic Color */
+  --primary: #12659b;
+  --primary-hover: #105584;
+  --secondary: #e8e8e8;
+
+  /* Status Color */
+  --active: #0376fe;
+  --warning: #dba621;
+  --success: #22c55e;
+  --error: #ef4444;
+
+  /* Neutral Color */
+  --neutral800: #1e293b;
+
+  /* Stepper variable */
+  --stepNumber: 9;
+
+  /* Border Color */
+  --inputBorderColor: #969696;
+
+  /* Forms and Imput */
+  --bgForm: #dbdbdb;
+  --bgInput: #fff;
+  --textPrimary: #212326;
+  --textSecondary: #6f6f6f;
+  --textInput: #09101d;
+  --iconPrimary: #676767;
+
+  --paragraph: #6c757d;
+}
+
+body {
+  overflow-x: hidden;
+  background-color: var(--bgDefault);
+}
+
+h1 {
+  font-family: "Roboto-Light", sans-serif;
+  color: #4b5563;
+}
+
+a {
+  text-decoration: none !important;
+}
+
+a.security-link:hover {
+  text-decoration: underline !important;
+}
+
+.strong-shadow {
+  box-shadow: rgba(0, 0, 0, 0.125) 0px 0px 1px 0px,
+    rgba(0, 0, 0, 0.2) 0px 1px 3px 0px !important;
+}
+
+.sweet-shadow {
+  box-shadow: 0 0 30px rgba(1, 41, 112, 0.1) !important;
+}
+
+.text-paragraph {
+  color: var(--paragraph);
+}
+
+.text-primary {
+  font-family: "Roboto-Bold", sans-serif;
+  color: var(--primary) !important;
+}
+
+.text-warning {
+  color: var(--warning);
+}
+
+.bg-primary {
+  background: var(--primary) !important;
+}
+
+.btn-primary {
+  background-color: var(--primary);
+  border-color: var(--primary);
+  color: white;
+}
+
+.btn-primary:disabled {
+  background-color: var(--primary);
+  border-color: var(--primary);
+  opacity: 0.5;
+}
+
+.btn-primary:disabled {
+  cursor: not-allowed !important;
+}
+
+.btn-primary:hover,
+.btn-primary:visited,
+.btn-primary:active,
+.btn-primary:focus,
+.btn-primary:focus-visible {
+  background-color: var(--primary-hover) !important;
+  border-color: var(--primary-hover) !important;
+}
+
+.btn-outline-primary:hover,
+.btn-outline-primary:visited,
+.btn-outline-primary:active,
+.btn-outline-primary:focus,
+.btn-outline-primary:focus-visible {
+  background-color: var(--primary) !important;
+  border-color: var(--primary) !important;
+  color: white;
+}
+
+.btn-danger,
+.btn-outline-danger:hover,
+.btn-outline-danger:focus,
+.btn-outline-danger:visited {
+  background-color: var(--error);
+  border-color: var(--error);
+  color: white;
+}
+
+.btn-outline-primary {
+  border-color: var(--primary);
+  color: var(--primary);
+}
+
+.btn-outline-danger {
+  border-color: var(--error);
+  color: var(--error);
+}
+
+.btn-warning,
+.btn-warning:focus,
+.btn-warning:visited {
+  border-color: #dba621 !important;
+  background: #dba621 !important;
+  color: white !important;
+}
+
+.btn-warning:hover {
+  border-color: #ddaa28 !important;
+  background: #ddaa28 !important;
+}
+
+.text-bg-primary {
+  background-color: var(--primary) !important;
+}
+
+.form-label {
+  font-family: "Roboto-Bold", sans-serif;
+  color: #12659b;
+}
+
+.star {
+  color: var(--error);
+}
+
+.border-bottom-dashed {
+  border-bottom: 2px dashed #e9ecef;
+}
+
+.border-block-dashed {
+  border-block: 2px dashed #e9ecef;
+}
+
+.border-full-dashed {
+  border: 2px dashed #e9ecef;
+  border-radius: 16px;
+}
+
+/* Input Tel */
+
+.intl-tel-input {
+  display: table-cell;
+}
+
+.intl-tel-input .selected-flag {
+  z-index: 4;
+}
+
+.intl-tel-input .country-list {
+  z-index: 5;
+}
+
+.input-group .intl-tel-input .form-control {
+  border-top-left-radius: 4px;
+  border-top-right-radius: 0;
+  border-bottom-left-radius: 4px;
+  border-bottom-right-radius: 0;
+}
+
+.iti {
+  width: 100%;
+}
+
+/* Input Select */
+
+.iti__selected-country {
+  height: 38px !important;
+}
+
+/* Alert */
+
+.alert {
+  border: none;
+}
+
+.alert.alert-success {
+  background-color: #22c55e;
+  color: white;
+}
+
+.alert.alert-success i {
+  color: #22c55e;
+  background: white;
+  border-radius: 100%;
+}
+
+/* Table */
+.table thead tr th,
+.table tbody tr th {
+  color: #6d7580;
+  font-size: 14px;
+  font-weight: normal;
+}
+
+.table tbody tr td {
+  color: #2c3a4b;
+  font-size: 14px;
+}
+
+.table tbody tr th,
+.table tbody tr td {
+  background-color: #f8f9fa;
+}
+
+.table > :not(caption) > * > * {
+  border-color: #fff;
+  border-width: 4px;
+}
+
+/* Cacher le eye show/hide password par defaut */
+input::-ms-reveal {
+  display: none;
+}
+
+.input-group {
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+/* Placeholder Color */
+input::placeholder {
+  color: #999999e0 !important;
+  opacity: 1;
+}
+
+.show-pass,
+.hide-pass {
+  border-top-right-radius: 6px !important;
+  border-bottom-right-radius: 6px !important;
+}
+
+button:disabled,
+a.disabled {
+  opacity: 0.4 !important;
+  cursor: not-allowed !important;
+}
+
+#login-loader,
+#forgot-password-loader,
+#reset-password-loader {
+  opacity: 0.9 !important;
+}

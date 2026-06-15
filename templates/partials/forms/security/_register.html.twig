@@ -1,0 +1,49 @@
+{{ form_start(form, {
+    'action': path('app_registeration', { 'ref': refPosition }),
+    'attr': {
+        'id': 'registration-form',
+        'class': 'needs-validation formulaire',
+        'novalidate': '',
+    }
+}) }}
+
+    <div class="mb-3">
+        {{ form_label(form.last_name) }} <span class="star">*</span></label>
+        {{ form_widget(form.last_name) }}
+        {{ form_errors(form.last_name) }}
+    </div>
+    <div class="mb-3">
+        {{ form_label(form.first_name) }} <span class="star">*</span></label>
+        {{ form_widget(form.first_name) }}
+        {{ form_errors(form.first_name) }}
+    </div>
+    <div class="mb-3">
+        {{ form_label(form.birth_date) }} <span class="star">*</span></label>
+        {{ form_widget(form.birth_date) }}
+        {{ form_errors(form.birth_date) }}
+    </div>
+    <div class="mb-3">
+        {{ form_label(form.cin) }} <span class="star">*</span></label>
+        {{ form_widget(form.cin) }}
+        {{ form_errors(form.cin) }}
+    </div>
+    <div class="mb-3">
+        {{ form_label(form.email) }} <span class="star">*</span></label>
+        {{ form_widget(form.email) }}
+        {{ form_errors(form.email) }}
+    </div>
+
+    <div class="my-4">   
+        <button id="registration-submit" type="submit" class="btn btn-primary w-100">S'inscrire</button>
+
+        <button id="registration-loader" class="btn btn-primary w-100 d-none" type="button" disabled>
+            <span class="spinner-border spinner-border-sm" aria-hidden="true"></span>
+            <span role="status">Enregistrement...</span>
+        </button>
+    </div>
+
+    <div class="w-100 text-center mt-4">
+        <p class="subtitle mb-0">Vous avez déjà un compte ? <a class="security-link" href="{{ path('app_login') }}">Connectez-vous ici</a></p>
+    </div>
+
+{{ form_end(form) }}

@@ -1,0 +1,36 @@
+<!-- Edit marital status -->
+
+<div
+  id="marital-status-{{ maritalStatusForm.vars.value.id }}"
+  class="modal modal-sm fade"
+  data-bs-backdrop="static"
+  data-bs-keyboard="false"
+  tabindex="-1"
+  aria-hidden="true"
+>
+  {{ form_start(maritalStatusForm, {
+    'attr': {
+      'id': 'marital-status-' ~ maritalStatusForm.vars.value.id,
+      'class': 'needs-validation',
+      'novalidate': '',
+    }
+  }) }}
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header px-4">
+          {{ form_label(maritalStatusForm.name) }}
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body text-start p-3">
+          {{ form_widget(maritalStatusForm.name) }}
+        </div>
+        <div class="modal-footer d-flex flex-nowrap gap-1 border-0 pb-4 px-4 pt-0">
+          <button type="submit" class="btn btn-primary w-100 d-flex justify-content-center align-items-center gap-2 m-0">
+            <i class="bx bx-check"></i> <span class="">Enregistrer</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  {{ form_end(maritalStatusForm) }}
+</div>
+

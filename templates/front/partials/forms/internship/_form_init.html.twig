@@ -1,0 +1,161 @@
+{# Yes or No Question ou "yon" #}
+<div class="yon my-4 text-center">
+    <p>Avez-vous déjà suivi des stages ?</p>
+    <div class="my-4 d-flex align-items-center justify-content-center gap-2">
+        <button type="button" class="show-alert-btn btn btn-outline-danger d-flex align-items-center gap-1">
+            <i class="bx bx-x"></i> Non
+        </button>
+        <button type="button" class="form-items-btn btn btn-outline-primary d-flex align-items-center gap-1">
+            <i class="bx bx-check"></i> Oui
+        </button>
+    </div>
+</div>
+
+{# Message d'alert #}
+{{ include('front/partials/steps/_step_alert_success.html.twig') }}
+
+<div class="form-items">
+    {# Formulaires d'édition pour les stage existants #}
+    <div id="internship-forms" class="step-5-forms">
+        {% if internshipForms is empty %}
+        {# ... #}
+        {% else %}
+        <h4 class="border-bottom mt-4 pb-2">Mes stages enregistrés</h4>
+        {% endif %}
+
+        {% for internshipForm in internshipForms %}
+        <div class="my-4 internship-form">
+            {{ form_start(internshipForm, {
+            'attr': {
+                'id': 'internship-' ~ internshipForm.vars.value.id,
+                'class': 'needs-validation',
+                'novalidate': '',
+            }
+            }) }}
+            
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="mb-3">
+                    {{ form_label(internshipForm.theme) }} <span class="star">*</span>
+                    {{ form_widget(internshipForm.theme) }}
+                    {{ form_errors(internshipForm.theme) }}
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="mb-3">
+                    {{ form_label(internshipForm.organization) }} <span class="star">*</span>
+                    {{ form_widget(internshipForm.organization) }}
+                    {{ form_errors(internshipForm.organization) }}
+                    </div>
+                </div>
+            </div>
+            
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="mb-3">
+                        {{ form_label(internshipForm.internship_year) }} <span class="star">*</span>
+                        {{ form_widget(internshipForm.internship_year) }}
+                        {{ form_errors(internshipForm.internship_year) }}
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="mb-3">
+                        {{ form_label(internshipForm.duration) }} <span class="star">*</span>
+                        {{ form_widget(internshipForm.duration) }}
+                        {{ form_errors(internshipForm.duration) }}
+                    </div>
+                </div>  
+            </div>
+            
+            <div class="d-flex justify-content-between">
+                <button 
+                type="submit" 
+                class="btn btn-primary d-flex align-items-center gap-1"
+                >
+                <i class="bx bx-edit"></i> 
+                <span class="d-none d-lg-flex">Mettre à jour ce stage</span>
+                </button>
+                <button 
+                type="button" 
+                class="btn btn-danger d-flex align-items-center gap-1 delete-internship" 
+                data-id="{{ internshipForm.vars.value.id }}" 
+                data-url="{{ path('app_internship_delete', {'id': internshipForm.vars.value.id}) }}"
+                >
+                <i class="bx bx-trash"></i> <span class="d-none d-lg-flex">Supprimer ce stage</span>
+                </button>
+            </div>
+            {{ form_end(internshipForm) }}
+        </div>
+        {% endfor %}
+    </div>
+
+    {# Formulaire pour ajouter un nouveau stage #}
+    <div class="new-internship-form">
+        <div class="d-flex flex-column flex-md-row justify-content-between align-items-center mb-4 border-bottom mt-4 pb-3 gap-4">
+            <h4 class="mb-0">Ajouter un Stage</h4>
+            <button 
+                id="remove-all-internships-form" 
+                type="button" 
+                class="remove-all-form btn btn-outline-danger d-flex align-items-center gap-1"
+                data-url="{{ path('app_internships_delete_all') }}"
+            >
+                <i class="bx bx-x"></i> Annuler d'ajout de stages
+            </button>
+        </div>
+
+        {{ form_start(newInternshipForm, {
+        'attr': {
+            'id': 'internship-new', 
+            'class': 'needs-validation',
+            'novalidate': '',
+        }
+        }) }}
+            
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="mb-3">
+                    {{ form_label(newInternshipForm.theme) }} <span class="star">*</span>
+                    {{ form_widget(newInternshipForm.theme) }}
+                    {{ form_errors(newInternshipForm.theme) }}
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="mb-3">
+                    {{ form_label(newInternshipForm.organization) }} <span class="star">*</span>
+                    {{ form_widget(newInternshipForm.organization) }}
+                    {{ form_errors(newInternshipForm.organization) }}
+                </div>
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="mb-3">
+                    {{ form_label(newInternshipForm.internship_year) }} <span class="star">*</span>
+                    {{ form_widget(newInternshipForm.internship_year) }}
+                    {{ form_errors(newInternshipForm.internship_year) }}
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="mb-3">
+                    {{ form_label(newInternshipForm.duration) }} <span class="star">*</span>
+                    {{ form_widget(newInternshipForm.duration) }}
+                    {{ form_errors(newInternshipForm.duration) }}
+                </div>
+            </div>  
+        </div>
+        
+        <div class="d-flex justify-content-end">
+            <button id="internship-new-submit" type="submit" class="add-form btn btn-primary d-flex align-items-center gap-1">
+                <i class="bx bx-plus"></i> Ajouter le stage
+            </button>
+
+            <button id="internship-new-loader" class="btn btn-primary d-none" type="button" disabled>
+                <span class="spinner-border spinner-border-sm" aria-hidden="true"></span>
+                <span role="status">Enregistrement...</span>
+            </button>
+        </div>
+        
+        {{ form_end(newInternshipForm) }}
+    </div>
+</div>

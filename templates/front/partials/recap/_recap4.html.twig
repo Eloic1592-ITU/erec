@@ -1,0 +1,40 @@
+{% if certifications %}
+<div class="p-4 p-lg-5 mb-4 bg-white rounded-4 strong-shadow" data-aos="fade-up" data-aos-duration="500" data-aos-easing="ease-in-out" data-aos-once="true">    
+    <div id="recap4" class="d-flex flex-column gap-2">
+        <h5 class="text-primary border-bottom mt-2 mb-0 pb-2">Certificats ou attestations</h5>
+
+        {% for certification in certifications %}
+        <div class="d-flex flex-column gap-1">
+            <div class="info-group">
+                <div class="info">
+                    <p class="info-label">Certificat / Attestation</p>
+                    <p class="info-value">{{ certification.getCertification() }}</p>
+                </div>
+                <div class="info">
+                    <p class="info-label">Spécialitér</p>
+                    <p class="info-value">{{ certification.getSpecialty() }}</p>
+                </div>
+            </div>
+            <div class="info-group">
+                <div class="info">
+                    <p class="info-label">Etablissement / Institution</p>
+                    <p class="info-value">{{ certification.getInstitution() }}</p>
+                </div>
+                <div class="info">
+                    <p class="info-label">Année d'obtention</p>
+                    <p class="info-value">{{ certification.getCertificationYear() }}</p>
+                </div>
+            </div>
+            <div class="info-group">
+                <div class="info">
+                    <p class="info-label">Voir de la Certificat / Attestation</p>
+                    <a href="{{ asset('uploads/certification/' ~ certification.getCertificationFilename()) }}" class="btn btn-primary mt-2" target="_blank">
+                        Aperçu du Certificat / Attestation
+                    </a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endif %}

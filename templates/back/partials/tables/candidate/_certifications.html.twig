@@ -1,0 +1,26 @@
+<table id="data-list" class="table table-striped nowrap" style="width: 100%">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Certificat / Attestation</th>
+            <th>Spécialitér</th>
+            <th>Etablissement / Institution</th>
+            <th>Année d'obtention</th>
+            <th>Télécharger</th>
+            <th>Détails</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for certification in candidate.getCertifications() %}
+            <tr>
+                <td>{{ certification.getId() }}</td>
+                <td>{{ certification.getCertification() }}</td>
+                <td>{{ certification.getSpecialty() }}</td>
+                <td>{{ certification.getInstitution() }}</td>
+                <td>{{ certification.getCertificationYear() }}</td>
+                <td><a class='btn btn-success bg-success text-white w-100' href="{{ asset('uploads/certification/' ~ certification.getCertificationFilename()) }}" target="_blank"><i class='bx bx-download me-1'></i> Télécharger le certificat / attestation</a></td>
+                <td><a class='btn btn-warning btn-sm bg-warning text-white w-100' href='#'><i class='bx bx-info-circle me-2'></i>Voir plus</a></td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>

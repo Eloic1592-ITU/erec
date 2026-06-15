@@ -1,0 +1,70 @@
+<?php //81f279e39d6562d7ac613333eaa169e2
+
+return [PHP_INT_MAX, static fn () => \Symfony\Component\VarExporter\Internal\Hydrator::hydrate(
+    $o = [
+        clone (($p = &\Symfony\Component\VarExporter\Internal\Registry::$prototypes)['Doctrine\\ORM\\Query\\ParserResult'] ?? \Symfony\Component\VarExporter\Internal\Registry::p('Doctrine\\ORM\\Query\\ParserResult')),
+        clone ($p['Doctrine\\ORM\\Query\\Exec\\SingleSelectExecutor'] ?? \Symfony\Component\VarExporter\Internal\Registry::p('Doctrine\\ORM\\Query\\Exec\\SingleSelectExecutor')),
+        clone ($p['Doctrine\\ORM\\Query\\ResultSetMapping'] ?? \Symfony\Component\VarExporter\Internal\Registry::p('Doctrine\\ORM\\Query\\ResultSetMapping')),
+    ],
+    null,
+    [
+        'Doctrine\\ORM\\Query\\ParserResult' => [
+            'sqlExecutor' => [
+                $o[1],
+            ],
+            'resultSetMapping' => [
+                $o[2],
+            ],
+            'parameterMappings' => [
+                [
+                    'isDeletedFalse' => [
+                        0,
+                    ],
+                    'ORMQueryBuilderLoader_getEntitiesByIds_id' => [
+                        1,
+                    ],
+                ],
+            ],
+        ],
+        'Doctrine\\ORM\\Query\\Exec\\AbstractSqlExecutor' => [
+            'sqlStatements' => [
+                1 => 'SELECT e0_.id AS ID_0, e0_.name AS NAME_1, e0_.is_deleted AS IS_DELETED_2 FROM "EREC_FIELD_OF_STUDY" e0_ WHERE (e0_.is_deleted = ? OR e0_.is_deleted IS NULL) AND e0_.id IN (?) ORDER BY e0_.name ASC',
+            ],
+        ],
+        'stdClass' => [
+            'aliasMap' => [
+                2 => [
+                    'f' => 'App\\Entity\\FieldOfStudy',
+                ],
+            ],
+            'fieldMappings' => [
+                2 => [
+                    'ID_0' => 'id',
+                    'NAME_1' => 'name',
+                    'IS_DELETED_2' => 'is_deleted',
+                ],
+            ],
+            'entityMappings' => [
+                2 => [
+                    'f' => null,
+                ],
+            ],
+            'columnOwnerMap' => [
+                2 => [
+                    'ID_0' => 'f',
+                    'NAME_1' => 'f',
+                    'IS_DELETED_2' => 'f',
+                ],
+            ],
+            'declaringClasses' => [
+                2 => [
+                    'ID_0' => 'App\\Entity\\FieldOfStudy',
+                    'NAME_1' => 'App\\Entity\\FieldOfStudy',
+                    'IS_DELETED_2' => 'App\\Entity\\FieldOfStudy',
+                ],
+            ],
+        ],
+    ],
+    $o[0],
+    []
+)];

@@ -1,0 +1,16 @@
+a {
+    color: #4298cc;
+}
+
+.dashboard-section {
+    scroll-margin-top: 78px;
+}
+
+.dashboard-section h1,
+.dashboard-section h2 {
+    font-family: "Roboto-Light", sans-serif;
+}
+
+.dashboard-section p {
+    color: #6c757d;
+}

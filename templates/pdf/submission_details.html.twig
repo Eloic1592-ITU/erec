@@ -1,0 +1,594 @@
+<div class="px-4">
+    <h1 class="my-4 text-center">Détails de candidature</h1>
+
+    {% if jobApplication %}
+    <div class="p-4 p-lg-5 mb-4 bg-white rounded-2">     
+        <div id="recap1" class="d-flex flex-column gap-2">
+            <h5 class="text-primary border-bottom mt-2 mb-0 pb-2">Poste demandé</h5>
+            <div class="d-flex flex-column gap-1">
+                <div class="info-group">
+                    <div class="info">
+                        <p class="info-label">Poste demandé</p>
+                        <p class="info-value">{{ app.user.referencePosition.name }}</p>
+                    </div>
+                    <div class="info">
+                        <p class="info-label">Lieu d'affectation</p>
+                        <p class="info-value">{{ jobApplication.getPrimaryLocation() }}</p>
+                    </div>
+                </div>
+                {% if jobApplication.getSecondaryLocation() or jobApplication.getTertiaryLocation() %}
+                <div class="info-group">
+                    {% if jobApplication.getSecondaryLocation() %}
+                    <div class="info">
+                        <p class="info-label">2ème lieu d'affectation souhaité</p>
+                        <p class="info-value">{{ jobApplication.getSecondaryLocation() }}</p>
+                    </div>
+                    {% endif %}
+                    {% if jobApplication.getTertiaryLocation() %}
+                    <div class="info">
+                        <p class="info-label">3ème lieu d'affectation souhaité</p>
+                        <p class="info-value">{{ jobApplication.getTertiaryLocation() }}</p>
+                    </div>
+                    {% endif %}
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    {% endif %}
+
+    {% if profile %}
+    <div class="p-4 p-lg-5 mb-4 bg-white rounded-2">      
+        <div id="recap2" class="d-flex flex-column gap-2">
+            <h5 class="text-primary border-bottom mt-2 mb-0 pb-2">Informations personnelles</h5>
+            <div class="d-flex flex-column gap-1">
+                <div class="info-group">
+                    <div class="info">
+                        <p class="info-label">Civilité</p>
+                        <p class="info-value">{{ profile.civility.getName() }}</p>
+                    </div>
+                    <div class="info">
+                        <p class="info-label">Nom</p>
+                        <p class="info-value">{{ app.user.getLastName() }}</p>
+                    </div>
+                </div>
+                <div class="info-group">
+                    <div class="info">
+                        <p class="info-label">Prénom(s)</p>
+                        <p class="info-value">{{ app.user.getFirstName() }}</p>
+                    </div>
+                    <div class="info">
+                        <p class="info-label">Date de naissance</p>
+                        <p class="info-value">{{ app.user.getBirthDate()|date('d/m/Y') }}</p>
+                    </div>
+                </div>
+                <div class="info-group">
+                    <div class="info">
+                        <p class="info-label">Lieu de naissance</p>
+                        <p class="info-value">{{ profile.getBirthCity() }} - {{ profile.getCountry() }}</p>
+                    </div>
+                    <div class="info">
+                        <p class="info-label">N° CIN</p>
+                        <p class="info-value">{{ app.user.getCin() }}</p>
+                    </div>
+                </div>
+                <div class="info-group">
+                    <div class="info">
+                        <p class="info-label">Date de délivrance du CIN</p>
+                        <p class="info-value">{{ profile.getCinIssueDate()|date('d/m/Y') }}</p>
+                    </div>
+                    <div class="info">
+                        <p class="info-label">Lieu de délivrance</p>
+                        <p class="info-value">{{ profile.getCinIssuePlace() }}</p>
+                    </div>
+                </div>
+                <div class="info-group">
+                    <div class="info">
+                        <p class="info-label">Adresse</p>
+                        <p class="info-value">{{ profile.getAddress() }}</p>
+                    </div>
+                    <div class="info">
+                        <p class="info-label">Code postal</p>
+                        <p class="info-value">{{ profile.getPostalCode() }}</p>
+                    </div>
+                </div>
+                <div class="info-group">
+                    <div class="info">
+                        <p class="info-label">Ville</p>
+                        <p class="info-value">{{ profile.getCity() }}</p>
+                    </div>
+                    <div class="info">
+                        <p class="info-label">Pays</p>
+                        <p class="info-value">{{ profile.getCountry() }}</p>
+                    </div>
+                </div>
+                <div class="info-group">
+                    <div class="info">
+                        <p class="info-label">Nationalité</p>
+                        <p class="info-value">{{ profile.getNationality() }}</p>
+                    </div>
+                    <div class="info">
+                        <p class="info-label">Situation familiale actuelle</p>
+                        <p class="info-value">{{ profile.maritalStatus.getName() }}</p>
+                    </div>
+                </div>
+                <div class="info-group">
+                    <div class="info">
+                        <p class="info-label">Nombre d'enfants</p>
+                        <p class="info-value">{{ profile.getNumberOfChildren() }}</p>
+                    </div>
+                    <div class="info">
+                        <p class="info-label">Téléphone 1</p>
+                        <p class="info-value">{{ profile.getPhone1() }}</p>
+                    </div>
+                </div>
+                <div class="info-group">
+                    {% if profile.getPhone2() %}
+                    <div class="info">
+                        <p class="info-label">Téléphone 2</p>
+                        <p class="info-value">{{ profile.getPhone2() }}</p>
+                    </div>
+                    {% endif %}
+                    <div class="info">
+                        <p class="info-label">Courier électronique</p>
+                        <p class="info-value">{{ app.user.getEmail() }}</p>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+    {% endif %}
+
+    {% if educations %}
+    <div class="p-4 p-lg-5 mb-4 bg-white rounded-2">      
+        <div id="recap3" class="d-flex flex-column gap-2">
+            <h5 class="text-primary border-bottom mt-2 mb-0 pb-2">Diplôme académiques</h5>
+
+            {% for education in educations %}
+            <div class="d-flex flex-column gap-1">
+                <div class="info-group">
+                    <div class="info">
+                        <p class="info-label">Diplôme</p>
+                        <p class="info-value">{{ education.degree.getName() }}</p>
+                    </div>
+
+                    {% if education.getOtherFieldOfStudy() %}
+                    <div class="info">
+                        <p class="info-label">Filière / Domaine</p>
+                        <p class="info-value">{{ education.getOtherFieldOfStudy() }}</p>
+                    </div>
+                    {% else %}
+                    <div class="info">
+                        <p class="info-label">Filière / Domaine</p>
+                        <p class="info-value">{{ education.fieldOfStudy.getName() }}</p>
+                    </div>
+                    {% endif %}
+
+                </div>
+                <div class="info-group">
+                    <div class="info">
+                        <p class="info-label">Spécialité / Option</p>
+                        <p class="info-value">{{ education.getSpecialty() }}</p>
+                    </div>
+                    <div class="info">
+                        <p class="info-label">Etablissement / Institution</p>
+                        <p class="info-value">{{ education.getInstitution() }}</p>
+                    </div>
+                </div>
+                <div class="info-group">
+                    <div class="info">
+                        <p class="info-label">Année d'obtention du diplôme</p>
+                        <p class="info-value">{{ education.getGraduationYear() }}</p>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    {% endif %}
+
+    {% if certifications %}
+    <div class="p-4 p-lg-5 mb-4 bg-white rounded-2">    
+        <div id="recap4" class="d-flex flex-column gap-2">
+            <h5 class="text-primary border-bottom mt-2 mb-0 pb-2">Certificats ou attestations</h5>
+
+            {% for certification in certifications %}
+            <div class="d-flex flex-column gap-1">
+                <div class="info-group">
+                    <div class="info">
+                        <p class="info-label">Certificat / Attestation</p>
+                        <p class="info-value">{{ certification.getCertification() }}</p>
+                    </div>
+                    <div class="info">
+                        <p class="info-label">Spécialitér</p>
+                        <p class="info-value">{{ certification.getSpecialty() }}</p>
+                    </div>
+                </div>
+                <div class="info-group">
+                    <div class="info">
+                        <p class="info-label">Etablissement / Institution</p>
+                        <p class="info-value">{{ certification.getInstitution() }}</p>
+                    </div>
+                    <div class="info">
+                        <p class="info-label">Année d'obtention</p>
+                        <p class="info-value">{{ certification.getCertificationYear() }}</p>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    {% endif %}
+
+    {% if internships %}
+    <div class="p-4 p-lg-5 mb-4 bg-white rounded-2">       
+        <div id="recap5" class="d-flex flex-column gap-2">
+            <h5 class="text-primary border-bottom mt-2 mb-0 pb-2">Stages suivis</h5>
+
+            {% for internship in internships %}
+            <div class="d-flex flex-column gap-1">
+                <div class="info-group">
+                    <div class="info">
+                        <p class="info-label">Thème</p>
+                        <p class="info-value">{{ internship.getTheme() }}</p>
+                    </div>
+                    <div class="info">
+                        <p class="info-label">Organisation ou Société</p>
+                        <p class="info-value">{{ internship.getOrganization() }}</p>
+                    </div>
+                </div>
+                <div class="info-group">
+                    <div class="info">
+                        <p class="info-label">Année de stage</p>
+                        <p class="info-value">{{ internship.getInternshipYear() }}</p>
+                    </div>
+                    <div class="info">
+                        <p class="info-label">Durée</p>
+                        <p class="info-value">{{ internship.getDuration() }} mois</p>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    {% endif %}
+
+    {% if workExperiences %}
+    <div class="p-4 p-lg-5 mb-4 bg-white rounded-2">    
+        <div id="recap6" class="d-flex flex-column gap-2">
+            <h5 class="text-primary border-bottom mt-2 mb-0 pb-2">Expériences professionnelles</h5>
+
+            {% for workExperience in workExperiences %}
+            <div class="d-flex flex-column gap-1">
+                <div class="info-group">
+                    <div class="info">
+                        <p class="info-label">Poste occupé</p>
+                        <p class="info-value">{{ workExperience.getPosition() }}</p>
+                    </div>
+                    <div class="info">
+                        <p class="info-label">Organisme ou Société</p>
+                        <p class="info-value">{{ workExperience.getOrganization() }}</p>
+                    </div>
+                </div>
+                <div class="info-group">
+                    <div class="info">
+                        <p class="info-label">Lieu</p>
+                        <p class="info-value">{{ workExperience.getLocation() }}</p>
+                    </div>
+                    <div class="info">
+                        <p class="info-label">Début</p>
+                        <p class="info-value">{{ workExperience.getStartDate()|date('d/m/Y') }}</p>
+                    </div>
+                </div>
+                <div class="info-group">
+                    <div class="info">
+                        <p class="info-label">Fin</p>
+                        <p class="info-value">{{ workExperience.getEndDate()|date('d/m/Y') }}</p>
+                    </div>
+                    <div class="info">
+                        <p class="info-label">Personne de référence</p>
+                        <p class="info-value">{{ workExperience.getReferenceName() }}</p>
+                    </div>
+                </div>
+                <div class="info-group">
+                    <div class="info">
+                        <p class="info-label">Fonction de la personne de référence</p>
+                        <p class="info-value">{{ workExperience.getReferencePosition() }}</p>
+                    </div>
+                    <div class="info">
+                        <p class="info-label">e-mail de la personne de référence</p>
+                        <p class="info-value">{{ workExperience.getReferenceEmail() }}</p>
+                    </div>
+                </div>
+                <div class="info-group">
+                    <div class="info">
+                        <p class="info-label">Téléphone de la personne de référence</p>
+                        <p class="info-value">{{ workExperience.getReferencePhone() }}</p>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    {% endif %}
+
+    {% if otherInfo %}
+    <div class="p-4 p-lg-5 mb-4 bg-white rounded-2">      
+        <div id="recap1">
+            <div class="d-flex flex-column gap-2">
+                <h5 class="text-primary border-bottom mt-2 mb-0 pb-2">Niveau de langue</h5>
+
+                <div class="d-flex d-lg-none flex-column gap-3">
+                    <div class="info-group">
+                        <div class="info">
+                            <p class="info-label">Niveau de lecture</p>
+                            <p class="info-value">{{ otherInfo.getMalagasyReadingLevel() }}</p>
+                        </div>
+                        <div class="info">
+                            <p class="info-label">Communication écrite</p>
+                            <p class="info-value">{{ otherInfo.getMalagasyWritingLevel() }}</p>
+                        </div>
+                    </div>
+                    <div class="info-group">
+                        <div class="info">
+                            <p class="info-label">Communication orale</p>
+                            <p class="info-value">{{ otherInfo.getMalagasySpeakingLevel() }}</p>
+                        </div>
+                        <div class="info">
+                            <p class="info-label">Niveau de lecture</p>
+                            <p class="info-value">{{ otherInfo.getFrenchReadingLevel() }}</p>
+                        </div>
+                    </div>
+                    <div class="info-group">
+                        <div class="info">
+                            <p class="info-label">Communication écrite</p>
+                            <p class="info-value">{{ otherInfo.getFrenchWritingLevel() }}</p>
+                        </div>
+                        <div class="info">
+                            <p class="info-label">Communication orale</p>
+                            <p class="info-value">{{ otherInfo.getFrenchSpeakingLevel() }}</p>
+                        </div>
+                    </div>
+                    <div class="info-group">
+                        <div class="info">
+                            <p class="info-label">Niveau de lecture</p>
+                            <p class="info-value">{{ otherInfo.getEnglishReadingLevel() }}</p>
+                        </div>
+                        <div class="info">
+                            <p class="info-label">Communication écrite</p>
+                            <p class="info-value">{{ otherInfo.getEnglishWritingLevel() }}</p>
+                        </div>
+                    </div>
+                    <div class="info-group">
+                        <div class="info">
+                            <p class="info-label">Communication orale</p>
+                            <p class="info-value">{{ otherInfo.getEnglishSpeakingLevel() }}</p>
+                        </div>
+
+                        {% if otherInfo.getOtherLanguageName() %}
+                        <div class="info">
+                            <p class="info-label">Niveau de lecture</p>
+                            <p class="info-value">{{ otherInfo.getOtherLanguageReadingLevel() }}</p>
+                        </div>
+                        {% endif %}
+                    </div>
+
+                    {% if otherInfo.getOtherLanguageName() %}
+                    <div class="info-group">
+                        <div class="info">
+                            <p class="info-label">Communication écrite {{ otherInfo.getOtherLanguageName() }}</p>
+                            <p class="info-value">{{ otherInfo.getOtherLanguageWritingLevel() }}</p>
+                        </div>
+                        <div class="info">
+                            <p class="info-label">Communication orale {{ otherInfo.getOtherLanguageName() }}</p>
+                            <p class="info-value">{{ otherInfo.getOtherLanguageSpeakingLevel() }}</p>
+                        </div>
+                    </div>
+                    {% endif %}
+                </div>
+
+                <div class="d-none d-lg-block row">
+                    <div class="col-lg-12">
+                        <table class="table language-lvl w-100">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Langue</th>
+                                    <th scope="col">Niveau de lecture</th>
+                                    <th scope="col">Communication écrite</th>
+                                    <th scope="col">Communication orale</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <th scope="row">Malagasy</th>
+                                    <td>{{ otherInfo.getMalagasyReadingLevel() }}</td>
+                                    <td>{{ otherInfo.getMalagasyWritingLevel() }}</td>
+                                    <td>{{ otherInfo.getMalagasySpeakingLevel() }}</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">Français</th>
+                                    <td>{{ otherInfo.getFrenchReadingLevel() }}</td>
+                                    <td>{{ otherInfo.getFrenchWritingLevel() }}</td>
+                                    <td>{{ otherInfo.getFrenchSpeakingLevel() }}</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">Anglais</th>
+                                    <td>{{ otherInfo.getEnglishReadingLevel() }}</td>
+                                    <td>{{ otherInfo.getEnglishWritingLevel() }}</td>
+                                    <td>{{ otherInfo.getEnglishSpeakingLevel() }}</td>
+                                </tr>
+
+                                {% if otherInfo.getOtherLanguageName() %}
+                                <tr>
+                                    <th scope="row">{{ otherInfo.getOtherLanguageName() }}</th>
+                                    <td>{{ otherInfo.getOtherLanguageReadingLevel() }}</td>
+                                    <td>{{ otherInfo.getOtherLanguageWritingLevel() }}</td>
+                                    <td>{{ otherInfo.getOtherLanguageSpeakingLevel() }}</td>
+                                </tr>
+                                {% endif %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <div class="d-flex flex-column gap-2">
+                <h5 class="text-primary border-bottom mt-2 mb-0 pb-2">Compétences en Informatique Bureautique</h5>
+
+                <div class="d-flex d-lg-none flex-column gap-3">
+                    <div class="info-group">
+                        <div class="info">
+                            <p class="info-label">Microsoft Word</p>
+                            <p class="info-value">{{ otherInfo.getMicrosoftWordLevel() }}</p>
+                        </div>
+                        <div class="info">
+                            <p class="info-label">Microsoft Excel</p>
+                            <p class="info-value">{{ otherInfo.getMicrosoftExcelLevel() }}</p>
+                        </div>
+                    </div>
+                    <div class="info-group">
+                        <div class="info">
+                            <p class="info-label">Microsoft PowerPoint</p>
+                            <p class="info-value">{{ otherInfo.getMicrosoftPowerPointLevel() }}</p>
+                        </div>
+                        <div class="info">
+                            <p class="info-label">Microsoft OneNote</p>
+                            <p class="info-value">{{ otherInfo.getMicrosoftOneNoteLevel() }}</p>
+                        </div>
+                    </div>
+                    <div class="info-group">
+                        <div class="info">
+                            <p class="info-label">Microsoft Outlook</p>
+                            <p class="info-value">{{ otherInfo.getMicrosoftOutlookLevel() }}</p>
+                        </div>
+                        <div class="info">
+                            <p class="info-label">Microsoft Publisher</p>
+                            <p class="info-value">{{ otherInfo.getMicrosoftPublisherLevel() }}</p>
+                        </div>
+                    </div>
+                    <div class="info-group">
+                        <div class="info">
+                            <p class="info-label">Microsoft Access</p>
+                            <p class="info-value">{{ otherInfo.getMicrosoftAccessLevel() }}</p>
+                        </div>
+                        <div class="info">
+                            <p class="info-label">Microsoft Visio</p>
+                            <p class="info-value">{{ otherInfo.getMicrosoftVisioLevel() }}</p>
+                        </div>
+                    </div>
+                    <div class="info-group">
+                        <div class="info">
+                            <p class="info-label">Microsoft Project</p>
+                            <p class="info-value">{{ otherInfo.getMicrosoftProjectLevel() }}</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="d-none d-lg-block row">
+                    <div class="col-lg-12">
+                        <table class="table language-lvl w-100">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Technologie</th>
+                                    <th scope="col">Niveau</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Microsoft Word</td>
+                                    <td>{{ otherInfo.getMicrosoftWordLevel() }}</td>
+                                </tr>
+
+                                <tr>
+                                    <td>Microsoft Excel</td>
+                                    <td>{{ otherInfo.getMicrosoftExcelLevel() }}</td>
+                                </tr>
+                                    
+                                <tr>
+                                    <td>Microsoft PowerPoint</td>
+                                    <td>{{ otherInfo.getMicrosoftPowerPointLevel() }}</td>
+                                </tr>
+
+                                <tr>
+                                    <td>Microsoft OneNote</td>
+                                    <td>{{ otherInfo.getMicrosoftOneNoteLevel() }}</td>
+                                </tr>
+
+                                <tr>
+                                    <td>Microsoft Outlook</td>
+                                    <td>{{ otherInfo.getMicrosoftOutlookLevel() }}</td>
+                                </tr>
+
+                                <tr>
+                                    <td>Microsoft Publisher</td>
+                                    <td>{{ otherInfo.getMicrosoftPublisherLevel() }}</td>
+                                </tr>
+
+                                <tr>
+                                    <td>Microsoft Access</td>
+                                    <td>{{ otherInfo.getMicrosoftAccessLevel() }}</td>
+                                </tr>
+
+                                <tr>
+                                    <td>Microsoft Visio</td>
+                                    <td>{{ otherInfo.getMicrosoftVisioLevel() }}</td>
+                                </tr>
+
+                                <tr>
+                                    <td>Microsoft Project</td>
+                                    <td>{{ otherInfo.getMicrosoftProjectLevel() }}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <div class="d-flex flex-column gap-2">
+                <h5 class="text-primary border-bottom mt-2 mb-0 pb-2">Autres compétences informatiques</h5>
+                <div class="tags">
+                    {% for skill in otherInfo.otherSkills %}
+                        <span class="tag">{{ skill }}</span>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <div class="d-flex flex-column gap-2">
+                <h5 class="text-primary border-bottom mt-2 mb-0 pb-2">Autres compétences non informatiques</h5>
+                <div class="tags">
+                    {% for skillOth in otherInfo.otherNotInfoSkills|split(',') %}
+                        <span class="tag">{{ skillOth }}</span>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+
+    {% if engagement %}
+        {% if engagement.getSecondPosition() or engagement.getThirdPosition() %}
+            <div class="p-4 p-lg-5 mb-4 bg-white rounded-2"> 
+                <div id="recap1" class="d-flex flex-column gap-2">
+                    <h5 class="text-primary border-bottom mt-2 mb-0 pb-2">Autres postes souhaités</h5>
+                    <div class="d-flex flex-column gap-1">
+                        <div class="info-group">
+                            {% if engagement.getSecondPosition() %}
+                            <div class="info">
+                                <p class="info-label">2ème poste souhaité</p>
+                                <p class="info-value">{{ engagement.getSecondPosition() }}</p>
+                            </div>
+                            {% endif %}
+                            {% if engagement.getThirdPosition() %}
+                            <div class="info">
+                                <p class="info-label">3ème poste souhaité</p>
+                                <p class="info-value">{{ engagement.getThirdPosition() }}</p>
+                            </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+    {% endif %}
+</div>

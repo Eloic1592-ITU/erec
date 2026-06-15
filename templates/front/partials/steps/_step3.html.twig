@@ -1,0 +1,223 @@
+<!-- Step 3 form fields here -->
+
+<div class="step step-3">
+  <div class="d-flex align-items-start justify-content-between my-4 d-block d-lg-none gap-2">
+    <div class="text-center bg-primary text-white px-2 py-1 rounded-1">
+      3/9
+    </div>
+    <div class="d-flex flex-column text-end">
+      <h3 class="text-end text-primary mb-1">Etudes académiques</h3>
+      <p class="text-paragraph m-0">Suivant : Certificats ou attestations</p>
+    </div>
+  </div>
+
+  <p class="pb-4 border-bottom-dashed text-paragraph d-block d-lg-none">Veuillez remplir les champs qui sont marqués obligatoires (<span class="text-danger">*</span>)</p>
+  <h3 class="d-none d-lg-flex justify-content-center py-3 mb-4 border-full-dashed">
+    Etudes académiques
+  </h3>
+
+  {# Formulaires d'édition pour les diplôme existants #}
+  <div id="education-forms">
+    {% if educationForms is empty %}
+      {# ... #}
+    {% else %}
+      <h4 class="border-bottom mt-4 pb-2">Mes diplôme enregistrés</h4>
+    {% endif %}
+
+    {% for educationForm in educationForms %}
+      <div class="my-4 education-form">
+        {{ form_start(educationForm, {
+          'attr': {
+            'id': 'education-' ~ educationForm.vars.value.id,
+            'class': 'needs-validation',
+            'novalidate': '',
+          }
+        }) }}
+          <div class="row">
+            <div class="col-lg-6">
+              <div class="mb-3">
+                {{ form_label(educationForm.degree) }} <span class="star">*</span>
+                {{ form_widget(educationForm.degree) }}
+                {{ form_errors(educationForm.degree) }}
+              </div>
+            </div>
+            <div class="col-lg-6">
+              <div class="mb-3">
+                {{ form_label(educationForm.degreeFile) }} <span class="star">*</span>
+                {{ form_widget(educationForm.degreeFile) }}
+                {{ form_errors(educationForm.degreeFile) }}
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-lg-6">
+              <div class="mb-3">
+                {{ form_label(educationForm.field_of_study) }} <span class="star">*</span>
+                {{ form_widget(educationForm.field_of_study, { 'attr': { 'data-toggle': educationForm.vars.value.id } }) }}
+                {{ form_errors(educationForm.field_of_study) }}
+              </div>
+            </div>
+            <div class="col-lg-6">
+              <div class="mb-3">
+                {{ form_label(educationForm.specialty) }} <span class="star">*</span>
+                {{ form_widget(educationForm.specialty) }}
+                {{ form_errors(educationForm.specialty) }}
+              </div>
+            </div>
+          </div>
+
+          <div class="row" class="other-field-of-study" style="display: none;">
+            <div class="col-lg-12">
+              <div class="mb-3">
+                {{ form_label(educationForm.other_field_of_study) }}
+                {{ form_widget(educationForm.other_field_of_study, { 'attr': { 'class': 'form-control other-field-of-study-' ~ educationForm.vars.value.id } }) }}
+                {{ form_errors(educationForm.other_field_of_study) }}
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-lg-6">
+              <div class="mb-3">
+                {{ form_label(educationForm.institution) }} <span class="star">*</span>
+                {{ form_widget(educationForm.institution) }}
+                {{ form_errors(educationForm.institution) }}
+              </div>
+            </div>
+            <div class="col-lg-6">
+              <div class="mb-3">
+                {{ form_label(educationForm.graduation_year) }} <span class="star">*</span>
+                {{ form_widget(educationForm.graduation_year) }}
+                {{ form_errors(educationForm.graduation_year) }}
+              </div>
+            </div>
+          </div>
+          
+          <div class="d-flex justify-content-between">
+            <button 
+              type="submit" 
+              class="btn btn-primary d-flex align-items-center gap-1"
+            >
+              <i class="bx bx-edit"></i> 
+              <span class="d-none d-lg-flex">Mettre à jour ce diplôme</span>
+            </button>
+            <button 
+              type="button" 
+              class="btn btn-danger d-flex align-items-center gap-1 delete-education" 
+              data-id="{{ educationForm.vars.value.id }}" 
+              data-url="{{ path('app_education_delete', {'id': educationForm.vars.value.id}) }}"
+            >
+              <i class="bx bx-trash"></i> <span class="d-none d-lg-flex">Supprimer ce diplôme</span>
+            </button>
+          </div>
+        {{ form_end(educationForm) }}
+      </div>
+    {% endfor %}
+  </div>
+
+  {# Formulaire pour ajouter une nouveau diplôme #}
+  <div class="new-education-form">
+    <h4 class="border-bottom mt-4 pb-2">Ajouter un nouveau diplôme</h4>
+       
+    <p>Veuillez renseigner <b>uniquement</b> le diplôme <b>le plus élevé</b> dans <b>chaque domaine</b> et, au <b>maximum</b>, vos <b>5</b> diplômes les plus pertinents.</p>
+
+    {{ form_start(newEducationForm, {
+      'attr': {
+        'id': 'education-new', 
+        'class': 'needs-validation',
+        'novalidate': '',
+      }
+    }) }}
+
+      <div class="row">
+        <div class="col-lg-6">
+          <div class="mb-3">
+            {{ form_label(newEducationForm.degree) }} <span class="star">*</span>
+            {{ form_widget(newEducationForm.degree) }}
+            {{ form_errors(newEducationForm.degree) }}
+          </div>
+        </div>
+        <div class="col-lg-6">
+          <div class="mb-3">
+            {{ form_label(newEducationForm.degreeFile) }} <span class="star">*</span>
+            {{ form_widget(newEducationForm.degreeFile) }}
+            {{ form_errors(newEducationForm.degreeFile) }}
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-lg-6">
+          <div class="mb-3">
+            {{ form_label(newEducationForm.field_of_study) }} <span class="star">*</span>
+            {{ form_widget(newEducationForm.field_of_study, { 'attr': { 'data-toggle': 'new' } }) }}
+            {{ form_errors(newEducationForm.field_of_study) }}
+          </div>
+        </div>
+        <div class="col-lg-6">
+          <div class="mb-3">
+            {{ form_label(newEducationForm.specialty) }} <span class="star">*</span>
+            {{ form_widget(newEducationForm.specialty) }}
+            {{ form_errors(newEducationForm.specialty) }}
+          </div>
+        </div>
+      </div>
+
+      <div class="row" class="other-field-of-study" style="display: none;">
+        <div class="col-lg-12">
+          <div class="mb-3">
+            {{ form_label(newEducationForm.other_field_of_study) }}
+            {{ form_widget(newEducationForm.other_field_of_study, { 'attr': { 'class': 'form-control other-field-of-study-new'} }) }}
+            {{ form_errors(newEducationForm.other_field_of_study) }}
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-lg-6">
+          <div class="mb-3">
+            {{ form_label(newEducationForm.institution) }} <span class="star">*</span>
+            {{ form_widget(newEducationForm.institution) }}
+            {{ form_errors(newEducationForm.institution) }}
+          </div>
+        </div>
+        <div class="col-lg-6">
+          <div class="mb-3">
+            {{ form_label(newEducationForm.graduation_year) }} <span class="star">*</span>
+            {{ form_widget(newEducationForm.graduation_year) }}
+            {{ form_errors(newEducationForm.graduation_year) }}
+          </div>
+        </div>
+      </div>
+
+      <div class="d-flex justify-content-end">
+        <button id="education-new-submit" type="submit" class="add-form btn btn-primary d-flex align-items-center gap-1">
+          <i class="bx bx-plus"></i> 
+          Enregistrer le diplôme
+        </button>
+
+        <button id="education-new-loader" class="btn btn-primary d-none" type="button" disabled>
+          <span class="spinner-border spinner-border-sm" aria-hidden="true"></span>
+          <span role="status">Enregistrement...</span>
+        </button>
+      </div>
+
+    {{ form_end(newEducationForm) }}
+  </div>
+
+  <div id="education-actions" class="mt-4 pt-4 d-flex justify-content-between">
+    {{ include('front/partials/steps/_step_btn_prev.html.twig') }}
+
+    <button 
+      type="button" 
+      class="next-step btn btn-success pe-lg-1 d-flex align-items-center gap-1" 
+      {% if educationForms is empty %} 
+        disabled 
+      {% endif %}
+    >
+      <span class="d-none d-lg-flex">Continuer</span> <i class="bx bx-chevron-right"></i>
+    </button>
+  </div>
+</div>
+

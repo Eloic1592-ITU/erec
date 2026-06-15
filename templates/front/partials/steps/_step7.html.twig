@@ -1,0 +1,232 @@
+<!-- Step 7 form fields here -->
+
+{{ form_start(otherInfoForm, {
+  'attr': {
+      'id': 'other-info-form', 
+      'class': 'needs-validation',
+      'novalidate': '',
+  }
+}) }}
+
+  {{ form_row(otherInfoForm._token) }}
+
+  <div class="step step-7">
+    <div class="d-flex align-items-start justify-content-between my-4 d-block d-lg-none gap-2">
+      <div class="text-center bg-primary text-white px-2 py-1 rounded-1">
+        7/9
+      </div>
+      <div class="d-flex flex-column text-end">
+        <h3 class="text-end text-primary mb-1">Autres Informations</h3>
+        <p class="text-paragraph m-0">Suivant : CV et Lettre de motivation</p>
+      </div>
+    </div>
+
+    <p class="pb-4 border-bottom-dashed text-paragraph d-block d-lg-none">Veuillez remplir les champs qui sont marqués obligatoires (<span class="text-danger">*</span>)</p>
+
+    <h3 class="d-none d-lg-flex justify-content-center py-3 mb-4 border-full-dashed">
+      Autres Informations
+    </h3>
+
+    <h4 class="mb-4 border-bottom pb-2">Niveau de langue</h4>
+
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="mb-3">
+          <label for="step7_mg_read" class="form-label">Malagasy <span class="star">*</span></label>
+          <div class="row">
+            <div class="col-lg-4 mb-3 mb-lg-0">
+              {{ form_widget(otherInfoForm.malagasy_reading_level) }}
+            </div>
+            <div class="col-lg-4 mb-3 mb-lg-0">
+              {{ form_widget(otherInfoForm.malagasy_writing_level) }}
+            </div>
+            <div class="col-lg-4 mb-3 mb-lg-0">
+              {{ form_widget(otherInfoForm.malagasy_speaking_level) }}
+            </div>
+          </div>
+        </div>
+        <div class="mb-3">
+          <label for="step7_fr_read" class="form-label">Français <span class="star">*</span></label>
+          <div class="row">
+            <div class="col-lg-4 mb-3 mb-lg-0">
+              {{ form_widget(otherInfoForm.french_reading_level) }}
+            </div>
+            <div class="col-lg-4 mb-3 mb-lg-0">
+              {{ form_widget(otherInfoForm.french_writing_level) }}
+            </div>
+            <div class="col-lg-4 mb-3 mb-lg-0">
+              {{ form_widget(otherInfoForm.french_speaking_level) }}
+            </div>
+          </div>
+        </div>
+        <div class="mb-3">
+          <label for="step7_eng_read" class="form-label">Anglais <span class="star">*</span></label>
+          <div class="row">
+            <div class="col-lg-4 mb-3 mb-lg-0">
+              {{ form_widget(otherInfoForm.english_reading_level) }}
+            </div>
+            <div class="col-lg-4 mb-3 mb-lg-0">
+              {{ form_widget(otherInfoForm.english_writing_level) }}
+            </div>
+            <div class="col-lg-4 mb-3 mb-lg-0">
+              {{ form_widget(otherInfoForm.english_speaking_level) }}
+            </div>
+          </div>
+        </div>
+        <div class="mb-3">
+          <label for="step7_other" class="form-label">Autre langue</label>
+          <div class="row mb-3">
+            <div class="col-lg-12 mb-3 mb-lg-0">
+              {{ form_widget(otherInfoForm.other_language_name) }}
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-lg-4 mb-3 mb-lg-0">
+              {{ form_widget(otherInfoForm.other_language_reading_level) }}
+            </div>
+            <div class="col-lg-4 mb-3 mb-lg-0">
+              {{ form_widget(otherInfoForm.other_language_writing_level) }}
+            </div>
+            <div class="col-lg-4 mb-3 mb-lg-0">
+              {{ form_widget(otherInfoForm.other_language_speaking_level) }}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    {# ---------------------------------------------------- #}
+
+    <h4 class="mb-4 border-bottom mt-4 pb-2">Compétences Informatique</h4>
+
+    <div class="row">
+      <div class="col-lg-12">
+        <h5>Informatique Bureautique</h5>
+        <p>Veiller sélectionner votre niveau correspondant à chaque logiciel.</p>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-lg-4">
+        <div class="mb-3">
+          {{ form_label(otherInfoForm.microsoft_word_level) }} <span class="star">*</span>
+          {{ form_widget(otherInfoForm.microsoft_word_level) }}
+        </div>
+      </div>
+      <div class="col-lg-4">
+        <div class="mb-3">
+          {{ form_label(otherInfoForm.microsoft_excel_level) }} <span class="star">*</span>
+          {{ form_widget(otherInfoForm.microsoft_excel_level) }}
+        </div>
+      </div>
+      <div class="col-lg-4">
+        <div class="mb-3">
+          {{ form_label(otherInfoForm.microsoft_powerPoint_level) }} <span class="star">*</span>
+          {{ form_widget(otherInfoForm.microsoft_powerPoint_level) }}
+        </div>
+      </div>
+      <div class="col-lg-4">
+        <div class="mb-3">
+          {{ form_label(otherInfoForm.microsoft_oneNote_level) }} <span class="star">*</span>
+          {{ form_widget(otherInfoForm.microsoft_oneNote_level) }}
+        </div>
+      </div>
+      <div class="col-lg-4">
+        <div class="mb-3">
+          {{ form_label(otherInfoForm.microsoft_outlook_level) }} <span class="star">*</span>
+          {{ form_widget(otherInfoForm.microsoft_outlook_level) }}
+        </div>
+      </div>
+      <div class="col-lg-4">
+        <div class="mb-3">
+          {{ form_label(otherInfoForm.microsoft_publisher_level) }} <span class="star">*</span>
+          {{ form_widget(otherInfoForm.microsoft_publisher_level) }}
+        </div>
+      </div>
+      <div class="col-lg-4">
+        <div class="mb-3">
+          {{ form_label(otherInfoForm.microsoft_access_level) }} <span class="star">*</span>
+          {{ form_widget(otherInfoForm.microsoft_access_level) }}
+        </div>
+      </div>
+      <div class="col-lg-4">
+        <div class="mb-3">
+          {{ form_label(otherInfoForm.microsoft_visio_level) }} <span class="star">*</span>
+          {{ form_widget(otherInfoForm.microsoft_visio_level) }}
+        </div>
+      </div>
+      <div class="col-lg-4">
+        <div class="mb-3">
+          {{ form_label(otherInfoForm.microsoft_project_level) }} <span class="star">*</span>
+          {{ form_widget(otherInfoForm.microsoft_project_level) }}
+        </div>
+      </div>
+    </div>
+
+    <div class="row border-top pt-4 mt-4">
+      <div class="col-lg-12">
+        <h5>Autres compétences informatiques</h5>
+
+        <p class="mb-0">Sélectionner une/des compétence(s) dans la liste.</p>
+        <p>Si la compétence informatique ne figure pas dans la liste proposée, veuillez la préciser.</p>
+
+        <div class="d-flex justify-content-end mb-2">
+          <button type="button" class="btn btn-primary d-flex align-items-center gap-2" data-bs-toggle="modal" data-bs-target="#addOtherSkill">
+            <i class="bx bx-plus"></i> <span class="d-none d-lg-flex">Ajouter une compétence</span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="d-block w-100">
+          {{ form_widget(otherInfoForm.other_skills) }}
+        </div>
+      </div>
+    </div>
+
+    <div class="row border-top pt-4 mt-4">
+      <div class="col-lg-12">
+        <h5>Autres compétences non informatiques</h5>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="d-block w-100">
+          {{ form_widget(otherInfoForm.otherNotInfoSkills) }}
+        </div>
+      </div>
+    </div>
+
+    <div class="mt-4 pt-4 d-flex justify-content-between">
+      {{ include('front/partials/steps/_step_btn_prev.html.twig') }}
+      
+      <div id="other-info-actions" class="d-flex gap-2">
+        <button id="other-info-submit" type="submit" class="btn btn-outline-primary d-flex align-items-center gap-2">
+          <i class='bx bx-check'></i> <span class="d-none d-lg-flex">Enregistrer</span>
+        </button>
+
+        <button id="other-info-loader" class="btn btn-primary d-none" type="button" disabled>
+          <span class="spinner-border spinner-border-sm" aria-hidden="true"></span>
+          <span role="status">Enregistrement...</span>
+        </button>
+
+        <button 
+          type="button" 
+          class="next-step btn btn-success pe-lg-1 d-flex align-items-center gap-1" 
+          {% if is_other_info_edit is empty %} 
+            disabled 
+          {% endif %}
+        >
+          <span class="d-none d-lg-flex">Continuer</span> <i class="bx bx-chevron-right"></i>
+        </button>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- Modals -->
+  {{ include('front/partials/modals/_addOtherSkill.html.twig') }}
+
+{{ form_end(otherInfoForm) }}

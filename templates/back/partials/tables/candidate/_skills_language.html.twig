@@ -1,0 +1,44 @@
+<table id="data-list-skills-language" class="table table-striped nowrap" style="width: 100%">
+    <thead>
+        <tr>
+            <th>Langue</th>
+            <th>Niveau de lecture</th>
+            <th>Communication écrite</th>
+            <th>Communication orale</th>
+            <th>Détails</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>Malagasy</td>
+            <td>{{ candidate.otherInfo.getMalagasyReadingLevel() }}</td>
+            <td>{{ candidate.otherInfo.getMalagasyWritingLevel() }}</td>
+            <td>{{ candidate.otherInfo.getMalagasySpeakingLevel() }}</td>
+            <td><a class='btn btn-warning btn-sm bg-warning text-white w-100' href='#'><i class='bx bx-info-circle me-2'></i>Voir plus</a></td>
+        </tr>
+        <tr>
+            <td>Français</td>
+            <td>{{ candidate.otherInfo.getFrenchReadingLevel() }}</td>
+            <td>{{ candidate.otherInfo.getFrenchWritingLevel() }}</td>
+            <td>{{ candidate.otherInfo.getFrenchSpeakingLevel() }}</td>
+            <td><a class='btn btn-warning btn-sm bg-warning text-white w-100' href='#'><i class='bx bx-info-circle me-2'></i>Voir plus</a></td>
+        </tr>
+        <tr>
+            <td>Anglais</td>
+            <td>{{ candidate.otherInfo.getEnglishReadingLevel() }}</td>
+            <td>{{ candidate.otherInfo.getEnglishWritingLevel() }}</td>
+            <td>{{ candidate.otherInfo.getEnglishSpeakingLevel() }}</td>
+            <td><a class='btn btn-warning btn-sm bg-warning text-white w-100' href='#'><i class='bx bx-info-circle me-2'></i>Voir plus</a></td>
+        </tr>
+
+        {% if candidate.otherInfo.getOtherLanguageName() %}
+        <tr>
+            <td>{{ candidate.otherInfo.getOtherLanguageName() }}</td>
+            <td>{{ candidate.otherInfo.getOtherLanguageReadingLevel() }}</td>
+            <td>{{ candidate.otherInfo.getOtherLanguageWritingLevel() }}</td>
+            <td>{{ candidate.otherInfo.getOtherLanguageSpeakingLevel() }}</td>
+            <td><a class='btn btn-warning btn-sm bg-warning text-white w-100' href='#'><i class='bx bx-info-circle me-2'></i>Voir plus</a></td>
+        </tr>
+        {% endif %}
+    </tbody>
+</table>

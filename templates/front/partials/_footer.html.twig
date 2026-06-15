@@ -1,0 +1,40 @@
+<footer class="footer mt-auto py-3">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-4">
+        <div class="d-flex flex-column align-items-center gap-2">
+          <img src="{{ asset('img/logo-bcm.png') }}" alt="logo-bcm" width="40px" />
+          <h6 class="m-0 text-center">BANKY FOIBEN'I MADAGASIKARA</h6>
+        </div>
+      </div>
+      <div class="col-lg-4 d-flex justify-content-center align-items-center">
+        <a href="{{ path('app_marketing') }}" class="faq-link">FAQ</a>
+
+      </div>
+      <div class="col-lg-4">
+        <span>
+            &copy; 2025
+            <a href="https://www.banky-foibe.mg/">Banky Foiben'i Madagasikara</a>. All rights reserved
+        </span>
+      </div>
+    </div>
+  </div>
+  {% if degreeForm is defined %}
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header px-4">
+          {{ form_label(degreeForm.name) }}
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body text-start p-3">
+          {{ form_widget(degreeForm.name) }}
+        </div>
+        <div class="modal-footer d-flex flex-nowrap gap-1 border-0 pb-4 px-4 pt-0">
+          <button type="submit" class="btn btn-primary w-100 d-flex justify-content-center align-items-center gap-2 m-0">
+            <i class="bx bx-check"></i> <span class="">Enregistrer</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  {% endif %}
+</footer>

@@ -1,0 +1,55 @@
+<?php
+
+namespace App\Repository;
+
+use App\Entity\Position;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\Persistence\ManagerRegistry;
+
+/**
+ * @extends ServiceEntityRepository<Position>
+ */
+class PositionRepository extends ServiceEntityRepository
+{
+    public function __construct(ManagerRegistry $registry)
+    {
+        parent::__construct($registry, Position::class);
+    }
+
+    /**
+     * Count all degree
+     * @return int
+     */
+    public function countPosition(): int
+    {
+        $qb = $this->createQueryBuilder('p');
+        $qb->select('COUNT(p.id) as _TOTAL');
+        $result = $qb->getQuery()->getArrayResult();
+        return !empty($result) ? (int)$result[0]['_TOTAL'] : 0;
+    }
+
+    //    /**
+    //     * @return Position[] Returns an array of Position objects
+    //     */
+    //    public function findByExampleField($value): array
+    //    {
+    //        return $this->createQueryBuilder('p')
+    //            ->andWhere('p.exampleField = :val')
+    //            ->setParameter('val', $value)
+    //            ->orderBy('p.id', 'ASC')
+    //            ->setMaxResults(10)
+    //            ->getQuery()
+    //            ->getResult()
+    //        ;
+    //    }
+
+    //    public function findOneBySomeField($value): ?Position
+    //    {
+    //        return $this->createQueryBuilder('p')
+    //            ->andWhere('p.exampleField = :val')
+    //            ->setParameter('val', $value)
+    //            ->getQuery()
+    //            ->getOneOrNullResult()
+    //        ;
+    //    }
+}

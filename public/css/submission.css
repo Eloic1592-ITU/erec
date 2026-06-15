@@ -1,0 +1,48 @@
+input[readonly] {
+  background-color: #e9ecef !important;
+  border-color: #ced4da !important;
+}
+
+.step h3,
+.step h4 {
+  font-family: "Roboto-Bold";
+}
+
+.step h3 {
+  color: #dba621;
+}
+
+.step h4 {
+  color: #dba621;
+}
+
+.step h5 {
+  color: #12659b;
+}
+
+.step p {
+  color: #6c757d;
+}
+
+.commitment-user {
+  color: #dba621;
+  font-weight: bold;
+}
+
+.country.active.highlight,
+.country.active.highlight:hover {
+  color: initial;
+}
+
+.step .ar-section {
+  margin-block: 24px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+#engagement_city-error {
+  position: absolute;
+  padding-left: 68px;
+}

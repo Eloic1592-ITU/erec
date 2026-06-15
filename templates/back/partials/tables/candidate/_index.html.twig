@@ -1,0 +1,84 @@
+<table id="data-list" class="table table-striped nowrap" style="width: 100%">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Civilité</th>
+            <th>Nom</th>
+            <th>Prénom(s)</th>
+            <th>Poste demandé</th>
+            <th>2ème poste demandé</th>
+            <th>3ème poste demandé</th>
+            <th>Date de Naissance</th>
+            <th>Lieu de Naissance</th>
+            <th>N° CIN</th>
+            <th>Date de délivrance du CIN</th>
+            <th>Lieu de délivrance</th>
+            <th>Adresse</th>
+            <th>Code postal</th>
+            <th>Ville</th>
+            <th>Pays</th>
+            <th>Nationalité</th>
+            <th>Situation familiale actuelle</th>
+            <th>Nombre d'enfants</th>
+            <th>Téléphone 1</th>
+            <th>Téléphone 2</th>
+            <th>Courier électronique</th>
+            <th>Diplômes</th>
+            <th>Certifications</th>
+            <th>Stages</th>
+            <th>Expériences</th>
+            <th>Compétences</th>
+            <th>CV</th>
+            <th>Lettre de motivation</th>
+            <th>Détails</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for candidate in candidates %}
+            <tr>
+                <td>{{ candidate.getId() }}</td>
+                <td>{{ candidate.profile.civility.getName() }}</td>
+                <td>{{ candidate.getLastName() }}</td>
+                <td>{{ candidate.getFirstName() }}</td>
+                <td>{{ candidate.referencePosition.name }}</td>
+                {% if candidate.engagement.getSecondPosition() %}
+                    <td>{{ candidate.engagement.getSecondPosition() }}</td>
+                {% else %}
+                    <td>Aucun</td>
+                {% endif %} 
+                {% if candidate.engagement.getThirdPosition() %}
+                    <td>{{ candidate.engagement.getThirdPosition() }}</td>
+                {% else %}
+                    <td>Aucun</td>
+                {% endif %} 
+                <td>{{ candidate.getBirthDate()|date('d/m/Y') }}</td>
+                <td>{{ candidate.profile.getBirthCity() }} - {{ candidate.profile.getBirthCountry() }}</td>
+                <td>{{ candidate.getCin() }}</td>
+                <td>{{ candidate.profile.getCinIssueDate()|date('d/m/Y') }}</td>
+                <td>{{ candidate.profile.getCinIssuePlace() }}</td>
+                <td>{{ candidate.profile.getAddress() }}</td>
+                <td>{{ candidate.profile.getPostalCode() }}</td>
+                <td>{{ candidate.profile.getCity() }}</td>
+                <td>{{ candidate.profile.getCountry() }}</td>
+                <td>{{ candidate.profile.getNationality() }}</td>
+                <td>{{ candidate.profile.maritalStatus.getName() }}</td>
+                <td>{{ candidate.profile.getNumberOfChildren() }}</td>
+                <td>{{ candidate.profile.getPhone1() }}</td>
+                {% if candidate.profile.getPhone2() %}
+                    <td>{{ candidate.profile.getPhone2() }}</td>
+                {% else %}
+                    <td>Aucun</td>
+                {% endif %} 
+                <td>{{ candidate.getEmail() }}</td>
+                <td><a class='btn btn-primary bg-primary text-white w-100' href="{{path('admin_candidate_education', { 'id': candidate.getId() })}}" target="_blank"><i class="nav-icon fas fa-graduation-cap"></i> Voir les diplômes</a></td>
+                <td><a class='btn btn-primary bg-primary text-white w-100' href="{{path('admin_candidate_certification', { 'id': candidate.getId() })}}" target="_blank"><i class="nav-icon fas fa-certificate"></i> Voir les certifications</a></td>
+                <td><a class='btn btn-primary bg-primary text-white w-100' href="{{path('admin_candidate_internship', { 'id': candidate.getId() })}}" target="_blank"><i class="nav-icon fas fa-briefcase"></i> Voir les stages</a></td>
+                <td><a class='btn btn-primary bg-primary text-white w-100' href="{{path('admin_candidate_experience', { 'id': candidate.getId() })}}" target="_blank"><i class="nav-icon fas fa-briefcase"></i> Voir les expériences</a></td>
+                <td><a class='btn btn-primary bg-primary text-white w-100' href="{{path('admin_candidate_skill', { 'id': candidate.getId() })}}" target="_blank"><i class="nav-icon fas fa-cogs"></i> Voir les compétences</a></td>
+                <td><a class='btn btn-success bg-success text-white w-100' href="{{ asset('uploads/cv/' ~ candidate.document.getCvFilename()) }}" target="_blank"><i class='bx bx-download me-1'></i> Télécharger le CV</a></td>
+                <td><a class='btn btn-success bg-success text-white w-100' href="{{ asset('uploads/lm/' ~ candidate.document.getLmFilename()) }}" target="_blank"><i class='bx bx-download me-1'></i> Télécharger la LM</a></td>
+                <td><a class='btn btn-warning btn-sm bg-warning text-white w-100' href='#'><i class='bx bx-info-circle me-2'></i>Voir plus</a></td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>

@@ -1,0 +1,203 @@
+{# ---------------------------- Layout ---------------------------- #}
+{% extends 'back/layouts/base.html.twig' %}
+
+{# ---------------------------- Title ---------------------------- #}
+{% block title %}
+    Dashboard
+{% endblock %}
+
+{# ---------------------------- CSS ---------------------------- #}
+{% block stylesheets %}
+  <link rel="stylesheet" href="{{ asset('css/back/dashboard.css') }}" />
+{% endblock %}
+
+{# ---------------------------- Body ---------------------------- #}
+{% block body %}
+    
+  {{ include('back/partials/_header.html.twig') }}
+
+  <div class="container d-flex flex-column gap-4">
+
+    <div class="dashboard-section p-4 mb-3 bg-white rounded-4 sweet-shadow d-flex justify-content-between">
+      <div class="row">
+        <div class="col-lg-8">
+          <h1>Bienvenue {{ app.user.getFirstName }} !</h1>
+          <p> 
+            Nous sommes ravis de vous accueillir sur la plateforme de recrutement. Utilisez les sections ci-dessous pour gérer efficacement les <a href="#utilisateurs">utilisateurs</a>, les <a href="#candidats">informations sur les candidats</a> et les <a href="#referentiels">référentiels</a>.
+          </p>
+        </div>
+        <div class="col-lg-4 d-none d-lg-block text-end">
+          <img class="ms-auto me-2" width="20%" src="{{ asset('img/bell.png') }}" alt="bell" />
+        </div>
+      </div>
+    </div>
+
+    <div id="utilisateurs" class="dashboard-section">
+      <h2>Gestion des Utilisateurs</h2>
+      <p>
+        La section 'Gestion des Utilisateurs' vous permet de superviser et administrer les utilisateurs inscrits sur la plateforme. Vous y trouverez la liste des candidats avec toutes leurs informations. </br>
+        Dans la liste des états des candidats, vous pouvez télécharger la liste des candidats par poste demandé pour facilement vérifier leur statut d'admission.
+      </p>
+
+      <div class="row my-4">
+        <div class="col-lg-12">
+          <a href="{{ path('admin_user') }}" class="info-box">
+            <span class="info-box-icon bg-primary"><i class="fas fa-users"></i></span>
+            <div class="info-box-content">
+              <span class="info-box-text">Utilisateurs</span>
+              <span class="info-box-number">Total : {{ users }}</span>
+            </div>
+          </a>
+        </div>
+        <div class="col-md-6 col-lg-6 col-xl-6">
+          <a href="{{ path('admin_candidate') }}" class="info-box">
+            <span class="info-box-icon bg-default"><i class="fas fa-user-tie"></i></span>
+
+            <div class="info-box-content">
+              <span class="info-box-text">Candidats</span>
+              <span class="info-box-number">Total : {{ candidats }}</span>
+            </div>
+          </a>
+        </div>
+        <div class="col-md-6 col-lg-6 col-xl-6">
+          <a href="{{ path('admin_candidate_state') }}" class="info-box">
+            <span class="info-box-icon bg-primary"><i class="fas fa-briefcase"></i></span>
+
+            <div class="info-box-content">
+              <span class="info-box-text">Etat par postes</span>
+              <span class="info-box-number">Postes : {{ positions }}</span>
+            </div>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <div id="candidats" class="dashboard-section">
+      <h2>Informations sur les Candidats</h2>
+      <p>
+        La section "Informations sur les Candidats" centralise toutes les données pertinentes concernant les candidats. Vous y trouverez des informations détaillées sur leurs diplômes, certifications, stages ainsi que leurs expériences professionnelles. Cette section permet de suivre et d'évaluer efficacement les candidatures, offrant ainsi une vue d'ensemble complète sur chaque candidat.
+      </p>
+
+      <div class="row my-4">
+        <div class="col-md-6 col-lg-4 col-xl-3">
+          <a href="{{ path('admin_education') }}" class="info-box">
+            <span class="info-box-icon bg-default"><i class="fas fa-graduation-cap"></i></span>
+
+            <div class="info-box-content">
+              <span class="info-box-text">Diplômes</span>
+              <span class="info-box-number">Total : {{ educations }}</span>
+            </div>
+          </a>
+        </div>
+        <div class="col-md-6 col-lg-4 col-xl-3">
+          <a href="{{ path('admin_certification') }}" class="info-box">
+            <span class="info-box-icon bg-default"><i class="fas fa-certificate"></i></span>
+            <div class="info-box-content">
+              <span class="info-box-text">Certifications</span>
+              <span class="info-box-number">Total :  {{ certifications }}</span>
+            </div>
+          </a>
+        </div>
+        <div class="col-md-6 col-lg-4 col-xl-3">
+          <a href="{{ path('admin_internship') }}" class="info-box">
+            <span class="info-box-icon bg-success"><i class="fas fa-briefcase"></i></span>
+            <div class="info-box-content">
+              <span class="info-box-text">Stages</span>
+              <span class="info-box-number">Total : {{ internships }}</span>
+            </div>
+          </a>
+        </div>
+        <div class="col-md-6 col-lg-4 col-xl-3">
+          <a href="{{ path('admin_experience') }}" class="info-box">
+            <span class="info-box-icon bg-success"><i class="fas fa-briefcase"></i></span>
+            <div class="info-box-content">
+              <span class="info-box-text">Expériences</span>
+              <span class="info-box-number">Total : {{ experiences }}</span>
+            </div>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <div id="referentiels" class="dashboard-section">
+      <h2>Gestion des Référentiels</h2>
+      <p>
+        La section "Gestion des Référentiels" est dédiée à la gestion des éléments de référence nécessaires pour le bon fonctionnement de la plateforme de recrutement. Cela inclut la gestion des domaines, des diplômes, des postes, des niveaux, des compétences, de la civilité et de l'état civil. En maintenant ces référentiels à jour, vous assurez la cohérence et la standardisation des données utilisées à travers la plateforme.
+      </p>
+
+      <div class="row my-4">
+        <div class="col-md-6 col-lg-4 col-xl-3">
+          <a href="{{ path('admin_field_of_study') }}" class="info-box">
+            <span class="info-box-icon bg-primary"><i class="fas fa-code-branch"></i></span>
+            <div class="info-box-content">
+              <span class="info-box-text">Domaines</span>
+              <span class="info-box-number">Total : {{ allfieldOfStudy }}</span>
+            </div>
+          </a>
+        </div>
+        <div class="col-md-6 col-lg-4 col-xl-3">
+          <a href="{{ path('admin_degree') }}" class="info-box">
+            <span class="info-box-icon bg-default"><i class="fas fa-graduation-cap"></i></span>
+
+            <div class="info-box-content">
+              <span class="info-box-text">Diplômes</span>
+              <span class="info-box-number">Total : {{ allDegree }}</span>
+            </div>
+          </a>
+        </div>
+        <div class="col-md-6 col-lg-4 col-xl-3">
+          <a href="{{ path('admin_position') }}" class="info-box">
+            <span class="info-box-icon bg-default"><i class="fas fa-briefcase"></i></span>
+            <div class="info-box-content">
+              <span class="info-box-text">Postes</span>
+              <span class="info-box-number">Total :  {{ positions }}</span>
+            </div>
+          </a>
+        </div>
+        <div class="col-md-6 col-lg-4 col-xl-3">
+          <a href="{{ path('admin_level') }}" class="info-box">
+            <span class="info-box-icon bg-success"><i class="fas fa-layer-group"></i></span>
+            <div class="info-box-content">
+              <span class="info-box-text">Niveau</span>
+              <span class="info-box-number">Total : {{ levels }}</span>
+            </div>
+          </a>
+        </div>
+        <div class="col-md-6 col-lg-4 col-xl-3">
+          <a href="{{ path('admin_skill') }}" class="info-box">
+            <span class="info-box-icon bg-primary"><i class="fas fa-cogs"></i></span>
+            <div class="info-box-content">
+              <span class="info-box-text">Compétences</span>
+              <span class="info-box-number">Total : {{ skills }}</span>
+            </div>
+          </a>
+        </div>
+        <div class="col-md-6 col-lg-4 col-xl-3">
+          <a href="{{ path('admin_civility') }}" class="info-box">
+            <span class="info-box-icon bg-primary"><i class="fas fa-id-card"></i></span>
+            <div class="info-box-content">
+              <span class="info-box-text">Civilité</span>
+              <span class="info-box-number">Total : {{ civilities }}</span>
+            </div>
+          </a>
+        </div>
+        <div class="col-md-6 col-lg-4 col-xl-3">
+          <a href="{{ path('admin_marital_status') }}" class="info-box">
+            <span class="info-box-icon bg-primary"><i class="fas fa-id-card-alt"></i></span>
+            <div class="info-box-content">
+              <span class="info-box-text">État civil</span>
+              <span class="info-box-number">Total : {{ allMaritalStatus }}</span>
+            </div>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+    
+{% endblock %}
+
+{# ---------------------------- JS ---------------------------- #}
+{% block javascripts %}
+  {# ... #}
+{% endblock %}
+

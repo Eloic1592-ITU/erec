@@ -1,0 +1,87 @@
+body {
+  background-image: url(../img/login-bg.jpg);
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  min-height: 100vh;
+  padding: 48px 16px;
+}
+
+input {
+  box-shadow: none !important;
+}
+
+input:focus {
+  background-color: #e9ecef !important;
+  border-color: #ced4da !important;
+}
+
+.col-register,
+.col-login {
+  backdrop-filter: blur(2px);
+}
+
+.col-register {
+  background-color: #12649bee;
+  color: white;
+  border-top-left-radius: 16px;
+  border-top-right-radius: 16px;
+}
+
+.col-register.border {
+  border-bottom-width: 0px !important;
+}
+
+.col-login {
+  background-color: #fcad1bcb;
+  color: white;
+  border-bottom-left-radius: 16px;
+  border-bottom-right-radius: 16px;
+}
+
+.col-login a {
+  color: white;
+  text-decoration: none;
+}
+
+.input-group-text {
+  width: 50px;
+}
+
+/* Modal rest password */
+.modal.fade.show {
+  backdrop-filter: blur(2px);
+}
+
+/* Small devices (landscape phones, 576px and up) */
+@media (min-width: 576px) {
+}
+
+/* Medium devices (tablets, 768px and up) */
+@media (min-width: 768px) {
+}
+
+/* Large devices (desktops, 992px and up) */
+@media (min-width: 992px) {
+  .col-register.border {
+    border-right: none !important;
+    border-bottom-width: 2px !important;
+    border-radius: 0px;
+    border-top-left-radius: 16px;
+    border-bottom-left-radius: 16px;
+  }
+
+  .col-register div:first-child {
+    margin-bottom: 48px;
+  }
+
+  .col-login {
+    border-radius: 0px;
+    border-top-right-radius: 16px;
+    border-bottom-right-radius: 16px;
+  }
+}
+
+/* Extra large devices (large desktops, 1200px and up) */
+@media (min-width: 1200px) {
+}

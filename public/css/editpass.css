@@ -1,0 +1,17 @@
+input {
+  box-shadow: none !important;
+}
+
+input:focus,
+select:focus,
+input[readonly] {
+  background-color: #e9ecef !important;
+  border-color: #ced4da !important;
+}
+
+h1 {
+  font-family: "Roboto-Bold";
+  color: var(--primary-hover);
+  padding-bottom: 16px;
+  margin-bottom: 24px;
+}

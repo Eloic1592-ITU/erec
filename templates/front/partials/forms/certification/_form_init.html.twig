@@ -1,0 +1,189 @@
+{# Yes or No Question ou "yon" #}
+<div class="yon my-4 text-center">
+    <p>Avez-vous des certificats ou des attestations de formation ?</p>
+    <div class="my-4 d-flex align-items-center justify-content-center gap-2">
+        <button type="button" class="show-alert-btn btn btn-outline-danger d-flex align-items-center gap-1">
+            <i class="bx bx-x"></i> Non
+        </button>
+        <button type="button" class="form-items-btn btn btn-outline-primary d-flex align-items-center gap-1">
+            <i class="bx bx-check"></i> Oui
+        </button>
+    </div>
+</div>
+
+{# Message d'alert #}
+{{ include('front/partials/steps/_step_alert_success.html.twig') }}
+
+<div class="form-items">
+    {# Formulaires d'édition pour les certification / Attestation existants #}
+    <div id="certification-forms" class="step-4-forms">
+        {% if certificationForms is empty %}
+        {# ... #}
+        {% else %}
+        <h4 class="border-bottom mt-4 pb-2">Mes Certifications / Attestations enregistrées</h4>
+        {% endif %}
+
+        {% for certificationForm in certificationForms %}
+        <div class="my-4 certification-form">
+            {{ form_start(certificationForm, {
+            'attr': {
+                'id': 'certification-' ~ certificationForm.vars.value.id,
+                'class': 'needs-validation',
+                'novalidate': '',
+            }
+            }) }}
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="mb-3">
+                        {{ form_label(certificationForm.certification) }} <span class="star">*</span>
+                        {{ form_widget(certificationForm.certification) }}
+                        {{ form_errors(certificationForm.certification) }}
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="mb-3">
+                        {{ form_label(certificationForm.certificationFile) }} <span class="star">*</span>
+                        {{ form_widget(certificationForm.certificationFile) }}
+                        {{ form_errors(certificationForm.certificationFile) }}
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="mb-3">
+                        {{ form_label(certificationForm.specialty) }} <span class="star">*</span>
+                        {{ form_widget(certificationForm.specialty) }}
+                        {{ form_errors(certificationForm.specialty) }}
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="mb-3">
+                        {{ form_label(certificationForm.institution) }} <span class="star">*</span>
+                        {{ form_widget(certificationForm.institution) }}
+                        {{ form_errors(certificationForm.institution) }}
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="mb-3">
+                        {{ form_label(certificationForm.certification_year) }} <span class="star">*</span>
+                        {{ form_widget(certificationForm.certification_year) }}
+                        {{ form_errors(certificationForm.certification_year) }}
+                    </div>
+                </div>
+            </div>
+            
+            <div class="d-flex justify-content-between">
+                <button 
+                type="submit" 
+                class="btn btn-primary d-flex align-items-center gap-1"
+                >
+                <i class="bx bx-edit"></i> 
+                <span class="d-none d-lg-flex">Mettre à jour cette certification / attestation</span>
+                </button>
+                <button 
+                type="button" 
+                class="btn btn-danger d-flex align-items-center gap-1 delete-certification" 
+                data-id="{{ certificationForm.vars.value.id }}" 
+                data-url="{{ path('app_certification_delete', {'id': certificationForm.vars.value.id}) }}"
+                >
+                <i class="bx bx-trash"></i> <span class="d-none d-lg-flex">Supprimer cette certification / attestation</span>
+                </button>
+            </div>
+            {{ form_end(certificationForm) }}
+        </div>
+        {% endfor %}
+    </div>
+
+    <div class="d-flex justify-content-center">
+        <button 
+            id="remove-all-certifications-form" 
+            type="button" 
+            class="remove-all-form btn btn-outline-danger d-flex align-items-center gap-1"
+            data-url="{{ path('app_certifications_delete_all') }}"
+        >
+            <i class="bx bx-x"></i> <span class="">Supprimer tous les certificats / attestations</span>
+        </button>
+    </div>
+
+    {# Formulaire pour ajouter une nouvelle certification / Attestation #}
+    <div class="new-certification-form">
+        <h4 class="border-bottom mt-4 pb-2">Ajouter une certification / attestation</h4>
+
+        <p>Veuillez renseigner <b>au plus</b> vos <b>3</b> certificats et/ou attestations les plus pertinents.</p>
+        
+        {{ form_start(newCertificationForm, {
+        'attr': {
+            'id': 'certification-new', 
+            'class': 'needs-validation',
+            'novalidate': '',
+        }
+        }) }}
+            
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="mb-3">
+                    {{ form_label(newCertificationForm.certification) }} <span class="star">*</span>
+                    {{ form_widget(newCertificationForm.certification) }}
+                    {{ form_errors(newCertificationForm.certification) }}
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="mb-3">
+                    {{ form_label(newCertificationForm.certificationFile) }} <span class="star">*</span>
+                    {{ form_widget(newCertificationForm.certificationFile) }}
+                    {{ form_errors(newCertificationForm.certificationFile) }}
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="mb-3">
+                    {{ form_label(newCertificationForm.specialty) }} <span class="star">*</span>
+                    {{ form_widget(newCertificationForm.specialty) }}
+                    {{ form_errors(newCertificationForm.specialty) }}
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="mb-3">
+                    {{ form_label(newCertificationForm.institution) }} <span class="star">*</span>
+                    {{ form_widget(newCertificationForm.institution) }}
+                    {{ form_errors(newCertificationForm.institution) }}
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="mb-3">
+                    {{ form_label(newCertificationForm.certification_year) }} <span class="star">*</span>
+                    {{ form_widget(newCertificationForm.certification_year) }}
+                    {{ form_errors(newCertificationForm.certification_year) }}
+                </div>
+            </div>
+        </div>
+        
+        <div class="d-flex justify-content-end">
+            <button id="certification-new-submit" type="submit" class="add-form btn btn-primary d-flex align-items-center gap-1">
+                <i class="bx bx-plus"></i> <span class="">Ajouter un certificat / une attestation</span>
+            </button>
+
+            <button id="certification-new-loader" class="btn btn-primary d-none" type="button" disabled>
+                <span class="spinner-border spinner-border-sm" aria-hidden="true"></span>
+                <span role="status">Enregistrement...</span>
+            </button>
+        </div>
+        
+        {{ form_end(newCertificationForm) }}
+    </div>
+</div>

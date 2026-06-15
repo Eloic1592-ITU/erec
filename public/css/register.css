@@ -1,0 +1,182 @@
+body {
+  background-color: #e6eef7;
+}
+
+input {
+  box-shadow: none !important;
+}
+
+input:focus,
+select:focus,
+input[readonly] {
+  background-color: #e9ecef !important;
+  border-color: #ced4da !important;
+}
+
+main {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+
+.position-relative {
+  position: relative;
+}
+
+.logo {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.blob {
+  display: none;
+  z-index: -100;
+  width: 600px;
+  height: 600px;
+  background-color: #1c3e5b;
+  border-radius: 50px;
+  position: absolute;
+  top: -350px;
+  left: -250px;
+  rotate: 60deg;
+}
+
+.icone-sm {
+  display: block;
+}
+
+.icone-lg {
+  display: none;
+}
+
+.icone h2 {
+  color: #fff;
+  font-size: 16px;
+}
+
+.icone-sm h2 {
+  color: #12659b;
+}
+
+.icone img {
+  width: 50px;
+}
+
+.come {
+  flex-direction: column;
+  justify-content: end;
+  display: none;
+}
+
+.come h1 {
+  font-family: "Roboto-Bold", sans-serif;
+  color: #fff;
+  letter-spacing: 2px;
+}
+
+.come h1:last-child {
+  color: #fff;
+  font-weight: bold;
+}
+
+.come h1 span {
+  font-family: "Roboto-Bold", sans-serif;
+  color: #d79956;
+}
+
+.title {
+  font-family: "Roboto-Bold", sans-serif;
+  color: #12659b;
+}
+
+.subtitle {
+  color: #737373;
+}
+
+.team-pic {
+  z-index: -1000;
+  width: 60%;
+  position: absolute;
+  top: -10%;
+  right: 15%;
+}
+
+.formulaire {
+  background-color: #f8f9fa;
+  padding: 24px;
+  border: 1px solid #ced4da;
+  border-radius: 16px;
+  margin-bottom: 48px;
+}
+
+.form-label {
+  font-family: "Roboto-Bold", sans-serif;
+  color: #12659b;
+}
+
+.vector-1,
+.vector-2 {
+  z-index: -1000;
+  position: absolute;
+}
+
+.vector-1 {
+  display: none;
+  width: 800px;
+  bottom: 0;
+  left: 0;
+}
+
+.vector-2 {
+  width: 600px;
+  bottom: 0;
+  right: 0;
+}
+
+a.security-link {
+  color: #4298cc;
+}
+
+/* Small devices (landscape phones, 576px and up) */
+@media (min-width: 576px) {
+}
+
+/* Medium devices (tablets, 768px and up) */
+@media (min-width: 768px) {
+}
+
+/* Large devices (desktops, 992px and up) */
+@media (min-width: 992px) {
+  .formulaire {
+    margin-bottom: 0px;
+  }
+
+  .come {
+    display: flex;
+  }
+
+  .icone-sm {
+    display: none;
+  }
+
+  .icone-lg {
+    display: block;
+  }
+
+  .blob {
+    display: block;
+  }
+
+  .vector-1 {
+    display: block;
+  }
+}
+
+/* Extra large devices (large desktops, 1200px and up) */
+@media (min-width: 1200px) {
+  .container {
+    max-width: 1600px;
+  }
+}

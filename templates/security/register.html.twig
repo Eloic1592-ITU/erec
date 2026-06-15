@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- x-icon -->
+    <link rel="icon" href="{{ asset('img/logo-bcm.png') }}" type="image/x-icon" />
+
+    <title>BFM | e-recrutement | Inscription</title>
+
+    <link rel="stylesheet" href="{{ asset('vendor/font-awesome/css/all.min.css') }}" />
+    <link rel="stylesheet" href="{{ asset('vendor/bootstrap/css/bootstrap.min.css') }}" />
+    <link rel="stylesheet" href="{{ asset('css/index.css') }}" />
+    <link rel="stylesheet" href="{{ asset('css/customSweetalert.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/register.css') }}" />
+    <link rel="stylesheet" href="{{ asset('css/position.css') }}" />
+    <link rel="stylesheet" href="{{ asset('css/loader.css') }}" />
+  </head>
+  <body>
+
+    {{ include('partials/_loader.html.twig') }}
+
+    <main>
+      <img class="vector-1" src="{{ asset('img/Polygon 1.png') }}" alt="poly-1" />
+      <img class="vector-2" src="{{ asset('img/Polygon 2.png') }}" alt="poly-2" />
+      <div class="logo">
+        <div class="text-center p-5 icone icone-lg">
+          <img class="mb-2" src="{{ asset('img/logo-bcm.png') }}" alt="bfm" />
+          <h2 class="text-uppercase">Banky Foiben'i Madagasikara</h2>
+        </div>
+        <div class="blob"></div>
+      </div>
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-7 come position-relative">
+            <img
+              class="team-pic"
+              src="{{ asset('img/team_pic.png') }}"
+              alt="team_pic"
+            />
+            <h1>REJOIGNEZ</h1>
+            <h1>NOTRE <span>EQUIPE</span></h1>
+          </div>
+          <div class="col-lg-5">
+            <div class="text-center px-5 py-5 icone icone-sm">
+              <img class="mb-2" src="{{ asset('img/logo-bcm.png') }}" alt="bfm" />
+              <h2 class="text-uppercase">Banky Foiben'i Madagasikara</h2>
+            </div>
+            <h1 class="text-center title">Créer un compte</h1>
+            <p class="text-center mb-4 subtitle">
+              Inscription au poste de : <span class="text-primary">{{ positionName }}</span>
+            </p>
+            <div class="row justify-content-center">
+              <div class="col-lg-10">
+                {{ include('partials/forms/security/_register.html.twig') }}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    {# jQuery v1.11.1 #}
+    <script src="{{ asset('vendor/jquery/jquery.min.js') }}" {{ add_nonce()|raw }}></script>
+
+    {# Bootstrap JS #}
+    <script src="{{ asset('vendor/bootstrap/js/bootstrap.bundle.min.js') }}" {{ add_nonce()|raw }}></script>
+
+    {# jQuery Validation #}
+    <script src="{{ asset('vendor/jquery-validation/jquery.validate.js') }}" {{ add_nonce()|raw }}></script>
+
+    {# jQuery Custom Validation Methods #}
+    <script src="{{ asset('js/customValidationMethods.js') }}" {{ add_nonce()|raw }}></script>
+
+    {# sweetalert2 CDN #}
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11" {{ add_nonce()|raw }}></script>
+
+    {# Custom Alert #}
+    <script src="{{ asset('js/customAlert.js') }}" {{ add_nonce()|raw }}></script>
+
+    {# Registration Srcipt #}
+    <script src="{{ asset('js/registration.js') }}" {{ add_nonce()|raw }}></script>
+
+    {# Show Hide Password #}
+    <script src="{{ asset('js/showHidePassword.js') }}" {{ add_nonce()|raw }}></script>
+
+    {# Submit Button Loader #}
+    <script src="{{ asset('js/submitLoader.js') }}" {{ add_nonce()|raw }}></script>
+
+    {# Full Page Loader #}
+    <script src="{{ asset('js/fullPageLoader.js') }}" {{ add_nonce()|raw }}></script>
+
+    {# jquery inputmask #}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.inputmask/3.3.4/jquery.inputmask.bundle.min.js" {{ add_nonce()|raw }}></script>
+
+    {# Other Custom Scripts #}
+    <script {{ add_nonce()|raw }}>
+      document.addEventListener('DOMContentLoaded', (event) => {
+        {% for label, messages in app.flashes %}
+          {% for message in messages %}
+            showAlert(
+              "",
+              "{{ message|e('js') }}",
+              "{{ label == 'success' ? 'success' : 'error' }}"
+            )
+          {% endfor %}
+        {% endfor %}
+      });
+
+      document.addEventListener("DOMContentLoaded", function() {
+        Inputmask("999 999 999 999").mask(document.querySelector('input[name="registration[cin]"]'));
+      });
+    </script>
+  </body>
+</html>

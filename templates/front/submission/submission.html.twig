@@ -1,0 +1,132 @@
+{# ---------------------------- Layout ---------------------------- #}
+{% extends 'front/layouts/base.html.twig' %}
+
+{# ---------------------------- Title ---------------------------- #}
+{% block title %}
+    Accueil
+{% endblock %}
+
+{# ---------------------------- CSS ---------------------------- #}
+{% block stylesheets %}
+  {# International Telephone Input CDN #}
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/intl-tel-input@23.0.10/build/css/intlTelInput.css">
+
+  {# select2 and select2-bootstrap-4-theme CDN #}
+  <link rel="stylesheet" href="{{ asset('vendor/select2/css/select2.min.css') }}" />
+  <link rel="stylesheet" href="{{ asset('vendor/select2-bootstrap4-theme/select2-bootstrap4.min.css') }}" />
+
+  {# Custom CSS #}
+  <link rel="stylesheet" href="{{ asset('css/navbar.css') }}" />
+  <link rel="stylesheet" href="{{ asset('css/submission.css') }}" />
+  <link rel="stylesheet" href="{{ asset('css/inforecap.css') }}" />
+  <link rel="stylesheet" href="{{ asset('css/multistep.css') }}" />
+  <link rel="stylesheet" href="{{ asset('css/footer.css') }}" />
+
+{% endblock %}
+
+{# ---------------------------- Body ---------------------------- #}
+{% block body %}
+
+    {{ include('front/partials/_navbar.html.twig') }}
+    
+    <main class="flex-shrink-0 pt-5 mb-5">
+      <div class="container pt-5">
+        <div class="p-4 p-lg-5 mb-4 bg-white rounded-4 strong-shadow">
+          <div class="py-3">
+            <h1 class="mt-1 mb-4 mb-lg-5 text-center">Nouvelle candidature</h1>
+            <h5 class="mb-5 pb-4 text-center border-bottom-dashed d-none d-lg-block">Veuillez remplir les champs qui sont marqués obligatoires (<span class="text-danger">*</span>)</h5>
+            <div class="progress px-1">
+              <div
+                class="progress-bar"
+                role="progressbar"
+                style="width: 0%"
+                aria-valuenow="0"
+                aria-valuemin="0"
+                aria-valuemax="100"
+              ></div>
+            </div>
+            <div class="step-container d-none d-lg-flex justify-content-between">
+              <div class="step-circle"><span>1</span></div>
+              <div class="step-circle"><span>2</span></div>
+              <div class="step-circle"><span>3</span></div>
+              <div class="step-circle"><span>4</span></div>
+              <div class="step-circle"><span>5</span></div>
+              <div class="step-circle"><span>6</span></div>
+              <div class="step-circle"><span>7</span></div>
+              <div class="step-circle"><span>8</span></div>
+              <div class="step-circle"><span>9</span></div>
+            </div>
+          </div>
+          <div id="multi-step-form">
+            {{ include('front/partials/steps/_step1.html.twig') }}
+            {{ include('front/partials/steps/_step2.html.twig') }}
+            {{ include('front/partials/steps/_step3.html.twig') }}
+            {{ include('front/partials/steps/_step4.html.twig') }}
+            {{ include('front/partials/steps/_step5.html.twig') }}
+            {{ include('front/partials/steps/_step6.html.twig') }}
+            {{ include('front/partials/steps/_step7.html.twig') }}
+            {{ include('front/partials/steps/_step8.html.twig') }}
+            {{ include('front/partials/steps/_step9.html.twig') }}
+          </div>
+        </div>
+      </div>
+    </main>
+    
+    {{ include('front/partials/_footer.html.twig') }}
+    
+{% endblock %}
+
+{# ---------------------------- JS ---------------------------- #}
+{% block javascripts %}
+  {# jQuery v1.11.1 #}
+  <script src="{{ asset('vendor/jquery/jquery.min.js') }}" {{ add_nonce()|raw }}></script>
+
+  {# jQuery Validation #}
+  <script src="{{ asset('vendor/jquery-validation/jquery.validate.js') }}" {{ add_nonce()|raw }}></script>
+
+  {# jQuery Custom Validation Methods #}
+  <script src="{{ asset('js/customValidationMethods.js') }}" {{ add_nonce()|raw }}></script>
+
+  {# select2 #}
+  <script src="{{ asset('vendor/select2/js/select2.full.min.js') }}" {{ add_nonce()|raw }}></script>
+
+  {# Select2 Init #}
+  <script src="{{ asset('js/select2Init.js') }}" {{ add_nonce()|raw }}></script>
+
+  {# International Telephone Input CDN #}
+  <script src="https://cdn.jsdelivr.net/npm/intl-tel-input@23.0.10/build/js/intlTelInput.min.js" {{ add_nonce()|raw }}></script>
+
+  {# Initiate Int Tel Input #}
+  <script src="{{ asset('js/intlTelInputInit.js') }}" {{ add_nonce()|raw }}></script>
+
+  {# sweetalert2 CDN #}
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11" {{ add_nonce()|raw }}></script>
+
+  {# Custom Alert #}
+  <script src="{{ asset('js/customAlert.js') }}" {{ add_nonce()|raw }}></script>
+
+  {# MultiSetp Init #}
+  <script src="{{ asset('js/multistep.js') }}" {{ add_nonce()|raw }}></script>
+
+  {# Add and Remove Forms #}
+  <script src="{{ asset('js/addRemoveForm.js') }}" {{ add_nonce()|raw }}></script>
+
+  {# EventBus #}
+  <script src="{{ asset('js/eventBus.js') }}" {{ add_nonce()|raw }}></script>
+
+  {# Submit Button Loader #}
+  <script src="{{ asset('js/submitLoader.js') }}" {{ add_nonce()|raw }}></script>
+  
+  {# All Steps Script #}
+  <script src="{{ asset('js/step1.js') }}" {{ add_nonce()|raw }}></script>
+  <script src="{{ asset('js/step2.js') }}" {{ add_nonce()|raw }}></script>
+  <script src="{{ asset('js/step3.js') }}" {{ add_nonce()|raw }}></script>
+  <script src="{{ asset('js/step4.js') }}" {{ add_nonce()|raw }}></script>
+  <script src="{{ asset('js/step5.js') }}" {{ add_nonce()|raw }}></script>
+  <script src="{{ asset('js/step6.js') }}" {{ add_nonce()|raw }}></script>
+  <script src="{{ asset('js/step7.js') }}" {{ add_nonce()|raw }}></script>
+  <script src="{{ asset('js/step8.js') }}" {{ add_nonce()|raw }}></script>
+  <script src="{{ asset('js/step9.js') }}" {{ add_nonce()|raw }}></script>
+  
+{% endblock %}
+

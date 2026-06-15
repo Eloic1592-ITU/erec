@@ -1,0 +1,36 @@
+{# ---------------------------- Layout ---------------------------- #}
+{% extends 'front/layouts/base.html.twig' %}
+
+{# ---------------------------- Title ---------------------------- #}
+{% block title %}
+    Accueil
+{% endblock %}
+
+{# ---------------------------- CSS ---------------------------- #}
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('css/position.css') }}" />
+{% endblock %}
+
+{# ---------------------------- Body ---------------------------- #}
+{% block body %}
+    
+    <div class="positions">
+        <div class="d-flex flex-column gap-2">
+	    {% if app.user is defined and app.user.id is defined and app.user.id is not null %}
+                <h5 class="text-success mb-3 text-center">Veuillez reconfirmer votre choix de poste</h5>
+            {% endif %}
+            {% for position in positions %}  
+                <a class="position" href="{{ url('app_landing', { 'ref': position.getReference() }) }}">
+                    {{ position.getName() }}
+                    <i class='bx bx-right-arrow-alt'></i>
+                </a>   
+            {% endfor %}    
+        </div>
+    </div>
+    
+{% endblock %}
+
+{# ---------------------------- JS ---------------------------- #}
+{% block javascripts %}
+    {# ... #}
+{% endblock %}

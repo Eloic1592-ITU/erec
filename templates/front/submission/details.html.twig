@@ -1,0 +1,183 @@
+{# ---------------------------- Layout ---------------------------- #}
+{% extends 'front/layouts/base.html.twig' %}
+
+{# ---------------------------- Title ---------------------------- #}
+{% block title %}
+    Details
+{% endblock %}
+
+{# ---------------------------- CSS ---------------------------- #}
+{% block stylesheets %}
+  {# International Telephone Input CDN #}
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/intl-tel-input@23.0.10/build/css/intlTelInput.css">
+
+  {# select2 and select2-bootstrap-4-theme CDN #}
+  <link rel="stylesheet" href="{{ asset('vendor/select2/css/select2.min.css') }}" />
+  <link rel="stylesheet" href="{{ asset('vendor/select2-bootstrap4-theme/select2-bootstrap4.min.css') }}" />
+
+  {# Custom CSS #}
+  <link rel="stylesheet" href="{{ asset('css/navbar.css') }}" />
+  <link rel="stylesheet" href="{{ asset('css/submission.css') }}" />
+  <link rel="stylesheet" href="{{ asset('css/inforecap.css') }}" />
+  <link rel="stylesheet" href="{{ asset('css/multistep.css') }}" />
+  <link rel="stylesheet" href="{{ asset('css/footer.css') }}" />
+{% endblock %}
+
+{# ---------------------------- Body ---------------------------- #}
+{% block body %}
+    {{ include('front/partials/_navbar.html.twig') }}
+    
+    <main class="flex-shrink-0 pt-5 mb-5">
+      <div class="container pt-5">
+        <div class="py-4 mb-4 border-bottom-dashed">
+          <h1 class="mt-1">Détails de ma candidature</h1>
+
+          {% if not app.user.hasSubmittedApplication %}
+            <p>
+              Veuillez vérifier le contenu de votre candidature si toutes les informations sont correctes avant de la soumettre.
+            </p>
+          {% endif %}
+
+          <div class="d-flex justify-content-end">
+            <button onclick="divToPrintDetails();" class="btn btn-warning d-flex align-items-center gap-2">
+              <i class='bx bx-printer'></i> <span>Imprimer ma candidature</span>
+            </button>
+          </div>
+
+          <div id="divToPrintDetails" class="d-none">
+            {{ render(controller('App\\Controller\\PdfController::printDetails')) }}
+          </div>
+
+        </div>
+        {% if not app.user.hasSubmittedApplication %}
+          <div class="row mb-4" data-aos="fade-up" data-aos-duration="500" data-aos-easing="ease-in-out" data-aos-once="true">
+            <div class="col-lg-12 d-flex gap-2 justify-content-between">
+              <a href="{{ path('app_submission') }}" class="btn btn-primary d-flex align-items-center gap-2">
+                <i class="bx bx-edit"></i> <span class="d-none d-lg-flex">Modifier ma candidature</span>
+              </a>
+              
+              <a id="submit-application-submit" href="{{ path('submit_application', { 'id': app.user.id }) }}" class="btn btn-success d-flex align-items-center gap-2 submit">
+                <i class="bx bx-envelope"></i> <span class="d-none d-lg-flex">Envoyer ma candidature</span>
+              </a>
+
+              <button id="submit-application-loader" class="btn btn-success d-none" type="button" disabled>
+                <span class="spinner-border spinner-border-sm" aria-hidden="true"></span>
+                <span role="status">Envoie en cours...</span>
+              </button>
+            </div>
+          </div>
+        {% endif %}
+        <div class="row">
+          <div class="col-lg-12">
+              <div class="d-flex flex-column gap-3">
+                {{ include('front/partials/recap/_recap1.html.twig') }}
+                {{ include('front/partials/recap/_recap2.html.twig') }}
+                {{ include('front/partials/recap/_recap3.html.twig') }}
+                {{ include('front/partials/recap/_recap4.html.twig') }}
+                {{ include('front/partials/recap/_recap5.html.twig') }}
+                {{ include('front/partials/recap/_recap6.html.twig') }}
+                {{ include('front/partials/recap/_recap7.html.twig') }}
+                {{ include('front/partials/recap/_recap8.html.twig') }}
+                {{ include('front/partials/recap/_recap9.html.twig') }}
+              </div>
+          </div>
+        </div>
+        {% if not app.user.hasSubmittedApplication %}
+          <div class="row my-4" data-aos="fade-up" data-aos-duration="500" data-aos-easing="ease-in-out" data-aos-once="true">
+            <div class="col-lg-12 d-flex gap-2 justify-content-between">
+              <a href="{{ path('app_submission') }}" class="btn btn-primary d-flex align-items-center gap-2">
+                <i class="bx bx-edit"></i> <span class="d-none d-lg-flex">Modifier ma candidature</span>
+              </a>
+              
+              <a id="submit-application-submit" href="{{ path('submit_application', { 'id': app.user.id }) }}" class="btn btn-success d-flex align-items-center gap-2 submit">
+                <i class="bx bx-envelope"></i> <span class="d-none d-lg-flex">Envoyer ma candidature</span>
+              </a>
+
+              <button id="submit-application-loader" class="btn btn-success d-none" type="button" disabled>
+                <span class="spinner-border spinner-border-sm" aria-hidden="true"></span>
+                <span role="status">Envoie en cours...</span>
+              </button>
+            </div>
+          </div>
+        {% endif %}
+      </div>
+    </main>
+    
+    {{ include('front/partials/_footer.html.twig') }}
+    
+{% endblock %}
+
+{# ---------------------------- JS ---------------------------- #}
+{% block javascripts %}
+  {# jQuery v1.11.1 #}
+  <script src="{{ asset('vendor/jquery/jquery.min.js') }}" {{ add_nonce()|raw }}></script>
+
+  {# jQuery Validation #}
+  <script src="{{ asset('vendor/jquery-validation/jquery.validate.js') }}" {{ add_nonce()|raw }}></script>
+
+  {# jQuery Custom Validation Methods #}
+  <script src="{{ asset('js/customValidationMethods.js') }}" {{ add_nonce()|raw }}></script>
+
+  {# select2 #}
+  <script src="{{ asset('vendor/select2/js/select2.full.min.js') }}" {{ add_nonce()|raw }}></script>
+
+  {# Select2 Init #}
+  <script src="{{ asset('js/select2Init.js') }}" {{ add_nonce()|raw }}></script>
+
+  {# International Telephone Input CDN #}
+  <script src="https://cdn.jsdelivr.net/npm/intl-tel-input@23.0.10/build/js/intlTelInput.min.js" {{ add_nonce()|raw }}></script>
+
+  {# Initiate Int Tel Input #}
+  <script src="{{ asset('js/intlTelInputInit.js') }}" {{ add_nonce()|raw }}></script>
+
+  {# sweetalert2 CDN #}
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11" {{ add_nonce()|raw }}></script>
+
+  {# Custom Alert #}
+  <script src="{{ asset('js/customAlert.js') }}" {{ add_nonce()|raw }}></script>
+
+  {# Submit Button Loader #}
+  <script src="{{ asset('js/submitLoader.js') }}" {{ add_nonce()|raw }}></script>
+
+  {# AOS init #}
+  <script src="{{ asset('js/aosInit.js') }}" {{ add_nonce()|raw }}></script>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', (event) => {
+      $('#submit-application-submit').on('click', function (e) {
+        e.preventDefault();
+        submitLoaderOn("submit-application");
+
+        window.location.href = $(this).attr('href');
+      });
+    });
+  </script>    
+
+  {# Print details Script #}
+  <script>
+    const divToPrintDetails = () => {
+      const divToPrintDetails = document.getElementById('divToPrintDetails');
+      const popupWin = window.open('','_blank');
+      popupWin.document.open();
+      popupWin.document.write(`
+        <html>
+          <head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <link rel="stylesheet" href="{{ asset('vendor/font-awesome/css/all.min.css') }}">
+            <link rel="stylesheet" href="{{ asset('vendor/boxicons/css/boxicons.min.css') }}">
+            <link rel="stylesheet" href="{{ asset('vendor/bootstrap/css/bootstrap.min.css') }}">
+            <link rel="stylesheet" href="{{ asset('css/inforecap.css') }}" />
+            <link rel="stylesheet" href="{{ asset('css/index.css') }}">
+          </head>
+          <body onload="window.print()">
+            ${divToPrintDetails.innerHTML}
+          </body>
+        </html>
+      `);
+      popupWin.document.close();
+    }
+  </script>
+  
+{% endblock %}
+

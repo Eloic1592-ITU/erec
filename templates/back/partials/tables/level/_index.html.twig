@@ -1,0 +1,65 @@
+<table id="data-list" class="table table-striped nowrap" style="width: 100%">
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Nom</th>
+        <th>Statut</th>
+        <th>Actions</th>
+        <th>Détails</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for level in levels %}
+        <tr>
+            <td>{{ level.getId() }}</td>
+            <td>{{ level.getName() }}</td>
+            <td>
+                {% if not level.isDeleted() %}
+                    <span class="badge text-bg-success rounded-pill">Activé</span> 
+                {% else %}
+                    <span class="badge text-bg-danger rounded-pill">Desactivé</span>
+                {% endif %}
+            </td>
+            <td>
+                <div class="d-flex justify-content-end gap-1">
+                    <button 
+                        class="btn-action bg-warning" 
+                        data-bs-toggle="modal" 
+                        data-bs-target="#level-{{ level.getId() }}"
+                    >
+                        <i class="bx bx-edit"></i> 
+                        <span>Modifier</span>
+                    </button>
+
+                    {% if not level.isDeleted() %}
+                        <button 
+                            class="btn-action btn-state bg-danger delete-level"
+                            data-state="désactiver ce niveau" 
+                            data-url="{{ path('admin_level_disable', {'id': level.getId()}) }}"
+                        >
+                            <span>Désactiver</span>
+                        </button>
+                    {% else %}
+                        <button 
+                            class="btn-action btn-state bg-success delete-level"
+                            data-state="réactiver ce niveau" 
+                            data-url="{{ path('admin_level_activate', {'id': level.getId()}) }}"
+                        >
+                            <span>Activer</span>
+                        </button>
+                    {% endif %}
+                </div>
+            </td>
+            <td><a class='btn btn-warning btn-sm bg-warning text-white w-100' href='#'><i class='bx bx-info-circle me-2'></i>Voir plus</a></td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+
+{# Modal for Adding new item #}
+{{ include('back/partials/modals/_newLevel.html.twig') }}
+
+{# Modals for Editing each items #}
+{% for levelForm in levelForms %}
+    {{ include('back/partials/modals/_editLevel.html.twig') }}
+{% endfor %}

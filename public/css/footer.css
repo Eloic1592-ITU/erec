@@ -1,0 +1,69 @@
+footer {
+	font-family: 'Roboto-Light', sans-serif !important;
+	font-size: 14px;
+	letter-spacing: .5px;
+    color: #fff;
+	background-color: #12659b;
+}
+
+footer .col-lg-4:first-child, footer .col-lg-4:last-child {
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
+}
+
+footer h6 {
+	font-family: 'Roboto-Bold', sans-serif !important;
+}
+
+footer span {
+	color: #fcae1b;
+	margin-top: 16px;
+	text-align: center;
+}
+
+footer span a {
+	text-decoration: none;
+	color: #fff;
+}
+
+footer span a:hover {
+	text-decoration: underline;
+}
+
+.faq-link {
+	text-decoration: none;
+	font-size: 24px;
+	color: #fff !important;
+	margin-top: 16px;
+}
+
+/* Small devices (landscape phones, 576px and up) */
+@media (min-width: 576px) {
+}
+
+/* Medium devices (tablets, 768px and up) */
+@media (min-width: 768px) {
+}
+
+/* Large devices (desktops, 992px and up) */
+@media (min-width: 992px) {
+	footer .col-lg-4:first-child {
+		flex-direction: row;
+		justify-content: start;
+	}
+
+	footer .col-lg-4:last-child {
+		flex-direction: column;
+		justify-content: end;
+		align-items: end;
+	}
+	.faq-link {
+		margin-top: 0px;
+	}	
+}
+
+/* Extra large devices (large desktops, 1200px and up) */
+@media (min-width: 1200px) {
+}

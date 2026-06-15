@@ -1,0 +1,43 @@
+#multi-step-form {
+  overflow-x: hidden;
+}
+
+.progress {
+  height: 3px;
+}
+
+.step-container {
+  position: relative;
+  text-align: center;
+  transform: translateY(-43%);
+}
+
+.step-circle {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background-color: #fff;
+  border: 2px solid #e9ecef;
+  line-height: 30px;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 10px;
+}
+
+.progress-bar {
+  background-color: #22c55e !important;
+}
+
+.success {
+  background-color: #22c55e;
+  border-color: #22c55e;
+  color: white;
+}
+
+.active {
+  background-color: #0376fe;
+  border-color: #0376fe;
+  color: white;
+}

@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    
+    <!-- x-icon -->
+    <link rel="icon" href="{{ asset('img/logo-bcm.png') }}" type="image/x-icon" />
+
+    <title>BFM | e-recrutement | Connexion</title>
+    
+    <link rel="stylesheet" href="{{ asset('vendor/boxicons/css/boxicons.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('vendor/font-awesome/css/all.min.css') }}" />
+    <link rel="stylesheet" href="{{ asset('vendor/bootstrap/css/bootstrap.min.css') }}" />
+    <link rel="stylesheet" href="{{ asset('css/index.css') }}" />
+    <link rel="stylesheet" href="{{ asset('css/customSweetalert.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/login.css') }}" />
+    <link rel="stylesheet" href="{{ asset('css/position.css') }}" />
+  </head>
+  <body class="d-flex align-items-center justify-content-center">
+    <main class="d-flex justify-content-center items-center">
+      <div class="container">
+        <div class="row d-none d-lg-flex justify-content-center mb-5">
+          <div class="col-lg-12">
+            <div class="text-center welcome-text">
+              <h2 class="text-primary">
+                Bienvenue sur le site de candidature en ligne de Banky Foiben'i
+                Madagasikara
+              </h2>
+              <h5 class="text-white">
+                Rejoignez notre équipe pour bâtir une Banque Centrale Forte,
+                Moderne et qui contribue au bien-être des citoyens
+              </h5>
+            </div>
+          </div>
+        </div>
+        <div class="row d-flex justify-content-center">
+          <div class="col-lg-4 border border-end border-2 border-white col-register">
+            <div class="d-flex flex-column text-center p-4">
+              <h3>Créer un compte ?</h3>
+              <hr />
+              <p>
+                Vous pouvez vous inscrire directement en cliquant sur le bouton ci-dessous et bénéficier de notre service de recrutement en ligne.
+              </p>
+              {% if refPosition is defined and refPosition %}
+                <a href="{{ path('app_registeration', { 'ref': refPosition })}}" class="btn btn-lg btn-success w-100">S'inscrire maintenant</a>
+              {% else %}
+                <button type="button" class="btn btn-lg btn-success w-100" data-bs-toggle="modal" data-bs-target="#positionsModal">S'inscrire maintenant</button>
+              {% endif %}
+            </div>
+          </div>
+          <div class="col-lg-4 border border-2 border-white col-login">
+            <div class="d-flex flex-column text-center p-4">
+              <h3>Vous avez déjà un compte ?</h3>
+              <hr />
+              <p class="text-start">Connectez-vous à votre compte.</p>
+              {% if app.user %}
+                <div class="mb-3">
+                  You are logged in as {{ app.user.userIdentifier }}, <a href="{{ path('app_logout') }}">Logout</a>
+                </div>
+              {% endif %}
+
+              <form id="login-form" method="post" action="{{ path('app_login') }}">
+                <div class="input-group input-group-lg flex-nowrap mb-3">
+                  <span class="input-group-text" id="emai"><i class="fas fa-user"></i></span>
+                  <input type="email" value="{{ last_username }}" placeholder="Adresse e-mail" name="_username" id="username" class="form-control" autocomplete="email" required autofocus />
+                </div>
+                <div class="input-group input-group-lg flex-nowrap">
+                  <span class="input-group-text" id="mdp"><i class="fas fa-key"></i></span>
+                  <input type="password" placeholder="Mot de passe" name="_password" id="password" class="form-control" autocomplete="current-password" required />
+                  <span class="input-group-text input-group-text-end show-pass"><i class='bx bx-show'></i></span>
+                  <span class="input-group-text input-group-text-end hide-pass d-none"><i class='bx bx-hide'></i></span>
+                </div>
+
+                <input 
+                  type="hidden" 
+                  name="_csrf_token"
+                  value="{{ csrf_token('authenticate') }}"
+                />
+
+                <hr class="mt-4" />
+                <div class="w-100 text-end">
+                  <a class="security-link" href="{{ path('app_forgot_password_request') }}">Mot de passe oublié ?</a>
+                </div>
+                <div class="w-100 text-end">
+                  <button id="login-submit" type="submit" class="btn btn-lg btn-primary mt-3 w-100">
+                    Se connecter
+                  </button>
+
+                  <button id="login-loader" class="d-flex justify-content-center align-items-center gap-2 btn btn-primary btn-lg ms-auto mt-3 w-100 d-none" type="button" disabled>
+                    <span class="spinner-border spinner-border-sm" aria-hidden="true"></span>
+                    <span role="status">connexion en cours...</span>
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    {# Modals #}
+    {{ include('partials/modals/_positions.html.twig') }}
+
+    {# jQuery v1.11.1 #}
+    <script src="{{ asset('vendor/jquery/jquery.min.js') }}" {{ add_nonce()|raw }}></script>
+
+    {# Bootstrap JS #}
+    <script src="{{ asset('vendor/bootstrap/js/bootstrap.bundle.min.js') }}" {{ add_nonce()|raw }}></script>
+
+    {# sweetalert2 CDN #}
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11" {{ add_nonce()|raw }}></script>
+
+    {# Custom Alert #}
+    <script src="{{ asset('js/customAlert.js') }}" {{ add_nonce()|raw }}></script>
+    
+    {# Show Hide Password #}
+    <script src="{{ asset('js/showHidePassword.js') }}" {{ add_nonce()|raw }}></script>
+
+    {# Submit Button Loader #}
+    <script src="{{ asset('js/submitLoader.js') }}" {{ add_nonce()|raw }}></script>
+
+    {# Other Custom Scripts #}
+    <script {{ add_nonce()|raw }}>
+      document.addEventListener('DOMContentLoaded', (event) => {
+        {% for label, messages in app.flashes %}
+          {% for message in messages %}
+            showAlert(
+              "",
+              "{{ message|e('js') }}",
+              "{{ label == 'success' ? 'success' : 'error' }}"
+            )
+          {% endfor %}
+        {% endfor %}
+
+        {% if error %}
+          showAlert(
+            "",
+            "Le l'adresse e-mail ou le mot de passe est incorrect.",
+            "error"
+          )
+        {% endif %}
+
+        // Événement de soumission du formulaire de connexion
+        $('#login-form').on('submit', function() {
+            submitLoaderOn('login');
+        });
+      });
+
+        
+    </script>
+  </body>
+</html>

@@ -1,0 +1,59 @@
+{% set sidebarMenus = {
+  'Utilisateurs': [
+    {'name': 'Utilisateurs', 'link': 'admin_user', 'icon': 'fas fa-users'},
+    {'name': 'Candidats', 'link': 'admin_candidate', 'icon': 'fas fa-user-tie'},
+    {'name': 'Etat', 'link': 'admin_candidate_state', 'icon': 'fas fa-briefcase'}
+  ],
+  'Candidats': [
+    {'name': 'Diplômes', 'link': 'admin_education', 'icon': 'fas fa-graduation-cap'},
+    {'name': 'Certifications', 'link': 'admin_certification', 'icon': 'fas fa-certificate'},
+    {'name': 'Stages', 'link': 'admin_internship', 'icon': 'fas fa-briefcase'},
+    {'name': 'Expériences', 'link': 'admin_experience', 'icon': 'fas fa-briefcase'}
+  ],
+  'Référentiels': [
+    {'name': 'Domaines', 'link': 'admin_field_of_study', 'icon': 'fas fa-code-branch'},
+    {'name': 'Diplômes', 'link': 'admin_degree', 'icon': 'fas fa-graduation-cap'},
+    {'name': 'Postes', 'link': 'admin_position', 'icon': 'fas fa-briefcase'},
+    {'name': 'Niveau', 'link': 'admin_level', 'icon': 'fas fa-layer-group'},
+    {'name': 'Compétences', 'link': 'admin_skill', 'icon': 'fas fa-cogs'},
+    {'name': 'Civilité', 'link': 'admin_civility', 'icon': 'fas fa-id-card'},
+    {'name': 'Situations familiales', 'link': 'admin_marital_status', 'icon': 'fas fa-id-card-alt'}
+  ]
+} %}
+
+<aside class="sidebar d-none d-lg-flex flex-column flex-shrink-0">
+  {% set currentRoute = app.request.get('_route') %}
+  <a href="{{ path('admin_dashboard') }}" class="brand-link border-bottom">
+    <img src="{{asset('img/logo-bcm.png')}}" alt="logo" width="24" />
+    <span>e-recrutement</span>
+  </a>
+  <ul class="nav nav-pills flex-column mb-auto p-2">
+
+    <li class="nav-item pb-2 mb-2 border-bottom">
+      <a class="nav-link user-panel {{ currentRoute is same as('app_user_edit_profile') ? 'active' : ''  }}" href="{{ path('app_user_edit_profile', {id: app.user.id}) }}">
+        <div class="pic ms-0"><i class="fas fa-user text-white"></i></div>
+        {{ app.user.getFirstName() }}
+      </a>
+    </li>
+
+    <li class="nav-item pb-2 mb-2 border-bottom">
+      <a class="nav-link {{ currentRoute is same as('admin_dashboard') ? 'active' : ''  }}" href="{{ path('admin_dashboard') }}">
+        <i class="nav-icon fas fa-tachometer-alt"></i>
+        Tableau de bord
+      </a>
+    </li>
+
+    {% for category, items in sidebarMenus %}
+      <li class="nav-header {% if loop.index > 1 %}border-top{% endif %}">{{ category }}</li>
+      {% for item in items %}
+        <li>
+          <a class="nav-link {{ currentRoute is same as(item.link) ? 'active' : ''  }}" href="{{ path(item.link) }}">
+            <i class="nav-icon {{ item.icon }}"></i>
+            {{ item.name }}
+          </a>
+        </li>
+      {% endfor %}
+    {% endfor %}
+    
+  </ul>
+</aside>

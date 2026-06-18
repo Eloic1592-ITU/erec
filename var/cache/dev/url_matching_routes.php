@@ -15,6 +15,8 @@ return [
         '/_profiler/xdebug' => [[['_route' => '_profiler_xdebug', '_controller' => 'web_profiler.controller.profiler::xdebugAction'], null, null, null, false, false, null]],
         '/_profiler/open' => [[['_route' => '_profiler_open_file', '_controller' => 'web_profiler.controller.profiler::openAction'], null, null, null, false, false, null]],
         '/admin' => [[['_route' => 'admin_dashboard', '_controller' => 'App\\Controller\\Back\\BackController::indexDashboard'], null, ['GET' => 0], null, true, false, null]],
+        '/admin/campaign' => [[['_route' => 'admin_campaign', '_controller' => 'App\\Controller\\Back\\CampaignController::index'], null, ['GET' => 0, 'POST' => 1, 'DELETE' => 2], null, true, false, null]],
+        '/admin/campaign/new' => [[['_route' => 'admin_campaign_new', '_controller' => 'App\\Controller\\Back\\CampaignController::new'], null, ['GET' => 0, 'POST' => 1], null, false, false, null]],
         '/admin/candidats' => [[['_route' => 'admin_candidate', '_controller' => 'App\\Controller\\Back\\CandidateController::indexCandidate'], null, ['GET' => 0], null, true, false, null]],
         '/admin/certifications' => [[['_route' => 'admin_certification', '_controller' => 'App\\Controller\\Back\\CertificationController::indexCertification'], null, ['GET' => 0], null, true, false, null]],
         '/admin/civilité' => [[['_route' => 'admin_civility', '_controller' => 'App\\Controller\\Back\\CivilityController::index'], null, ['GET' => 0, 'POST' => 1, 'DELETE' => 2], null, true, false, null]],
@@ -83,101 +85,111 @@ return [
                 .'|/a(?'
                     .'|dmin/(?'
                         .'|c(?'
-                            .'|andidats/(?'
-                                .'|e(?'
-                                    .'|tudes/([^/]++)(*:249)'
-                                    .'|xperiences/([^/]++)(*:276)'
+                            .'|a(?'
+                                .'|mpaign/(?'
+                                    .'|([^/]++)(?'
+                                        .'|(*:244)'
+                                        .'|/edit(*:257)'
+                                    .')'
+                                    .'|desactiver/([^/]++)(*:285)'
+                                    .'|activer/([^/]++)(*:309)'
                                 .')'
-                                .'|c(?'
-                                    .'|ertifications/([^/]++)(*:311)'
-                                    .'|ompétences/([^/]++)(*:339)'
+                                .'|ndidats/(?'
+                                    .'|e(?'
+                                        .'|tudes/([^/]++)(*:347)'
+                                        .'|xperiences/([^/]++)(*:374)'
+                                    .')'
+                                    .'|c(?'
+                                        .'|ertifications/([^/]++)(*:409)'
+                                        .'|ompétences/([^/]++)(*:437)'
+                                    .')'
+                                    .'|stages/([^/]++)(*:461)'
                                 .')'
-                                .'|stages/([^/]++)(*:363)'
                             .')'
                             .'|ivilité/(?'
-                                .'|editer/([^/]++)(*:399)'
-                                .'|desactiver/([^/]++)(*:426)'
-                                .'|activer/([^/]++)(*:450)'
+                                .'|editer/([^/]++)(*:498)'
+                                .'|desactiver/([^/]++)(*:525)'
+                                .'|activer/([^/]++)(*:549)'
                             .')'
                             .'|ompétence/(?'
-                                .'|editer/([^/]++)(*:488)'
-                                .'|desactiver/([^/]++)(*:515)'
-                                .'|activer/([^/]++)(*:539)'
+                                .'|editer/([^/]++)(*:587)'
+                                .'|desactiver/([^/]++)(*:614)'
+                                .'|activer/([^/]++)(*:638)'
                             .')'
                         .')'
                         .'|d(?'
                             .'|iplôme/(?'
-                                .'|editer/([^/]++)(*:579)'
-                                .'|desactiver/([^/]++)(*:606)'
-                                .'|activer/([^/]++)(*:630)'
+                                .'|editer/([^/]++)(*:678)'
+                                .'|desactiver/([^/]++)(*:705)'
+                                .'|activer/([^/]++)(*:729)'
                             .')'
                             .'|omaines/(?'
-                                .'|editer/([^/]++)(*:665)'
-                                .'|desactiver/([^/]++)(*:692)'
-                                .'|activer/([^/]++)(*:716)'
+                                .'|editer/([^/]++)(*:764)'
+                                .'|desactiver/([^/]++)(*:791)'
+                                .'|activer/([^/]++)(*:815)'
                             .')'
                         .')'
                         .'|niveau/(?'
-                            .'|editer/([^/]++)(*:751)'
-                            .'|desactiver/([^/]++)(*:778)'
-                            .'|activer/([^/]++)(*:802)'
+                            .'|editer/([^/]++)(*:850)'
+                            .'|desactiver/([^/]++)(*:877)'
+                            .'|activer/([^/]++)(*:901)'
                         .')'
                         .'|état\\-civil/(?'
-                            .'|editer/([^/]++)(*:842)'
-                            .'|desactiver/([^/]++)(*:869)'
-                            .'|activer/([^/]++)(*:893)'
+                            .'|editer/([^/]++)(*:941)'
+                            .'|desactiver/([^/]++)(*:968)'
+                            .'|activer/([^/]++)(*:992)'
                         .')'
                         .'|poste/(?'
-                            .'|editer/([^/]++)(*:926)'
-                            .'|desactiver/([^/]++)(*:953)'
-                            .'|activer/([^/]++)(*:977)'
+                            .'|editer/([^/]++)(*:1025)'
+                            .'|desactiver/([^/]++)(*:1053)'
+                            .'|activer/([^/]++)(*:1078)'
                         .')'
-                        .'|etat/export/([^/]++)(*:1006)'
+                        .'|etat/export/([^/]++)(*:1108)'
                         .'|utilisateurs/(?'
-                            .'|nouveau/([^/]++)(*:1047)'
-                            .'|desactiver/([^/]++)(*:1075)'
-                            .'|activer/([^/]++)(*:1100)'
+                            .'|nouveau/([^/]++)(*:1149)'
+                            .'|desactiver/([^/]++)(*:1177)'
+                            .'|activer/([^/]++)(*:1202)'
                         .')'
                     .')'
-                    .'|ccueil/([^/]++)(*:1126)'
-                    .'|utres/editer/([^/]++)(*:1156)'
+                    .'|ccueil/([^/]++)(*:1228)'
+                    .'|utres/editer/([^/]++)(*:1258)'
                 .')'
                 .'|/c(?'
                     .'|ertification/(?'
-                        .'|editer/([^/]++)(*:1202)'
-                        .'|supprimer/([^/]++)(*:1229)'
+                        .'|editer/([^/]++)(*:1304)'
+                        .'|supprimer/([^/]++)(*:1331)'
                     .')'
-                    .'|onnexion/([^/]++)(*:1256)'
+                    .'|onnexion/([^/]++)(*:1358)'
                 .')'
                 .'|/d(?'
-                    .'|ocument/editer/([^/]++)(*:1294)'
+                    .'|ocument/editer/([^/]++)(*:1396)'
                     .'|iplome/(?'
-                        .'|editer/([^/]++)(*:1328)'
-                        .'|supprimer/([^/]++)(*:1355)'
+                        .'|editer/([^/]++)(*:1430)'
+                        .'|supprimer/([^/]++)(*:1457)'
                     .')'
                 .')'
                 .'|/e(?'
-                    .'|ngagement/editer/([^/]++)(*:1396)'
+                    .'|ngagement/editer/([^/]++)(*:1498)'
                     .'|xperience/(?'
-                        .'|editer/([^/]++)(*:1433)'
-                        .'|supprimer/([^/]++)(*:1460)'
+                        .'|editer/([^/]++)(*:1535)'
+                        .'|supprimer/([^/]++)(*:1562)'
                     .')'
                 .')'
                 .'|/utilisateur/e(?'
-                    .'|nvoie\\-candidature/([^/]++)(*:1515)'
+                    .'|nvoie\\-candidature/([^/]++)(*:1617)'
                     .'|dition/(?'
-                        .'|profil/([^/]++)(*:1549)'
-                        .'|mot\\-de\\-passe/([^/]++)(*:1581)'
+                        .'|profil/([^/]++)(*:1651)'
+                        .'|mot\\-de\\-passe/([^/]++)(*:1683)'
                     .')'
                 .')'
                 .'|/stage/(?'
-                    .'|editer/([^/]++)(*:1617)'
-                    .'|supprimer/([^/]++)(*:1644)'
+                    .'|editer/([^/]++)(*:1719)'
+                    .'|supprimer/([^/]++)(*:1746)'
                 .')'
-                .'|/job/editer/([^/]++)(*:1674)'
-                .'|/profil/editer/([^/]++)(*:1706)'
-                .'|/inscription/([^/]++)(*:1736)'
-                .'|/reinitialiser\\-mot\\-de\\-passe/([^/]++)(*:1784)'
+                .'|/job/editer/([^/]++)(*:1776)'
+                .'|/profil/editer/([^/]++)(*:1808)'
+                .'|/inscription/([^/]++)(*:1838)'
+                .'|/reinitialiser\\-mot\\-de\\-passe/([^/]++)(*:1886)'
             .')/?$}sDu',
     ],
     [ // $dynamicRoutes
@@ -189,56 +201,60 @@ return [
         168 => [[['_route' => '_profiler_exception', '_controller' => 'web_profiler.controller.exception_panel::body'], ['token'], null, null, false, false, null]],
         181 => [[['_route' => '_profiler_exception_css', '_controller' => 'web_profiler.controller.exception_panel::stylesheet'], ['token'], null, null, false, false, null]],
         191 => [[['_route' => '_profiler', '_controller' => 'web_profiler.controller.profiler::panelAction'], ['token'], null, null, false, true, null]],
-        249 => [[['_route' => 'admin_candidate_education', '_controller' => 'App\\Controller\\Back\\CandidateController::candidateEducation'], ['id'], ['GET' => 0], null, false, true, null]],
-        276 => [[['_route' => 'admin_candidate_experience', '_controller' => 'App\\Controller\\Back\\CandidateController::candidateWorkExperience'], ['id'], ['GET' => 0], null, false, true, null]],
-        311 => [[['_route' => 'admin_candidate_certification', '_controller' => 'App\\Controller\\Back\\CandidateController::candidateCertification'], ['id'], ['GET' => 0], null, false, true, null]],
-        339 => [[['_route' => 'admin_candidate_skill', '_controller' => 'App\\Controller\\Back\\CandidateController::candidateSkill'], ['id'], ['GET' => 0], null, false, true, null]],
-        363 => [[['_route' => 'admin_candidate_internship', '_controller' => 'App\\Controller\\Back\\CandidateController::candidateInternship'], ['id'], ['GET' => 0], null, false, true, null]],
-        399 => [[['_route' => 'admin_civility_edit', '_controller' => 'App\\Controller\\Back\\CivilityController::edit'], ['id'], ['GET' => 0, 'POST' => 1], null, false, true, null]],
-        426 => [[['_route' => 'admin_civility_disable', '_controller' => 'App\\Controller\\Back\\CivilityController::disable'], ['id'], ['POST' => 0], null, false, true, null]],
-        450 => [[['_route' => 'admin_civility_activate', '_controller' => 'App\\Controller\\Back\\CivilityController::activate'], ['id'], ['POST' => 0], null, false, true, null]],
-        488 => [[['_route' => 'admin_skill_edit', '_controller' => 'App\\Controller\\Back\\SkillController::edit'], ['id'], ['GET' => 0, 'POST' => 1], null, false, true, null]],
-        515 => [[['_route' => 'admin_skill_disable', '_controller' => 'App\\Controller\\Back\\SkillController::disable'], ['id'], ['POST' => 0], null, false, true, null]],
-        539 => [[['_route' => 'admin_skill_activate', '_controller' => 'App\\Controller\\Back\\SkillController::activate'], ['id'], ['POST' => 0], null, false, true, null]],
-        579 => [[['_route' => 'admin_degree_edit', '_controller' => 'App\\Controller\\Back\\DegreeController::edit'], ['id'], ['GET' => 0, 'POST' => 1], null, false, true, null]],
-        606 => [[['_route' => 'admin_degree_disable', '_controller' => 'App\\Controller\\Back\\DegreeController::disable'], ['id'], ['POST' => 0], null, false, true, null]],
-        630 => [[['_route' => 'admin_degree_activate', '_controller' => 'App\\Controller\\Back\\DegreeController::activate'], ['id'], ['POST' => 0], null, false, true, null]],
-        665 => [[['_route' => 'admin_field_of_study_edit', '_controller' => 'App\\Controller\\Back\\FieldOfStudyController::edit'], ['id'], ['GET' => 0, 'POST' => 1], null, false, true, null]],
-        692 => [[['_route' => 'admin_field_of_study_disable', '_controller' => 'App\\Controller\\Back\\FieldOfStudyController::disable'], ['id'], ['POST' => 0], null, false, true, null]],
-        716 => [[['_route' => 'admin_field_of_study_activate', '_controller' => 'App\\Controller\\Back\\FieldOfStudyController::activate'], ['id'], ['POST' => 0], null, false, true, null]],
-        751 => [[['_route' => 'admin_level_edit', '_controller' => 'App\\Controller\\Back\\LevelController::edit'], ['id'], ['GET' => 0, 'POST' => 1], null, false, true, null]],
-        778 => [[['_route' => 'admin_level_disable', '_controller' => 'App\\Controller\\Back\\LevelController::disable'], ['id'], ['POST' => 0], null, false, true, null]],
-        802 => [[['_route' => 'admin_level_activate', '_controller' => 'App\\Controller\\Back\\LevelController::activate'], ['id'], ['POST' => 0], null, false, true, null]],
-        842 => [[['_route' => 'admin_marital_status_edit', '_controller' => 'App\\Controller\\Back\\MaritalStatusController::edit'], ['id'], ['GET' => 0, 'POST' => 1], null, false, true, null]],
-        869 => [[['_route' => 'admin_marital_status_disable', '_controller' => 'App\\Controller\\Back\\MaritalStatusController::disable'], ['id'], ['POST' => 0], null, false, true, null]],
-        893 => [[['_route' => 'admin_marital_status_activate', '_controller' => 'App\\Controller\\Back\\MaritalStatusController::activate'], ['id'], ['POST' => 0], null, false, true, null]],
-        926 => [[['_route' => 'admin_position_edit', '_controller' => 'App\\Controller\\Back\\PositionController::edit'], ['id'], ['GET' => 0, 'POST' => 1], null, false, true, null]],
-        953 => [[['_route' => 'admin_position_disable', '_controller' => 'App\\Controller\\Back\\PositionController::disable'], ['id'], ['POST' => 0], null, false, true, null]],
-        977 => [[['_route' => 'admin_position_activate', '_controller' => 'App\\Controller\\Back\\PositionController::activate'], ['id'], ['POST' => 0], null, false, true, null]],
-        1006 => [[['_route' => 'admin_candidate_state_export', '_controller' => 'App\\Controller\\Back\\StateController::export'], ['id'], ['GET' => 0], null, false, true, null]],
-        1047 => [[['_route' => 'admin_user_new', '_controller' => 'App\\Controller\\Back\\UserController::new'], ['ref'], ['GET' => 0, 'POST' => 1], null, false, true, null]],
-        1075 => [[['_route' => 'admin_user_disable', '_controller' => 'App\\Controller\\Back\\UserController::disable'], ['id'], ['POST' => 0], null, false, true, null]],
-        1100 => [[['_route' => 'admin_user_activate', '_controller' => 'App\\Controller\\Back\\UserController::activate'], ['id'], ['POST' => 0], null, false, true, null]],
-        1126 => [[['_route' => 'app_landing', '_controller' => 'App\\Controller\\Front\\FrontController::landing'], ['ref'], ['GET' => 0], null, false, true, null]],
-        1156 => [[['_route' => 'app_other_info_edit', '_controller' => 'App\\Controller\\Front\\OtherInfoController::edit'], ['id'], ['POST' => 0], null, false, true, null]],
-        1202 => [[['_route' => 'app_certification_edit', '_controller' => 'App\\Controller\\Front\\CertificationController::edit'], ['id'], ['POST' => 0], null, false, true, null]],
-        1229 => [[['_route' => 'app_certification_delete', '_controller' => 'App\\Controller\\Front\\CertificationController::delete'], ['id'], ['DELETE' => 0], null, false, true, null]],
-        1256 => [[['_route' => 'app_first_login', '_controller' => 'App\\Controller\\SecurityController::firstLogin'], ['ref'], null, null, false, true, null]],
-        1294 => [[['_route' => 'app_document_edit', '_controller' => 'App\\Controller\\Front\\DocumentController::edit'], ['id'], ['POST' => 0], null, false, true, null]],
-        1328 => [[['_route' => 'app_education_edit', '_controller' => 'App\\Controller\\Front\\EducationController::edit'], ['id'], ['POST' => 0], null, false, true, null]],
-        1355 => [[['_route' => 'app_education_delete', '_controller' => 'App\\Controller\\Front\\EducationController::delete'], ['id'], ['DELETE' => 0], null, false, true, null]],
-        1396 => [[['_route' => 'app_engagement_edit', '_controller' => 'App\\Controller\\Front\\EngagementController::edit'], ['id'], ['POST' => 0], null, false, true, null]],
-        1433 => [[['_route' => 'app_work_experience_edit', '_controller' => 'App\\Controller\\Front\\WorkExperienceController::edit'], ['id'], ['POST' => 0], null, false, true, null]],
-        1460 => [[['_route' => 'app_work_experience_delete', '_controller' => 'App\\Controller\\Front\\WorkExperienceController::delete'], ['id'], ['DELETE' => 0], null, false, true, null]],
-        1515 => [[['_route' => 'submit_application', '_controller' => 'App\\Controller\\Front\\FrontController::submitApplication'], ['id'], ['POST' => 0, 'GET' => 1], null, false, true, null]],
-        1549 => [[['_route' => 'app_user_edit_profile', '_controller' => 'App\\Controller\\UserController::editProfile'], ['id'], ['GET' => 0, 'POST' => 1], null, false, true, null]],
-        1581 => [[['_route' => 'app_user_edit_password', '_controller' => 'App\\Controller\\UserController::editPassword'], ['id'], ['GET' => 0, 'POST' => 1], null, false, true, null]],
-        1617 => [[['_route' => 'app_internship_edit', '_controller' => 'App\\Controller\\Front\\InternshipController::edit'], ['id'], ['POST' => 0], null, false, true, null]],
-        1644 => [[['_route' => 'app_internship_delete', '_controller' => 'App\\Controller\\Front\\InternshipController::delete'], ['id'], ['DELETE' => 0], null, false, true, null]],
-        1674 => [[['_route' => 'app_job_application_edit', '_controller' => 'App\\Controller\\Front\\JobApplicationController::edit'], ['id'], ['POST' => 0], null, false, true, null]],
-        1706 => [[['_route' => 'app_profile_edit', '_controller' => 'App\\Controller\\Front\\ProfileController::edit'], ['id'], ['POST' => 0], null, false, true, null]],
-        1736 => [[['_route' => 'app_registeration', '_controller' => 'App\\Controller\\SecurityController::registeration'], ['ref'], ['GET' => 0, 'POST' => 1], null, false, true, null]],
-        1784 => [
+        244 => [[['_route' => 'admin_campaign_show', '_controller' => 'App\\Controller\\Back\\CampaignController::show'], ['id'], ['GET' => 0], null, false, true, null]],
+        257 => [[['_route' => 'admin_campaign_edit', '_controller' => 'App\\Controller\\Back\\CampaignController::edit'], ['id'], ['GET' => 0, 'POST' => 1], null, false, false, null]],
+        285 => [[['_route' => 'admin_campaign_disable', '_controller' => 'App\\Controller\\Back\\CampaignController::disable'], ['id'], ['POST' => 0], null, false, true, null]],
+        309 => [[['_route' => 'admin_campaign_activate', '_controller' => 'App\\Controller\\Back\\CampaignController::activate'], ['id'], ['POST' => 0], null, false, true, null]],
+        347 => [[['_route' => 'admin_candidate_education', '_controller' => 'App\\Controller\\Back\\CandidateController::candidateEducation'], ['id'], ['GET' => 0], null, false, true, null]],
+        374 => [[['_route' => 'admin_candidate_experience', '_controller' => 'App\\Controller\\Back\\CandidateController::candidateWorkExperience'], ['id'], ['GET' => 0], null, false, true, null]],
+        409 => [[['_route' => 'admin_candidate_certification', '_controller' => 'App\\Controller\\Back\\CandidateController::candidateCertification'], ['id'], ['GET' => 0], null, false, true, null]],
+        437 => [[['_route' => 'admin_candidate_skill', '_controller' => 'App\\Controller\\Back\\CandidateController::candidateSkill'], ['id'], ['GET' => 0], null, false, true, null]],
+        461 => [[['_route' => 'admin_candidate_internship', '_controller' => 'App\\Controller\\Back\\CandidateController::candidateInternship'], ['id'], ['GET' => 0], null, false, true, null]],
+        498 => [[['_route' => 'admin_civility_edit', '_controller' => 'App\\Controller\\Back\\CivilityController::edit'], ['id'], ['GET' => 0, 'POST' => 1], null, false, true, null]],
+        525 => [[['_route' => 'admin_civility_disable', '_controller' => 'App\\Controller\\Back\\CivilityController::disable'], ['id'], ['POST' => 0], null, false, true, null]],
+        549 => [[['_route' => 'admin_civility_activate', '_controller' => 'App\\Controller\\Back\\CivilityController::activate'], ['id'], ['POST' => 0], null, false, true, null]],
+        587 => [[['_route' => 'admin_skill_edit', '_controller' => 'App\\Controller\\Back\\SkillController::edit'], ['id'], ['GET' => 0, 'POST' => 1], null, false, true, null]],
+        614 => [[['_route' => 'admin_skill_disable', '_controller' => 'App\\Controller\\Back\\SkillController::disable'], ['id'], ['POST' => 0], null, false, true, null]],
+        638 => [[['_route' => 'admin_skill_activate', '_controller' => 'App\\Controller\\Back\\SkillController::activate'], ['id'], ['POST' => 0], null, false, true, null]],
+        678 => [[['_route' => 'admin_degree_edit', '_controller' => 'App\\Controller\\Back\\DegreeController::edit'], ['id'], ['GET' => 0, 'POST' => 1], null, false, true, null]],
+        705 => [[['_route' => 'admin_degree_disable', '_controller' => 'App\\Controller\\Back\\DegreeController::disable'], ['id'], ['POST' => 0], null, false, true, null]],
+        729 => [[['_route' => 'admin_degree_activate', '_controller' => 'App\\Controller\\Back\\DegreeController::activate'], ['id'], ['POST' => 0], null, false, true, null]],
+        764 => [[['_route' => 'admin_field_of_study_edit', '_controller' => 'App\\Controller\\Back\\FieldOfStudyController::edit'], ['id'], ['GET' => 0, 'POST' => 1], null, false, true, null]],
+        791 => [[['_route' => 'admin_field_of_study_disable', '_controller' => 'App\\Controller\\Back\\FieldOfStudyController::disable'], ['id'], ['POST' => 0], null, false, true, null]],
+        815 => [[['_route' => 'admin_field_of_study_activate', '_controller' => 'App\\Controller\\Back\\FieldOfStudyController::activate'], ['id'], ['POST' => 0], null, false, true, null]],
+        850 => [[['_route' => 'admin_level_edit', '_controller' => 'App\\Controller\\Back\\LevelController::edit'], ['id'], ['GET' => 0, 'POST' => 1], null, false, true, null]],
+        877 => [[['_route' => 'admin_level_disable', '_controller' => 'App\\Controller\\Back\\LevelController::disable'], ['id'], ['POST' => 0], null, false, true, null]],
+        901 => [[['_route' => 'admin_level_activate', '_controller' => 'App\\Controller\\Back\\LevelController::activate'], ['id'], ['POST' => 0], null, false, true, null]],
+        941 => [[['_route' => 'admin_marital_status_edit', '_controller' => 'App\\Controller\\Back\\MaritalStatusController::edit'], ['id'], ['GET' => 0, 'POST' => 1], null, false, true, null]],
+        968 => [[['_route' => 'admin_marital_status_disable', '_controller' => 'App\\Controller\\Back\\MaritalStatusController::disable'], ['id'], ['POST' => 0], null, false, true, null]],
+        992 => [[['_route' => 'admin_marital_status_activate', '_controller' => 'App\\Controller\\Back\\MaritalStatusController::activate'], ['id'], ['POST' => 0], null, false, true, null]],
+        1025 => [[['_route' => 'admin_position_edit', '_controller' => 'App\\Controller\\Back\\PositionController::edit'], ['id'], ['GET' => 0, 'POST' => 1], null, false, true, null]],
+        1053 => [[['_route' => 'admin_position_disable', '_controller' => 'App\\Controller\\Back\\PositionController::disable'], ['id'], ['POST' => 0], null, false, true, null]],
+        1078 => [[['_route' => 'admin_position_activate', '_controller' => 'App\\Controller\\Back\\PositionController::activate'], ['id'], ['POST' => 0], null, false, true, null]],
+        1108 => [[['_route' => 'admin_candidate_state_export', '_controller' => 'App\\Controller\\Back\\StateController::export'], ['id'], ['GET' => 0], null, false, true, null]],
+        1149 => [[['_route' => 'admin_user_new', '_controller' => 'App\\Controller\\Back\\UserController::new'], ['ref'], ['GET' => 0, 'POST' => 1], null, false, true, null]],
+        1177 => [[['_route' => 'admin_user_disable', '_controller' => 'App\\Controller\\Back\\UserController::disable'], ['id'], ['POST' => 0], null, false, true, null]],
+        1202 => [[['_route' => 'admin_user_activate', '_controller' => 'App\\Controller\\Back\\UserController::activate'], ['id'], ['POST' => 0], null, false, true, null]],
+        1228 => [[['_route' => 'app_landing', '_controller' => 'App\\Controller\\Front\\FrontController::landing'], ['ref'], ['GET' => 0], null, false, true, null]],
+        1258 => [[['_route' => 'app_other_info_edit', '_controller' => 'App\\Controller\\Front\\OtherInfoController::edit'], ['id'], ['POST' => 0], null, false, true, null]],
+        1304 => [[['_route' => 'app_certification_edit', '_controller' => 'App\\Controller\\Front\\CertificationController::edit'], ['id'], ['POST' => 0], null, false, true, null]],
+        1331 => [[['_route' => 'app_certification_delete', '_controller' => 'App\\Controller\\Front\\CertificationController::delete'], ['id'], ['DELETE' => 0], null, false, true, null]],
+        1358 => [[['_route' => 'app_first_login', '_controller' => 'App\\Controller\\SecurityController::firstLogin'], ['ref'], null, null, false, true, null]],
+        1396 => [[['_route' => 'app_document_edit', '_controller' => 'App\\Controller\\Front\\DocumentController::edit'], ['id'], ['POST' => 0], null, false, true, null]],
+        1430 => [[['_route' => 'app_education_edit', '_controller' => 'App\\Controller\\Front\\EducationController::edit'], ['id'], ['POST' => 0], null, false, true, null]],
+        1457 => [[['_route' => 'app_education_delete', '_controller' => 'App\\Controller\\Front\\EducationController::delete'], ['id'], ['DELETE' => 0], null, false, true, null]],
+        1498 => [[['_route' => 'app_engagement_edit', '_controller' => 'App\\Controller\\Front\\EngagementController::edit'], ['id'], ['POST' => 0], null, false, true, null]],
+        1535 => [[['_route' => 'app_work_experience_edit', '_controller' => 'App\\Controller\\Front\\WorkExperienceController::edit'], ['id'], ['POST' => 0], null, false, true, null]],
+        1562 => [[['_route' => 'app_work_experience_delete', '_controller' => 'App\\Controller\\Front\\WorkExperienceController::delete'], ['id'], ['DELETE' => 0], null, false, true, null]],
+        1617 => [[['_route' => 'submit_application', '_controller' => 'App\\Controller\\Front\\FrontController::submitApplication'], ['id'], ['POST' => 0, 'GET' => 1], null, false, true, null]],
+        1651 => [[['_route' => 'app_user_edit_profile', '_controller' => 'App\\Controller\\UserController::editProfile'], ['id'], ['GET' => 0, 'POST' => 1], null, false, true, null]],
+        1683 => [[['_route' => 'app_user_edit_password', '_controller' => 'App\\Controller\\UserController::editPassword'], ['id'], ['GET' => 0, 'POST' => 1], null, false, true, null]],
+        1719 => [[['_route' => 'app_internship_edit', '_controller' => 'App\\Controller\\Front\\InternshipController::edit'], ['id'], ['POST' => 0], null, false, true, null]],
+        1746 => [[['_route' => 'app_internship_delete', '_controller' => 'App\\Controller\\Front\\InternshipController::delete'], ['id'], ['DELETE' => 0], null, false, true, null]],
+        1776 => [[['_route' => 'app_job_application_edit', '_controller' => 'App\\Controller\\Front\\JobApplicationController::edit'], ['id'], ['POST' => 0], null, false, true, null]],
+        1808 => [[['_route' => 'app_profile_edit', '_controller' => 'App\\Controller\\Front\\ProfileController::edit'], ['id'], ['POST' => 0], null, false, true, null]],
+        1838 => [[['_route' => 'app_registeration', '_controller' => 'App\\Controller\\SecurityController::registeration'], ['ref'], ['GET' => 0, 'POST' => 1], null, false, true, null]],
+        1886 => [
             [['_route' => 'app_reset_password', '_controller' => 'App\\Controller\\SecurityController::resetPassword'], ['token'], ['GET' => 0, 'POST' => 1], null, false, true, null],
             [null, null, null, null, false, false, 0],
         ],

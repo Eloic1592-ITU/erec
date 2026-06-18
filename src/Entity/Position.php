@@ -5,6 +5,9 @@ namespace App\Entity;
 use App\Repository\PositionRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use App\Entity\Campaign;
+use App\Entity\JobApplication;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: PositionRepository::class)]
@@ -32,9 +35,27 @@ class Position
     #[ORM\Column(nullable: true)]
     private ?bool $is_deleted = null;
 
+ 
+    #[ORM\ManyToOne(targetEntity: Campaign::class, inversedBy: 'positions')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Campaign $campaign = null;
+
+    // Il peut avoir  plusieurs candidatures (Job_application) pour un poste (Position)
+    /**
+     * @var Collection<int, JobApplication>
+     */
+    #[ORM\OneToMany(targetEntity: JobApplication::class, mappedBy: 'position', orphanRemoval: true)]
+    private Collection $jobApplications;
+
+    #[ORM\Column(type: 'oracle_date')]
+    private ?\DateTimeInterface $closing_date = null;
+
+
+
     public function __construct()
     {
         $this->users = new ArrayCollection();
+        $this->jobApplications = new ArrayCollection(); // manquant
     }
 
     public function getId(): ?int
@@ -115,6 +136,49 @@ class Position
     public function setDeleted(?bool $is_deleted): static
     {
         $this->is_deleted = $is_deleted;
+
+        return $this;
+    }
+    public function getCampaign(): ?Campaign
+    {
+        return $this->campaign;
+    }
+
+    public function setCampaign(?Campaign $campaign): static
+    {
+        $this->campaign = $campaign;
+
+        return $this;
+    }
+
+        public function addJobApplication(JobApplication $jobApplication): static
+    {
+        if (!$this->jobApplications->contains($jobApplication)) {
+            $this->jobApplications->add($jobApplication);
+            $jobApplication->setPosition($this);
+        }
+
+        return $this;
+    }
+    public function removeJobApplication(JobApplication $jobApplication): static
+    {
+        if ($this->jobApplications->removeElement($jobApplication)) {
+            if ($jobApplication->getPosition() === $this) {
+                $jobApplication->setPosition(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getClosingDate(): ?\DateTimeInterface
+    {
+        return $this->closing_date;
+    }
+
+    public function setClosingDate(\DateTimeInterface $closing_date): static
+    {
+        $this->closing_date = $closing_date;
 
         return $this;
     }

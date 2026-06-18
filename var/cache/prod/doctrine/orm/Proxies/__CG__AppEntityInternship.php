@@ -8,26 +8,32 @@ namespace Proxies\__CG__\App\Entity;
 class Internship extends \App\Entity\Internship implements \Doctrine\ORM\Proxy\InternalProxy
 {
     use \Symfony\Component\VarExporter\LazyGhostTrait {
-        initializeLazyObject as __load;
+        initializeLazyObject as private;
         setLazyObjectAsInitialized as public __setInitialized;
         isLazyObjectInitialized as private;
         createLazyGhost as private;
         resetLazyObject as private;
     }
 
+    public function __load(): void
+    {
+        $this->initializeLazyObject();
+    }
+    
+
     private const LAZY_OBJECT_PROPERTY_SCOPES = [
-        "\0".parent::class."\0".'duration' => [parent::class, 'duration', null],
-        "\0".parent::class."\0".'id' => [parent::class, 'id', null],
-        "\0".parent::class."\0".'internship_year' => [parent::class, 'internship_year', null],
-        "\0".parent::class."\0".'organization' => [parent::class, 'organization', null],
-        "\0".parent::class."\0".'theme' => [parent::class, 'theme', null],
-        "\0".parent::class."\0".'user' => [parent::class, 'user', null],
-        'duration' => [parent::class, 'duration', null],
-        'id' => [parent::class, 'id', null],
-        'internship_year' => [parent::class, 'internship_year', null],
-        'organization' => [parent::class, 'organization', null],
-        'theme' => [parent::class, 'theme', null],
-        'user' => [parent::class, 'user', null],
+        "\0".parent::class."\0".'duration' => [parent::class, 'duration', null, 16],
+        "\0".parent::class."\0".'id' => [parent::class, 'id', null, 16],
+        "\0".parent::class."\0".'internship_year' => [parent::class, 'internship_year', null, 16],
+        "\0".parent::class."\0".'organization' => [parent::class, 'organization', null, 16],
+        "\0".parent::class."\0".'theme' => [parent::class, 'theme', null, 16],
+        "\0".parent::class."\0".'user' => [parent::class, 'user', null, 16],
+        'duration' => [parent::class, 'duration', null, 16],
+        'id' => [parent::class, 'id', null, 16],
+        'internship_year' => [parent::class, 'internship_year', null, 16],
+        'organization' => [parent::class, 'organization', null, 16],
+        'theme' => [parent::class, 'theme', null, 16],
+        'user' => [parent::class, 'user', null, 16],
     ];
 
     public function __isInitialized(): bool

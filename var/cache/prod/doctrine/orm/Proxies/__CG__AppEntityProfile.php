@@ -8,46 +8,52 @@ namespace Proxies\__CG__\App\Entity;
 class Profile extends \App\Entity\Profile implements \Doctrine\ORM\Proxy\InternalProxy
 {
     use \Symfony\Component\VarExporter\LazyGhostTrait {
-        initializeLazyObject as __load;
+        initializeLazyObject as private;
         setLazyObjectAsInitialized as public __setInitialized;
         isLazyObjectInitialized as private;
         createLazyGhost as private;
         resetLazyObject as private;
     }
 
+    public function __load(): void
+    {
+        $this->initializeLazyObject();
+    }
+    
+
     private const LAZY_OBJECT_PROPERTY_SCOPES = [
-        "\0".parent::class."\0".'address' => [parent::class, 'address', null],
-        "\0".parent::class."\0".'birth_city' => [parent::class, 'birth_city', null],
-        "\0".parent::class."\0".'birth_country' => [parent::class, 'birth_country', null],
-        "\0".parent::class."\0".'cin_issue_date' => [parent::class, 'cin_issue_date', null],
-        "\0".parent::class."\0".'cin_issue_place' => [parent::class, 'cin_issue_place', null],
-        "\0".parent::class."\0".'city' => [parent::class, 'city', null],
-        "\0".parent::class."\0".'civility' => [parent::class, 'civility', null],
-        "\0".parent::class."\0".'country' => [parent::class, 'country', null],
-        "\0".parent::class."\0".'id' => [parent::class, 'id', null],
-        "\0".parent::class."\0".'marital_status' => [parent::class, 'marital_status', null],
-        "\0".parent::class."\0".'nationality' => [parent::class, 'nationality', null],
-        "\0".parent::class."\0".'number_of_children' => [parent::class, 'number_of_children', null],
-        "\0".parent::class."\0".'phone1' => [parent::class, 'phone1', null],
-        "\0".parent::class."\0".'phone2' => [parent::class, 'phone2', null],
-        "\0".parent::class."\0".'postal_code' => [parent::class, 'postal_code', null],
-        "\0".parent::class."\0".'user' => [parent::class, 'user', null],
-        'address' => [parent::class, 'address', null],
-        'birth_city' => [parent::class, 'birth_city', null],
-        'birth_country' => [parent::class, 'birth_country', null],
-        'cin_issue_date' => [parent::class, 'cin_issue_date', null],
-        'cin_issue_place' => [parent::class, 'cin_issue_place', null],
-        'city' => [parent::class, 'city', null],
-        'civility' => [parent::class, 'civility', null],
-        'country' => [parent::class, 'country', null],
-        'id' => [parent::class, 'id', null],
-        'marital_status' => [parent::class, 'marital_status', null],
-        'nationality' => [parent::class, 'nationality', null],
-        'number_of_children' => [parent::class, 'number_of_children', null],
-        'phone1' => [parent::class, 'phone1', null],
-        'phone2' => [parent::class, 'phone2', null],
-        'postal_code' => [parent::class, 'postal_code', null],
-        'user' => [parent::class, 'user', null],
+        "\0".parent::class."\0".'address' => [parent::class, 'address', null, 16],
+        "\0".parent::class."\0".'birth_city' => [parent::class, 'birth_city', null, 16],
+        "\0".parent::class."\0".'birth_country' => [parent::class, 'birth_country', null, 16],
+        "\0".parent::class."\0".'cin_issue_date' => [parent::class, 'cin_issue_date', null, 16],
+        "\0".parent::class."\0".'cin_issue_place' => [parent::class, 'cin_issue_place', null, 16],
+        "\0".parent::class."\0".'city' => [parent::class, 'city', null, 16],
+        "\0".parent::class."\0".'civility' => [parent::class, 'civility', null, 16],
+        "\0".parent::class."\0".'country' => [parent::class, 'country', null, 16],
+        "\0".parent::class."\0".'id' => [parent::class, 'id', null, 16],
+        "\0".parent::class."\0".'marital_status' => [parent::class, 'marital_status', null, 16],
+        "\0".parent::class."\0".'nationality' => [parent::class, 'nationality', null, 16],
+        "\0".parent::class."\0".'number_of_children' => [parent::class, 'number_of_children', null, 16],
+        "\0".parent::class."\0".'phone1' => [parent::class, 'phone1', null, 16],
+        "\0".parent::class."\0".'phone2' => [parent::class, 'phone2', null, 16],
+        "\0".parent::class."\0".'postal_code' => [parent::class, 'postal_code', null, 16],
+        "\0".parent::class."\0".'user' => [parent::class, 'user', null, 16],
+        'address' => [parent::class, 'address', null, 16],
+        'birth_city' => [parent::class, 'birth_city', null, 16],
+        'birth_country' => [parent::class, 'birth_country', null, 16],
+        'cin_issue_date' => [parent::class, 'cin_issue_date', null, 16],
+        'cin_issue_place' => [parent::class, 'cin_issue_place', null, 16],
+        'city' => [parent::class, 'city', null, 16],
+        'civility' => [parent::class, 'civility', null, 16],
+        'country' => [parent::class, 'country', null, 16],
+        'id' => [parent::class, 'id', null, 16],
+        'marital_status' => [parent::class, 'marital_status', null, 16],
+        'nationality' => [parent::class, 'nationality', null, 16],
+        'number_of_children' => [parent::class, 'number_of_children', null, 16],
+        'phone1' => [parent::class, 'phone1', null, 16],
+        'phone2' => [parent::class, 'phone2', null, 16],
+        'postal_code' => [parent::class, 'postal_code', null, 16],
+        'user' => [parent::class, 'user', null, 16],
     ];
 
     public function __isInitialized(): bool

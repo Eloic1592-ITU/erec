@@ -5,7 +5,6 @@ namespace App\Entity;
 use App\Repository\UserRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
-use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -48,8 +47,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $resetToken;
 
-    #[ORM\OneToOne(mappedBy: 'user', cascade: ['persist', 'remove'])]
-    private ?JobApplication $jobApplication = null;
+    /**
+     * @var Collection<int, JobApplication>
+     */
+    #[ORM\OneToMany(targetEntity: JobApplication::class, mappedBy: 'user', orphanRemoval: true)]
+    private Collection $jobApplications;
 
     #[ORM\OneToOne(mappedBy: 'user', cascade: ['persist', 'remove'])]
     private ?Profile $profile = null;
@@ -103,6 +105,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->certifications = new ArrayCollection();
         $this->internships = new ArrayCollection();
         $this->workExperiences = new ArrayCollection();
+        $this->jobApplications = new ArrayCollection();
     }
 
     public function getResetToken(): ?string
@@ -252,19 +255,30 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         // $this->plainPassword = null;
     }
 
-    public function getJobApplication(): ?JobApplication
+    /**
+     * @return Collection<int, JobApplication>
+     */
+    public function getJobApplications(): Collection
     {
-        return $this->jobApplication;
+        return $this->jobApplications;
     }
 
-    public function setJobApplication(JobApplication $jobApplication): static
+    public function addJobApplication(JobApplication $jobApplication): static
     {
-        // set the owning side of the relation if necessary
-        if ($jobApplication->getUser() !== $this) {
+        if (!$this->jobApplications->contains($jobApplication)) {
+            $this->jobApplications->add($jobApplication);
             $jobApplication->setUser($this);
         }
 
-        $this->jobApplication = $jobApplication;
+        return $this;
+    }
+
+    public function removeJobApplication(JobApplication $jobApplication): static
+    {
+        if ($this->jobApplications->removeElement($jobApplication)) {
+            // côté propriétaire, on ne peut pas juste mettre null
+            // puisque JoinColumn(nullable: false) sur JobApplication::$user
+        }
 
         return $this;
     }

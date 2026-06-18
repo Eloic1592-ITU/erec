@@ -8,22 +8,28 @@ namespace Proxies\__CG__\App\Entity;
 class Civility extends \App\Entity\Civility implements \Doctrine\ORM\Proxy\InternalProxy
 {
     use \Symfony\Component\VarExporter\LazyGhostTrait {
-        initializeLazyObject as __load;
+        initializeLazyObject as private;
         setLazyObjectAsInitialized as public __setInitialized;
         isLazyObjectInitialized as private;
         createLazyGhost as private;
         resetLazyObject as private;
     }
 
+    public function __load(): void
+    {
+        $this->initializeLazyObject();
+    }
+    
+
     private const LAZY_OBJECT_PROPERTY_SCOPES = [
-        "\0".parent::class."\0".'id' => [parent::class, 'id', null],
-        "\0".parent::class."\0".'is_deleted' => [parent::class, 'is_deleted', null],
-        "\0".parent::class."\0".'name' => [parent::class, 'name', null],
-        "\0".parent::class."\0".'profiles' => [parent::class, 'profiles', null],
-        'id' => [parent::class, 'id', null],
-        'is_deleted' => [parent::class, 'is_deleted', null],
-        'name' => [parent::class, 'name', null],
-        'profiles' => [parent::class, 'profiles', null],
+        "\0".parent::class."\0".'id' => [parent::class, 'id', null, 16],
+        "\0".parent::class."\0".'is_deleted' => [parent::class, 'is_deleted', null, 16],
+        "\0".parent::class."\0".'name' => [parent::class, 'name', null, 16],
+        "\0".parent::class."\0".'profiles' => [parent::class, 'profiles', null, 16],
+        'id' => [parent::class, 'id', null, 16],
+        'is_deleted' => [parent::class, 'is_deleted', null, 16],
+        'name' => [parent::class, 'name', null, 16],
+        'profiles' => [parent::class, 'profiles', null, 16],
     ];
 
     public function __isInitialized(): bool

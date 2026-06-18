@@ -315,6 +315,29 @@ $(document).ready(function () {
 
     CUDReferentiel("marital-status", maritalStatusValidationRules, maritalStatusValidationMessages);
 
+
+    // CRUD - Campaign
+
+    // Règles de validation
+    const campaignValidationRules = {
+      "campaign[title]": {
+          required: true,
+          minlength: 2,
+          maxlength: 255,
+      },
+    };
+
+    // Messages de validation
+    const campaignValidationMessages = {
+        "campaign[title]": {
+            required: "Veuillez saisir un titre de campagne.",
+            minlength: "Le titre doit comporter au moins 2 caractères.",
+            maxlength: "Le titre ne peut pas dépasser 255 caractères.",
+        },
+    };
+
+    CUDReferentiel("campaign", campaignValidationRules, campaignValidationMessages);
+
     // Users Switch State 
     updateReferentielState("user");
 

@@ -4,9 +4,12 @@ namespace App\Entity;
 
 use App\Repository\JobApplicationRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 #[ORM\Entity(repositoryClass: JobApplicationRepository::class)]
 #[ORM\Table(name: '`EREC_JOB_APPLICATION`')]
+#[ORM\UniqueConstraint(name: 'uniq_user_campaign', columns: ['user_id', 'campaign_id'])]
+#[UniqueEntity(fields: ['user', 'campaign'], message: 'Vous avez déjà postulé à une position pour cette campagne.')]
 class JobApplication
 {
     #[ORM\Id]
@@ -23,9 +26,23 @@ class JobApplication
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $tertiary_location = null;
 
-    #[ORM\OneToOne(inversedBy: 'jobApplication', cascade: ['persist', 'remove'])]
+    // Un utilisateur ne peut postuler qu'un poste (n'importe quel poste) par campagne
+
+    // Un utilisateur est relié a une candidature
+    #[ORM\ManyToOne(inversedBy: 'jobApplications')]
     #[ORM\JoinColumn(nullable: false)]
     private ?User $user = null;
+
+    // Une candidature est relié a une campagne
+    #[ORM\ManyToOne(targetEntity: Campaign::class, inversedBy: 'jobApplications')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Campaign $campaign = null;
+
+    // Un candidature est relié a un poste
+    #[ORM\ManyToOne(targetEntity: Position::class, inversedBy: 'jobApplications')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Position $position = null;
+
 
     public function getId(): ?int
     {
@@ -79,4 +96,31 @@ class JobApplication
 
         return $this;
     }
+
+    public function getCampaign(): ?Campaign
+    {
+        return $this->campaign;
+    }
+
+    public function setCampaign(?Campaign $campaign): static
+    {
+        $this->campaign = $campaign;
+
+        return $this;
+    }
+
+    public function getPosition(): ?Position
+    {
+        return $this->position;
+    }
+
+    public function setPosition(?Position $position): static
+    {
+        $this->position = $position;
+
+        return $this;
+    }
+
+
+    
 }

@@ -8,26 +8,32 @@ namespace Proxies\__CG__\App\Entity;
 class Engagement extends \App\Entity\Engagement implements \Doctrine\ORM\Proxy\InternalProxy
 {
     use \Symfony\Component\VarExporter\LazyGhostTrait {
-        initializeLazyObject as __load;
+        initializeLazyObject as private;
         setLazyObjectAsInitialized as public __setInitialized;
         isLazyObjectInitialized as private;
         createLazyGhost as private;
         resetLazyObject as private;
     }
 
+    public function __load(): void
+    {
+        $this->initializeLazyObject();
+    }
+    
+
     private const LAZY_OBJECT_PROPERTY_SCOPES = [
-        "\0".parent::class."\0".'city' => [parent::class, 'city', null],
-        "\0".parent::class."\0".'date_engagement' => [parent::class, 'date_engagement', null],
-        "\0".parent::class."\0".'id' => [parent::class, 'id', null],
-        "\0".parent::class."\0".'second_position' => [parent::class, 'second_position', null],
-        "\0".parent::class."\0".'third_position' => [parent::class, 'third_position', null],
-        "\0".parent::class."\0".'user' => [parent::class, 'user', null],
-        'city' => [parent::class, 'city', null],
-        'date_engagement' => [parent::class, 'date_engagement', null],
-        'id' => [parent::class, 'id', null],
-        'second_position' => [parent::class, 'second_position', null],
-        'third_position' => [parent::class, 'third_position', null],
-        'user' => [parent::class, 'user', null],
+        "\0".parent::class."\0".'city' => [parent::class, 'city', null, 16],
+        "\0".parent::class."\0".'date_engagement' => [parent::class, 'date_engagement', null, 16],
+        "\0".parent::class."\0".'id' => [parent::class, 'id', null, 16],
+        "\0".parent::class."\0".'second_position' => [parent::class, 'second_position', null, 16],
+        "\0".parent::class."\0".'third_position' => [parent::class, 'third_position', null, 16],
+        "\0".parent::class."\0".'user' => [parent::class, 'user', null, 16],
+        'city' => [parent::class, 'city', null, 16],
+        'date_engagement' => [parent::class, 'date_engagement', null, 16],
+        'id' => [parent::class, 'id', null, 16],
+        'second_position' => [parent::class, 'second_position', null, 16],
+        'third_position' => [parent::class, 'third_position', null, 16],
+        'user' => [parent::class, 'user', null, 16],
     ];
 
     public function __isInitialized(): bool

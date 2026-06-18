@@ -8,28 +8,34 @@ namespace Proxies\__CG__\App\Entity;
 class Certification extends \App\Entity\Certification implements \Doctrine\ORM\Proxy\InternalProxy
 {
     use \Symfony\Component\VarExporter\LazyGhostTrait {
-        initializeLazyObject as __load;
+        initializeLazyObject as private;
         setLazyObjectAsInitialized as public __setInitialized;
         isLazyObjectInitialized as private;
         createLazyGhost as private;
         resetLazyObject as private;
     }
 
+    public function __load(): void
+    {
+        $this->initializeLazyObject();
+    }
+    
+
     private const LAZY_OBJECT_PROPERTY_SCOPES = [
-        "\0".parent::class."\0".'certification' => [parent::class, 'certification', null],
-        "\0".parent::class."\0".'certificationFilename' => [parent::class, 'certificationFilename', null],
-        "\0".parent::class."\0".'certification_year' => [parent::class, 'certification_year', null],
-        "\0".parent::class."\0".'id' => [parent::class, 'id', null],
-        "\0".parent::class."\0".'institution' => [parent::class, 'institution', null],
-        "\0".parent::class."\0".'specialty' => [parent::class, 'specialty', null],
-        "\0".parent::class."\0".'user' => [parent::class, 'user', null],
-        'certification' => [parent::class, 'certification', null],
-        'certificationFilename' => [parent::class, 'certificationFilename', null],
-        'certification_year' => [parent::class, 'certification_year', null],
-        'id' => [parent::class, 'id', null],
-        'institution' => [parent::class, 'institution', null],
-        'specialty' => [parent::class, 'specialty', null],
-        'user' => [parent::class, 'user', null],
+        "\0".parent::class."\0".'certification' => [parent::class, 'certification', null, 16],
+        "\0".parent::class."\0".'certificationFilename' => [parent::class, 'certificationFilename', null, 16],
+        "\0".parent::class."\0".'certification_year' => [parent::class, 'certification_year', null, 16],
+        "\0".parent::class."\0".'id' => [parent::class, 'id', null, 16],
+        "\0".parent::class."\0".'institution' => [parent::class, 'institution', null, 16],
+        "\0".parent::class."\0".'specialty' => [parent::class, 'specialty', null, 16],
+        "\0".parent::class."\0".'user' => [parent::class, 'user', null, 16],
+        'certification' => [parent::class, 'certification', null, 16],
+        'certificationFilename' => [parent::class, 'certificationFilename', null, 16],
+        'certification_year' => [parent::class, 'certification_year', null, 16],
+        'id' => [parent::class, 'id', null, 16],
+        'institution' => [parent::class, 'institution', null, 16],
+        'specialty' => [parent::class, 'specialty', null, 16],
+        'user' => [parent::class, 'user', null, 16],
     ];
 
     public function __isInitialized(): bool

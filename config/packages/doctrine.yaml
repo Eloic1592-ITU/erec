@@ -1,6 +1,13 @@
 doctrine:
     dbal:
-        url: '%env(resolve:DATABASE_URL)%'
+        # url: '%env(resolve:DATABASE_URL)%'
+        driver: oci8
+        host: localhost
+        port: 1521
+        user: recru
+        password: recru2025
+        service: true
+        dbname: pdborcl
 
         types:
             oracle_date: App\Types\OracleDateType

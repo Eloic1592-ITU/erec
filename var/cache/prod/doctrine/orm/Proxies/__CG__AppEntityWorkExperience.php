@@ -8,38 +8,44 @@ namespace Proxies\__CG__\App\Entity;
 class WorkExperience extends \App\Entity\WorkExperience implements \Doctrine\ORM\Proxy\InternalProxy
 {
     use \Symfony\Component\VarExporter\LazyGhostTrait {
-        initializeLazyObject as __load;
+        initializeLazyObject as private;
         setLazyObjectAsInitialized as public __setInitialized;
         isLazyObjectInitialized as private;
         createLazyGhost as private;
         resetLazyObject as private;
     }
 
+    public function __load(): void
+    {
+        $this->initializeLazyObject();
+    }
+    
+
     private const LAZY_OBJECT_PROPERTY_SCOPES = [
-        "\0".parent::class."\0".'end_date' => [parent::class, 'end_date', null],
-        "\0".parent::class."\0".'id' => [parent::class, 'id', null],
-        "\0".parent::class."\0".'location' => [parent::class, 'location', null],
-        "\0".parent::class."\0".'organization' => [parent::class, 'organization', null],
-        "\0".parent::class."\0".'position' => [parent::class, 'position', null],
-        "\0".parent::class."\0".'reference_email' => [parent::class, 'reference_email', null],
-        "\0".parent::class."\0".'reference_name' => [parent::class, 'reference_name', null],
-        "\0".parent::class."\0".'reference_phone' => [parent::class, 'reference_phone', null],
-        "\0".parent::class."\0".'reference_position' => [parent::class, 'reference_position', null],
-        "\0".parent::class."\0".'start_date' => [parent::class, 'start_date', null],
-        "\0".parent::class."\0".'user' => [parent::class, 'user', null],
-        "\0".parent::class."\0".'workFilename' => [parent::class, 'workFilename', null],
-        'end_date' => [parent::class, 'end_date', null],
-        'id' => [parent::class, 'id', null],
-        'location' => [parent::class, 'location', null],
-        'organization' => [parent::class, 'organization', null],
-        'position' => [parent::class, 'position', null],
-        'reference_email' => [parent::class, 'reference_email', null],
-        'reference_name' => [parent::class, 'reference_name', null],
-        'reference_phone' => [parent::class, 'reference_phone', null],
-        'reference_position' => [parent::class, 'reference_position', null],
-        'start_date' => [parent::class, 'start_date', null],
-        'user' => [parent::class, 'user', null],
-        'workFilename' => [parent::class, 'workFilename', null],
+        "\0".parent::class."\0".'end_date' => [parent::class, 'end_date', null, 16],
+        "\0".parent::class."\0".'id' => [parent::class, 'id', null, 16],
+        "\0".parent::class."\0".'location' => [parent::class, 'location', null, 16],
+        "\0".parent::class."\0".'organization' => [parent::class, 'organization', null, 16],
+        "\0".parent::class."\0".'position' => [parent::class, 'position', null, 16],
+        "\0".parent::class."\0".'reference_email' => [parent::class, 'reference_email', null, 16],
+        "\0".parent::class."\0".'reference_name' => [parent::class, 'reference_name', null, 16],
+        "\0".parent::class."\0".'reference_phone' => [parent::class, 'reference_phone', null, 16],
+        "\0".parent::class."\0".'reference_position' => [parent::class, 'reference_position', null, 16],
+        "\0".parent::class."\0".'start_date' => [parent::class, 'start_date', null, 16],
+        "\0".parent::class."\0".'user' => [parent::class, 'user', null, 16],
+        "\0".parent::class."\0".'workFilename' => [parent::class, 'workFilename', null, 16],
+        'end_date' => [parent::class, 'end_date', null, 16],
+        'id' => [parent::class, 'id', null, 16],
+        'location' => [parent::class, 'location', null, 16],
+        'organization' => [parent::class, 'organization', null, 16],
+        'position' => [parent::class, 'position', null, 16],
+        'reference_email' => [parent::class, 'reference_email', null, 16],
+        'reference_name' => [parent::class, 'reference_name', null, 16],
+        'reference_phone' => [parent::class, 'reference_phone', null, 16],
+        'reference_position' => [parent::class, 'reference_position', null, 16],
+        'start_date' => [parent::class, 'start_date', null, 16],
+        'user' => [parent::class, 'user', null, 16],
+        'workFilename' => [parent::class, 'workFilename', null, 16],
     ];
 
     public function __isInitialized(): bool

@@ -8,24 +8,30 @@ namespace Proxies\__CG__\App\Entity;
 class JobApplication extends \App\Entity\JobApplication implements \Doctrine\ORM\Proxy\InternalProxy
 {
     use \Symfony\Component\VarExporter\LazyGhostTrait {
-        initializeLazyObject as __load;
+        initializeLazyObject as private;
         setLazyObjectAsInitialized as public __setInitialized;
         isLazyObjectInitialized as private;
         createLazyGhost as private;
         resetLazyObject as private;
     }
 
+    public function __load(): void
+    {
+        $this->initializeLazyObject();
+    }
+    
+
     private const LAZY_OBJECT_PROPERTY_SCOPES = [
-        "\0".parent::class."\0".'id' => [parent::class, 'id', null],
-        "\0".parent::class."\0".'primary_location' => [parent::class, 'primary_location', null],
-        "\0".parent::class."\0".'secondary_location' => [parent::class, 'secondary_location', null],
-        "\0".parent::class."\0".'tertiary_location' => [parent::class, 'tertiary_location', null],
-        "\0".parent::class."\0".'user' => [parent::class, 'user', null],
-        'id' => [parent::class, 'id', null],
-        'primary_location' => [parent::class, 'primary_location', null],
-        'secondary_location' => [parent::class, 'secondary_location', null],
-        'tertiary_location' => [parent::class, 'tertiary_location', null],
-        'user' => [parent::class, 'user', null],
+        "\0".parent::class."\0".'id' => [parent::class, 'id', null, 16],
+        "\0".parent::class."\0".'primary_location' => [parent::class, 'primary_location', null, 16],
+        "\0".parent::class."\0".'secondary_location' => [parent::class, 'secondary_location', null, 16],
+        "\0".parent::class."\0".'tertiary_location' => [parent::class, 'tertiary_location', null, 16],
+        "\0".parent::class."\0".'user' => [parent::class, 'user', null, 16],
+        'id' => [parent::class, 'id', null, 16],
+        'primary_location' => [parent::class, 'primary_location', null, 16],
+        'secondary_location' => [parent::class, 'secondary_location', null, 16],
+        'tertiary_location' => [parent::class, 'tertiary_location', null, 16],
+        'user' => [parent::class, 'user', null, 16],
     ];
 
     public function __isInitialized(): bool

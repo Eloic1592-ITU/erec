@@ -24,15 +24,20 @@
         <h3 class="d-none d-lg-flex justify-content-center py-3 mb-4 border-full-dashed">
             Poste demandé
         </h3>
-
         <div class="row">
             <div class="col-lg-4">
                 <div class="mb-3">
                     <label class="form-label">Poste demandé <span class="star">*</span></label>
-                    <input type="text" class="form-control" placeholder="{{ app.user.referencePosition.name }}" readonly />
+                        {{ form_widget(jobApplicationForm.position_name, {
+                            'attr': {
+                                'class': 'form-control',
+                                'placeholder': ''
+                            }
+                        }) }}
                 </div>
             </div>
         </div>
+
 
         <div class="row">
             <div class="col-lg-4">

@@ -4,20 +4,24 @@ namespace App\Form;
 
 use App\Entity\JobApplication;
 use App\Repository\LocationRepository;
-use Symfony\Bundle\SecurityBundle\Security;
+use App\Repository\PositionRepository;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints as Assert;
+use App\Entity\Position;
 
 class JobApplicationType extends AbstractType
 {
     private $locationRepository;
-    public function __construct(LocationRepository $locationRepository)
+    private $positionRepository;
+    public function __construct(LocationRepository $locationRepository,PositionRepository $positionRepository)
     {
         $this->locationRepository = $locationRepository;
+        $this->positionRepository = $positionRepository;
     }
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
@@ -25,6 +29,14 @@ class JobApplicationType extends AbstractType
         $locationOptions = [];
         foreach ($locations as $location) {
             $locationOptions[$location->getName()] = $location->getName();
+        }
+        // Recuperer la ref depuis les options
+        $ref = $options['ref'];
+
+        $position = null;
+        
+        if ($ref) {
+            $position = $this->positionRepository->findOneBy(['reference' => $ref]);
         }
 
         $builder
@@ -72,14 +84,21 @@ class JobApplicationType extends AbstractType
                 'constraints' => [
                     new Assert\NotBlank(['message' => "Veuillez entrer un lieu d'affectation."]),
                 ]
-            ])
-        ;
+            ])        
+            ->add('position_name', TextType::class, [
+                'mapped' => false,
+                'data' => $position ? $position->getName() : '',
+                'disabled' => true,
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             'data_class' => JobApplication::class,
+            'ref' => null, // valeur par défaut si non passée
         ]);
+        // Typage de l'option (optionnel mais recommandé)
+        $resolver->setAllowedTypes('ref', ['null', 'string']);
     }
 }

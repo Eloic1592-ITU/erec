@@ -21,13 +21,19 @@
           {{ form_label(positionForm.name) }}
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
-        <div class="modal-body text-start p-3">
-          <div class="mb-2">
+        <div class="modal-body text-start p-1">
+          <div class="modal-body text-start p-1">
             {{ form_widget(positionForm.name) }}
           </div>
 
-          <div>
+          <div class="modal-body text-start p-1">
             {{ form_widget(positionForm.reference) }}
+          </div>
+          <div class="modal-body text-start p-1"> 
+            {{ form_widget(positionForm.closing_date) }}
+          </div>
+            <div class="modal-body text-start p-1"> 
+            {{ form_widget(positionForm.campaign) }}
           </div>
         </div>
         <div class="modal-footer d-flex flex-nowrap gap-1 border-0 pb-4 px-4 pt-0">

@@ -11,6 +11,8 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
+use App\Entity\Position;
+use App\Form\PositionType;
 
 #[Route('/admin/campaign')]
 class CampaignController extends AbstractController
@@ -81,6 +83,40 @@ class CampaignController extends AbstractController
             'campaign' => $campaign,
         ]);
     }
+
+    // Liste des postes par campagne
+    #[Route('/{id}/position', name: 'admin_position_per_campaign', methods: ['GET'])]
+    public function showPositionCampaign(Campaign $campaign): Response
+    {
+        // Header data
+
+        $title = "Postes disponibles";
+        $positions = $campaign->getPositions();
+        // formulaire d'insertion
+        $newPositionForm = $this->createForm(PositionType::class, new Position(), [
+            'action' => $this->generateUrl('admin_position_new'),
+            'method' => 'POST',
+        ])->createView();
+
+        // formulaire de modification
+        $positionForms = [];
+        foreach ($positions as $position) {
+            $positionForms[] = $this->createForm(PositionType::class, $position, [
+                'action' => $this->generateUrl('admin_position_edit', ['id' => $position->getId()]),
+                'method' => 'POST',
+            ])->createView();
+        }
+
+
+        return $this->render('back/campaign/show_positions.html.twig', [
+            'title' =>$title,
+            'campaign' => $campaign,
+            'positions' => $positions,
+            'positionForms' => $positionForms,
+            'newPositionForm' => $newPositionForm,
+        ]);
+    }
+
 
     #[Route('/{id}/edit', name: 'admin_campaign_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Campaign $campaign, EntityManagerInterface $entityManager): Response

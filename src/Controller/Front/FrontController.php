@@ -59,6 +59,40 @@ class FrontController extends AbstractController
             'positions' => $positions
         ]);
     }
+    #[Route('/{campaign_id}', name: 'app_positions_campaign', methods: ['GET'], requirements: ['campaign_id' => '\d+'])]
+    public function position_campaign(
+        EntityManagerInterface $entityManager, 
+        PositionRepository $positionRepository,
+        ?int $campaign_id = null
+    ): Response     
+    {
+        // Si idcampagne est null ou vide → page d'erreur
+        if (empty($campaign_id)) {
+            return $this->render('security/invalid_campaign.html.twig', [], 
+                new Response('', Response::HTTP_BAD_REQUEST)
+            );
+        }
+    
+        // Récupérer les positions par campagne
+        $query = $entityManager->createQuery(
+            'SELECT u
+            FROM App\Entity\Position u
+            WHERE (u.is_deleted = false OR u.is_deleted IS NULL)
+            AND u.campaign = :campaign_id'
+        )->setParameter('campaign_id', $campaign_id);
+    
+        $positions = $query->getResult();
+    
+        // Si aucune position trouvée pour cette campagne
+        if (empty($positions)) {
+            throw $this->createNotFoundException('Aucun poste pour cette campagne.');
+        }
+    
+        return $this->render('front/position/index.html.twig', [
+            'positions' => $positions,
+
+        ]);
+    }
 
     // Page d'accueil avec passage d'ID d'un poste
     #[Route('/accueil/{ref}', name:'app_landing', methods:['GET'])]
@@ -106,9 +140,28 @@ class FrontController extends AbstractController
         return $this->render('front/submission/index.html.twig');
     }
 
-    #[Route('/details', name:'app_details', methods:['GET'])]
+    // Liste de candidatures de l'utilisateur connecté
+    #[Route('/mes-candidatures', name: 'app_job_application_index', methods: ['GET'])]
     #[IsGranted('ROLE_USER')]
-    public function details(
+    public function list(JobApplicationRepository $repository): Response
+    {
+        $user = $this->getUser();
+
+        if (!$user instanceof \App\Entity\User) {
+            throw $this->createAccessDeniedException('Utilisateur invalide.');
+        }
+
+        $jobApplications = $repository->findByUser($user);
+
+        return $this->render('front/submission/list.html.twig', [
+            'jobApplications' => $jobApplications,
+        ]);
+    }
+
+    #[Route('/candidature/details/{id}', name: 'app_job_application_details', methods: ['GET'])]
+    #[IsGranted('ROLE_USER')]
+    public function detailsjobapplication(
+        int $id,
         JobApplicationRepository $repository, 
         ProfileRepository $profileRepository, 
         EducationRepository $educationRepository,
@@ -120,7 +173,103 @@ class FrontController extends AbstractController
         EngagementRepository $engagementRepository,
     ) : Response 
     {
-        $jobApplication = $repository->findOneBy(['user' => $this->getUser()]);
+        $user = $this->getUser();
+
+        if (!$user instanceof \App\Entity\User) {
+            throw $this->createAccessDeniedException('Utilisateur invalide.');
+        }
+
+        $jobApplication = $repository->find($id);
+
+        if (!$jobApplication) {
+            throw $this->createNotFoundException('Candidature introuvable.');
+        }
+
+        // Sécurité : empêcher un utilisateur de voir la candidature d'un autre
+        if ($jobApplication->getUser() !== $user) {
+            throw $this->createAccessDeniedException('Vous n\'avez pas accès à cette candidature.');
+        }
+
+        $profile = $profileRepository->findOneBy(['user' => $user]);
+        $educations = $educationRepository->findBy(['user' => $user]);
+        $certifications = $certificationRepository->findBy(['user' => $user]);
+        $internships = $internshipRepository->findBy(['user' => $user]);
+        $workExperiences = $workExperienceRepository->findBy(['user' => $user]);
+        $otherInfo = $otherInfoRepository->findOneBy(['user' => $user]);
+        $document = $documentRepository->findOneBy(['user' => $user]);
+        $engagement = $engagementRepository->findOneBy(['user' => $user]);
+
+        return $this->render('front/submission/details.html.twig', [
+            'jobApplication' => $jobApplication,
+            'profile' => $profile,
+            'educations' => $educations,
+            'certifications' => $certifications,
+            'internships' => $internships,
+            'workExperiences' => $workExperiences,
+            'otherInfo' => $otherInfo,
+            'document' => $document,
+            'engagement' => $engagement,
+        ]);
+    }
+
+    // #[Route('/details', name:'app_details', methods:['GET'])]
+    // #[IsGranted('ROLE_USER')]
+    // public function details(
+    //     JobApplicationRepository $repository, 
+    //     ProfileRepository $profileRepository, 
+    //     EducationRepository $educationRepository,
+    //     CertificationRepository $certificationRepository,
+    //     InternshipRepository $internshipRepository,
+    //     WorkExperienceRepository $workExperienceRepository,
+    //     OtherInfoRepository $otherInfoRepository,
+    //     DocumentRepository $documentRepository,
+    //     EngagementRepository $engagementRepository,
+    // ) : Response 
+    // {
+    //     $jobApplication = $repository->findOneBy(['user' => $this->getUser()]);
+    //     $profile = $profileRepository->findOneBy(['user' => $this->getUser()]);
+    //     $educations = $educationRepository->findBy(['user' => $this->getUser()]);
+    //     $certifications = $certificationRepository->findBy(['user' => $this->getUser()]);
+    //     $internships = $internshipRepository->findBy(['user' => $this->getUser()]);
+    //     $workExperiences = $workExperienceRepository->findBy(['user' => $this->getUser()]);
+    //     $otherInfo = $otherInfoRepository->findOneBy(['user' => $this->getUser()]);
+    //     $document = $documentRepository->findOneBy(['user' => $this->getUser()]);
+    //     $engagement = $engagementRepository->findOneBy(['user' => $this->getUser()]);
+
+    //     return $this->render('front/submission/details.html.twig', [
+    //         'jobApplication' => $jobApplication,
+    //         'profile' => $profile,
+    //         'educations' => $educations,
+    //         'certifications' => $certifications,
+    //         'internships' => $internships,
+    //         'workExperiences' => $workExperiences,
+    //         'otherInfo' => $otherInfo,
+    //         'document' => $document,
+    //         'engagement' => $engagement,
+    //     ]);
+    // }
+
+    #[Route('/details/{ref}', name:'app_details', methods:['GET'])]
+    #[IsGranted('ROLE_USER')]   
+    public function details(
+        ?string $ref,
+        JobApplicationRepository $repository, 
+        ProfileRepository $profileRepository, 
+        EducationRepository $educationRepository,
+        CertificationRepository $certificationRepository,
+        InternshipRepository $internshipRepository,
+        WorkExperienceRepository $workExperienceRepository,
+        OtherInfoRepository $otherInfoRepository,
+        DocumentRepository $documentRepository,
+        EngagementRepository $engagementRepository,
+        PositionRepository $positionRepository,
+    ) : Response 
+    {
+        $position = $positionRepository->findOneBy(['reference' => $ref]);
+        $jobApplication = $repository->findOneBy([
+            'user' => $this->getUser(),
+            'position' => $position,
+        ]);
         $profile = $profileRepository->findOneBy(['user' => $this->getUser()]);
         $educations = $educationRepository->findBy(['user' => $this->getUser()]);
         $certifications = $certificationRepository->findBy(['user' => $this->getUser()]);
@@ -143,9 +292,10 @@ class FrontController extends AbstractController
         ]);
     }
 
-    #[Route('/candidature', name:'app_submission', methods:['GET'])]
+    #[Route('/candidature/{ref}', name:'app_submission', methods:['GET'])]
     #[IsGranted('ROLE_USER')]
     public function index(
+        ?string $ref,
         JobApplicationRepository $repository, 
         ProfileRepository $profileRepository, 
         EducationRepository $educationRepository,
@@ -155,19 +305,23 @@ class FrontController extends AbstractController
         OtherInfoRepository $otherInfoRepository,
         DocumentRepository $documentRepository,
         EngagementRepository $engagementRepository,
+        PositionRepository $positionRepository,
     ): Response {
 
-        $user = $this->getUser();
+        // $user = $this->getUser();    
 
-        if ($user instanceof \App\Entity\User && $user->getHasSubmittedApplication() === true) {
-            return $this->redirectToRoute('app_details');
-        }
+        // if ($user instanceof \App\Entity\User && $user->getHasSubmittedApplication() === true) {
+        //     return $this->redirectToRoute('app_details');
+        // }
 
-	if ($user instanceof \App\Entity\User && is_null($user->getReferencePosition())) {
-            return $this->redirectToRoute('app_positions');
-        }
-
-        $jobApplication = $repository->findOneBy(['user' => $this->getUser()]);
+	    // if ($user instanceof \App\Entity\User && is_null($user->getReferencePosition())) {
+        //     return $this->redirectToRoute('app_positions');
+        // }
+        $position = $positionRepository->findOneBy(['reference' => $ref]);
+        $jobApplication = $repository->findOneBy([
+            'user' => $this->getUser(),
+            'position' => $position,
+        ]);
         $profile = $profileRepository->findOneBy(['user' => $this->getUser()]);
         $educations = $educationRepository->findBy(['user' => $this->getUser()]);
         $certifications = $certificationRepository->findBy(['user' => $this->getUser()]);
@@ -182,12 +336,14 @@ class FrontController extends AbstractController
             $jobApplicationForm = $this->createForm(JobApplicationType::class, $jobApplication, [
                 'action' => $this->generateUrl('app_job_application_edit', ['id' => $jobApplication->getId()]),
                 'method' => 'POST',
+                'ref'=> $ref,
             ]);
             $isJobApplicationEdit = true;
         } else {
             $jobApplicationForm = $this->createForm(JobApplicationType::class, new JobApplication(), [
-                'action' => $this->generateUrl('app_job_application_new'),
+                'action' => $this->generateUrl('app_job_application_new', ['ref' => $ref]), 
                 'method' => 'POST',
+                'ref' => $ref,
             ]);
             $isJobApplicationEdit = false;
         }
@@ -296,14 +452,16 @@ class FrontController extends AbstractController
         // Engagement forms setup
         if ($engagement) {
             $engagementForm = $this->createForm(EngagementType::class, $engagement, [
-                'action' => $this->generateUrl('app_engagement_edit', ['id' => $engagement->getId()]),
+                'action' => $this->generateUrl('app_engagement_edit', ['id' => $engagement->getId(), 'ref' => $ref]),
                 'method' => 'POST',
-            ]);
+                'ref' => $ref,
+             ]);
             $isEngagementEdit = true;
         } else {
             $engagementForm = $this->createForm(EngagementType::class, new Engagement(), [
-                'action' => $this->generateUrl('app_engagement_new'),
+                'action' => $this->generateUrl('app_engagement_new', ['ref' => $ref]),
                 'method' => 'POST',
+                'ref' => $ref,
             ]);
             $isEngagementEdit = false;
         }

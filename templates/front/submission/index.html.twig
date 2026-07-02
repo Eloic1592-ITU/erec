@@ -25,7 +25,8 @@
             <img src="{{ asset('img/bell.png') }}" alt="bell" width="20%" />
 
             {% if app.user.hasSubmittedApplication %}
-              <a href="{{ path('app_details') }}" class="btn btn-primary btn-lg mt-5">Voir les details de ma candidature</a>
+              {#<a class="btn btn-primary btn-lg mt-5">Voir les details de ma candidature</a>#}
+                <a href="{{ path('app_job_application_index') }}" class="btn btn-primary btn-lg mt-5">Voir toutes mes candidatures</a>
             {% else %}
               <a href="{{ path('app_submission') }}" class="btn btn-success btn-lg mt-5">Créer ma candidature maintenant</a>
             {% endif %}

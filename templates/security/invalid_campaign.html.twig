@@ -1,0 +1,49 @@
+{# ---------------------------- Layout ---------------------------- #}
+{% extends 'front/layouts/base.html.twig' %}
+
+{# ---------------------------- Title ---------------------------- #}
+{% block title %}
+  Accueil
+{% endblock %}
+
+{# ---------------------------- CSS ---------------------------- #}
+{% block stylesheets %}
+  <link rel="stylesheet" href="{{ asset('css/position.css') }}" />
+{% endblock %}
+
+{# ---------------------------- Body ---------------------------- #}
+{% block body %}
+  <div class="container">
+    <div class="row d-flex justify-content-center">
+      <div class="row">
+        <div class="col mt-4 alert-danger py-5 px-3 text-center">
+          {% if app.request.attributes.get('exception') is defined and app.request.attributes.get('exception').statusCode is defined %}
+              {% if app.request.attributes.get('exception').statusCode == '404' %}
+                  <h1 class="display-2 fw-bold">ERREUR 404</h1>
+                  <h5>La page que vous recherchez n'existe pas... ou plus !</h5>
+              {% elseif app.request.attributes.get('exception').statusCode == '403' %}
+                  <h1 class="display-2 fw-bold">ERREUR 403</h1>
+                  <h5>Vous ne pouvez pas afficher cette page ou cette section !</h5>
+              {% elseif app.request.attributes.get('exception').statusCode == '500' %}
+                  <h1 class="display-2 fw-bold">ERREUR 500</h1>
+                  <h5>Oups !?! Alors là, on a un problème... La page ou la section ne s'affiche pas.</h5>
+              {% else %}
+                  <h5>Oups !?!Désolé Campagne invalide.</h5>
+              {% endif %}
+          {% else %}
+              <h5>Oups !?! Désolé, Campagne invalide.</h5>
+          {% endif %}
+
+        </div>
+        <div class="mt-3 text-center">
+          <a class="btn btn-primary p-3 lead" href="{{ path('app_positions') }}">Page d'accueil</a>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}
+
+{# ---------------------------- JS ---------------------------- #}
+{% block javascripts %}
+  {# ... #}
+{% endblock %}

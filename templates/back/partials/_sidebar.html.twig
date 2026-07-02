@@ -1,6 +1,7 @@
 {% set sidebarMenus = {
-  'Campagne': [
-    {'name': 'Campagne - Emploi', 'link': 'admin_campaign', 'icon': 'fas fa-briefcase'},
+  'Campagne - Poste': [
+    {'name': 'Campagne', 'link': 'admin_campaign', 'icon': 'fas fa-bullhorn'},
+    {'name': 'Postes', 'link': 'admin_position', 'icon': 'fas fa-briefcase'},
   ],
   'Utilisateurs': [
     {'name': 'Utilisateurs', 'link': 'admin_user', 'icon': 'fas fa-users'},
@@ -16,13 +17,17 @@
   'Référentiels': [
     {'name': 'Domaines', 'link': 'admin_field_of_study', 'icon': 'fas fa-code-branch'},
     {'name': 'Diplômes', 'link': 'admin_degree', 'icon': 'fas fa-graduation-cap'},
-    {'name': 'Postes', 'link': 'admin_position', 'icon': 'fas fa-briefcase'},
+
     {'name': 'Niveau', 'link': 'admin_level', 'icon': 'fas fa-layer-group'},
     {'name': 'Compétences', 'link': 'admin_skill', 'icon': 'fas fa-cogs'},
     {'name': 'Civilité', 'link': 'admin_civility', 'icon': 'fas fa-id-card'},
     {'name': 'Situations familiales', 'link': 'admin_marital_status', 'icon': 'fas fa-id-card-alt'}
   ]
 } %}
+{# 'Référentiels': [
+      {'name': 'Postes', 'link': 'admin_position', 'icon': 'fas fa-briefcase'},
+    ...
+  ] #}
 
 <aside class="sidebar d-none d-lg-flex flex-column flex-shrink-0">
   {% set currentRoute = app.request.get('_route') %}

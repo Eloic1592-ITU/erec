@@ -5,6 +5,8 @@ namespace App\Entity;
 use App\Repository\JobApplicationRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 #[ORM\Entity(repositoryClass: JobApplicationRepository::class)]
 #[ORM\Table(name: '`EREC_JOB_APPLICATION`')]
@@ -35,12 +37,12 @@ class JobApplication
 
     // Une candidature est relié a une campagne
     #[ORM\ManyToOne(targetEntity: Campaign::class, inversedBy: 'jobApplications')]
-    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\JoinColumn(name: 'campaign_id', referencedColumnName: 'id', nullable: false)]
     private ?Campaign $campaign = null;
-
-    // Un candidature est relié a un poste
+    
+    // Une candidature est relié a un poste
     #[ORM\ManyToOne(targetEntity: Position::class, inversedBy: 'jobApplications')]
-    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\JoinColumn(name: 'position_id', referencedColumnName: 'id', nullable: false)]
     private ?Position $position = null;
 
 
@@ -120,7 +122,16 @@ class JobApplication
 
         return $this;
     }
-
+    
+    #[Assert\Callback]
+    public function validateCampaignMatchesPosition(ExecutionContextInterface $context): void
+    {
+        if ($this->position && $this->campaign && $this->position->getCampaign() !== $this->campaign) {
+            $context->buildViolation('La campagne ne correspond pas à la position sélectionnée.')
+                ->atPath('campaign')
+                ->addViolation();
+        }
+    }
 
     
 }

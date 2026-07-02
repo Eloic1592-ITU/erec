@@ -1,0 +1,89 @@
+{# ---------------------------- Layout ---------------------------- #}
+{% extends 'front/layouts/base.html.twig' %}
+
+{# ---------------------------- Title ---------------------------- #}
+{% block title %}
+    Mes candidatures
+{% endblock %}
+
+{# ---------------------------- CSS ---------------------------- #}
+{% block stylesheets %}
+  {# Custom CSS #}
+  <link rel="stylesheet" href="{{ asset('css/navbar.css') }}" />
+  <link rel="stylesheet" href="{{ asset('css/submission.css') }}" />
+  <link rel="stylesheet" href="{{ asset('css/inforecap.css') }}" />
+  <link rel="stylesheet" href="{{ asset('css/footer.css') }}" />
+{% endblock %}
+
+{# ---------------------------- Body ---------------------------- #}
+{% block body %}
+    {{ include('front/partials/_navbar.html.twig') }}
+
+    <main class="flex-shrink-0 pt-5 mb-5">
+      <div class="container pt-5">
+        <div class="py-4 mb-4 border-bottom-dashed">
+          <h1 class="mt-1">Mes candidatures</h1>
+          <p>
+            Retrouvez ici la liste de vos candidatures soumises.
+          </p>
+        </div>
+
+        <div class="row">
+          <div class="col-lg-12">
+            {% if jobApplications is empty %}
+              <div class="alert alert-info" role="alert">
+                Vous n'avez aucune candidature pour le moment.
+              </div>
+            {% else %}
+              <div class="table-responsive">
+                <table class="table table-hover align-middle">
+                  <thead>
+                    <tr>
+                      
+                      <th scope="col">Nom</th>
+                      <th scope="col">Prénom</th>
+                      <th scope="col">Poste demandé</th>
+                      <th scope="col">Reference</th>
+                      <th scope="col">Campagne</th>
+                      <th scope="col">Lieu d'affectation 1</th>
+                      <th scope="col">Lieu d'affectation 2</th>
+                      <th scope="col">Lieu d'affectation 3</th>
+                      <th scope="col" class="text-end">Action</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {% for jobApplication in jobApplications %}
+                      <tr>
+                        <td>{{ jobApplication.user.lastName ?? '—' }}</td>
+                        <td>{{ jobApplication.user.firstName ?? '—' }}</td>
+                        <td>{{ jobApplication.position.name ?? '—' }}</td>
+                        <td>{{ jobApplication.position.reference ?? '—' }}</td>
+                        <td>{{ jobApplication.campaign.title ?? '—' }}</td>
+                        <td>{{ jobApplication.primaryLocation ?? '—' }}</td>
+                        <td>{{ jobApplication.secondaryLocation ?? '—' }}</td>
+                        <td>{{ jobApplication.tertiaryLocation ?? '—' }}</td>
+                        <td class="text-end">
+                            <a href="{{ path('app_job_application_details', {'id': jobApplication.id}) }}" class="btn btn-sm btn-primary d-flex align-items-center gap-2 ms-auto" style="width: fit-content;">
+                                <i class="bx bx-show"></i> <span>Détails</span>
+                            </a>
+                        </td>
+                      </tr>
+                    {% endfor %}
+                  </tbody>
+                </table>
+              </div>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    </main>
+
+    {{ include('front/partials/_footer.html.twig') }}
+
+{% endblock %}
+
+{# ---------------------------- JS ---------------------------- #}
+{% block javascripts %}
+  {# AOS init #}
+  <script src="{{ asset('js/aosInit.js') }}" {{ add_nonce()|raw }}></script>
+{% endblock %}

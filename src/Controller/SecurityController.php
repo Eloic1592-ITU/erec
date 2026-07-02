@@ -24,6 +24,7 @@ use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Csrf\TokenGenerator\TokenGeneratorInterface;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
+use App\Entity\UserPosition;
 
 class SecurityController extends AbstractController
 {
@@ -71,7 +72,6 @@ class SecurityController extends AbstractController
             'positions' => $positions,
         ]);
     }
-
     /**
      * Gère l'affichage du formulaire de connexion et le traitement des erreurs d'authentification.
      * Passe l'ID du Poste choisi par l'utilisateur.
@@ -80,30 +80,61 @@ class SecurityController extends AbstractController
      * @param int $id : ID du Poste choisi par le utilisateur.
      * @return Response
      */
-    #[Route(path: '/connexion/{ref}', name: 'app_first_login')]
-    public function firstLogin(AuthenticationUtils $authenticationUtils, string $ref, EntityManagerInterface $entityManager): Response
+    #[Route(path: '/connexion/{ref}', name: 'app_first_login', defaults: ['ref' => null])]
+    public function firstLogin(AuthenticationUtils $authenticationUtils, ?string $ref, EntityManagerInterface $entityManager,Request $request): Response
     {
-        if($this->getUser()) {
+        // dd($ref);
+        if (empty($ref)) {
             return $this->redirectToRoute('app_home');
         }
 
         $existingPosition = $entityManager->getRepository(Position::class)->findOneBy(['reference' => $ref]);
-        if ($existingPosition instanceof Position) {
-            // get the login error if there is one
-            $error = $authenticationUtils->getLastAuthenticationError();
-
-            // last username entered by the user
-            $lastUsername = $authenticationUtils->getLastUsername();
-
-            return $this->render('security/login.html.twig', [
-                'last_username' => $lastUsername,
-                'error' => $error,
-                'refPosition' => $ref,
-            ]);
+        if (!$existingPosition instanceof Position) {
+            return $this->redirectToRoute('app_positions');
         }
 
-        return $this->redirectToRoute('app_positions');
+        if ($this->getUser()) {
+            return $this->redirectToRoute('app_submission', ['ref' => $ref]);
+        }
+
+        // Sauvegarder la ref en session avant d'afficher le login
+        $request->getSession()->set('_target_ref', $ref);
+
+        $error = $authenticationUtils->getLastAuthenticationError();
+        $lastUsername = $authenticationUtils->getLastUsername();
+
+        return $this->render('security/login.html.twig', [
+            'last_username' => $lastUsername,
+            'error' => $error,
+            'refPosition' => $ref,
+        ]);
     }
+
+    // #[Route(path: '/connexion/{ref}', name: 'app_first_login')]
+    // public function firstLogin(AuthenticationUtils $authenticationUtils, string $ref, EntityManagerInterface $entityManager): Response
+    // {
+    //     if($this->getUser()) {
+    //         return $this->redirectToRoute('app_home');
+    //     }
+
+    //     $existingPosition = $entityManager->getRepository(Position::class)->findOneBy(['reference' => $ref]);
+    //     if ($existingPosition instanceof Position) {
+    //         // get the login error if there is one
+    //         $error = $authenticationUtils->getLastAuthenticationError();
+
+    //         // last username entered by the user
+    //         $lastUsername = $authenticationUtils->getLastUsername();
+
+    //         return $this->render('security/login.html.twig', [
+    //             'last_username' => $lastUsername,
+    //             'error' => $error,
+    //             'refPosition' => $ref,
+    //         ]);
+    //     }
+
+    //     return $this->redirectToRoute('app_positions');
+    // }
+
 
     /**
      * Cette méthode gère la déconnexion de l'utilisateur.
@@ -198,7 +229,16 @@ class SecurityController extends AbstractController
                 try {
                     // Enregistrer l'utilisateur dans la base de données
                     $entityManager->persist($user);
+
+                    // Créer la liaison UserPosition
+                    // $userPosition = new UserPosition();
+                    // $userPosition->setUser($user);
+                    // $userPosition->setPosition($position); // $position est déjà récupéré plus haut 
+                    // $entityManager->persist($userPosition);
+
+                    // Un seul flush pour tout enregistrer en même temps
                     $entityManager->flush();
+
 
                     // Envoyer un e-mail de confirmation
                     try {
@@ -234,16 +274,38 @@ class SecurityController extends AbstractController
      * @return Response
      */
     #[Route('/dispatch', name: 'app_dispatch')]
-    public function dispatch(Security $security): Response
+    public function dispatch(
+        Security $security, 
+        Request $request,
+        EntityManagerInterface $entityManager
+    ): Response
     {
         $user = $this->getUser();
-        
+
         if ($this->isGranted('ROLE_ADMIN')) {
             return $this->redirectToRoute('admin_dashboard', [], Response::HTTP_SEE_OTHER);
+
         } elseif ($this->isGranted('ROLE_USER') && ($user->getRoles() === ["ROLE_USER"])) {
+
+            // 1. Récupérer et nettoyer IMMÉDIATEMENT la session
+            $ref = $request->getSession()->get('_target_ref');
+            $request->getSession()->remove('_target_ref'); 
+
+            if ($ref) {
+                // 2. Revalider la ref en base
+                $position = $entityManager->getRepository(Position::class)->findOneBy(['reference' => $ref]);
+
+                // 3. Vérifier que la position ET la campagne ne sont PAS supprimées
+                if ($position && !$position->isDeleted() && !$position->getCampaign()->isDeleted()) {
+                    return $this->redirectToRoute('app_submission', ['ref' => $ref]);
+                }
+            }
+
+            // Pas de ref, ref invalide, ou position/campagne supprimée → app_home
             return $this->redirectToRoute('app_home');
+
         } else {
-            $this->addFlash("error","Accès non autorisé");
+            $this->addFlash("error", "Accès non autorisé");
             return $security->logout(false);
         }
     }

@@ -140,6 +140,14 @@ class Campaign
         return $this;
     }
 
+    /**
+     * @return Collection<int, Position>
+     */
+    public function getPositions(): Collection
+    {
+        return $this->positions;
+    }
+
     public function addPosition(Position $position): static
     {
         if (!$this->positions->contains($position)) {

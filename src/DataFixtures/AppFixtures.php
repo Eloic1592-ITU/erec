@@ -11,6 +11,7 @@ use App\Entity\Level;
 use App\Entity\Skill;
 use App\Entity\Civility;
 use App\Entity\MaritalStatus;
+use App\Entity\Campaign;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ManagerRegistry;
 use Doctrine\Persistence\ObjectManager;
@@ -36,6 +37,7 @@ class AppFixtures extends Fixture
         // Set the Oracle session date formats
         $this->connection->executeQuery("ALTER SESSION SET NLS_DATE_FORMAT = 'YYYY-MM-DD HH24:MI:SS' NLS_TIMESTAMP_FORMAT = 'YYYY-MM-DD HH24:MI:SS' NLS_TIMESTAMP_TZ_FORMAT = 'YYYY-MM-DD HH24:MI:SS TZH:TZM'");
 
+        $this->loadCampaign($manager);
         $this->loadPosition($manager);
         
         $manager->flush();
@@ -134,25 +136,35 @@ class AppFixtures extends Fixture
         }
     }
 
-    private function loadPosition(ObjectManager $manager): void
-    {
-        $positionChoices = [
-            'Economistes' => 'ECO0224',
-            'Juristes' => 'JUR0224',
-            'Auditeurs informatiques et Auditeurs internes' => 'AUD0224',
-            'Acheteurs polyvalents et Acheteurs spécialisés' => 'ACH0224',
-            'Acheteurs Gestionnaires de contrat' => 'GES0224',
-            'Ingénieurs et Techniciens informatiques' => 'INF0224',
-            'Spécialistes en Actuariat' => 'ACT0224',
-        ];
+private function loadPosition(ObjectManager $manager): void
+{
+    $positionChoices = [
+        'Economistes' => 'ECO0224',
+        'Juristes' => 'JUR0224',
+        'Auditeurs informatiques et Auditeurs internes' => 'AUD0224',
+        'Acheteurs polyvalents et Acheteurs spécialisés' => 'ACH0224',
+        'Acheteurs Gestionnaires de contrat' => 'GES0224',
+        'Ingénieurs et Techniciens informatiques' => 'INF0224',
+        'Spécialistes en Actuariat' => 'ACT0224',
+    ];
 
-        foreach ($positionChoices as $position => $reference) {
-            $positionEntity = new Position();
-            $positionEntity->setName($position);
-            $positionEntity->setReference($reference);
-            $manager->persist($positionEntity);
-        }
+    $campaignCount = 3; // doit correspondre au nombre de campagnes créées dans loadCampaign()
+
+    foreach ($positionChoices as $position => $reference) {
+        $positionEntity = new Position();
+        $positionEntity->setName($position);
+        $positionEntity->setReference($reference);
+        $positionEntity->setDeleted(false);
+        $positionEntity->setClosingDate(new \DateTime('+30 days'));
+
+        // Assignation aléatoire d'une campagne parmi celles créées dans loadCampaign()
+        $randomCampaignIndex = random_int(0, $campaignCount - 1);
+        $campaign = $this->getReference('campaign_' . $randomCampaignIndex, Campaign::class);
+        $positionEntity->setCampaign($campaign);
+
+        $manager->persist($positionEntity);
     }
+}
 
     private function loadLocation(ObjectManager $manager): void
     {
@@ -284,4 +296,26 @@ class AppFixtures extends Fixture
         }
     }
 
+    // Chargement des donnees de test pour l'entité Campagne
+    private function loadCampaign(ObjectManager $manager): void
+    {
+        $campaignTitles = [
+            'Campagne de recrutement 2026',
+            'Stages été 2026',
+            'Recrutement Prestataire 2026',
+            'Recrutement Sequence 6 2026',
+        ];
+
+        foreach ($campaignTitles as $index => $title) {
+            $campaign = new Campaign();
+            $campaign->setTitle($title);
+            $campaign->setDescription('Description de la campagne : ' . $title);
+            $campaign->setDeleted(false);
+
+            $manager->persist($campaign);
+
+            // Référence pour pouvoir lier les Position à cette campagne dans loadPosition()
+            $this->addReference('campaign_' . $index, $campaign);
+        }
+    }
 }

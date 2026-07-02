@@ -27,6 +27,7 @@ class PositionRepository extends ServiceEntityRepository
         $result = $qb->getQuery()->getArrayResult();
         return !empty($result) ? (int)$result[0]['_TOTAL'] : 0;
     }
+    
 
     //    /**
     //     * @return Position[] Returns an array of Position objects

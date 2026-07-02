@@ -17,43 +17,47 @@ class EngagementType extends AbstractType
     private $positionRepository;
     private $security;
 
-    public function __construct(PositionRepository $positionRepository, Security $security)
+    public function __construct(PositionRepository $positionRepository)
     {
         $this->positionRepository = $positionRepository;
-        $this->security = $security;
     }
 
-    private function getPositionChoices(): array
+    private function getPositionChoices(?string $ref): array
     {
-        // Obtenir l'utilisateur connecté
-        $user = $this->security->getUser();
-
-        if (!$user instanceof \App\Entity\User) {
-            throw new \Exception('User object is not an instance of App\Entity\User');
+        if (!$ref) {
+            return [];
         }
 
-        $referencePosition = $user ? $user->getReferencePosition() : null;
+        // Récupérer la position de référence via la ref
+        $referencePosition = $this->positionRepository->findOneBy(['reference' => $ref]);
 
-        // Récupérer tous les postes sauf celle de l'utilisateur connecté
+        if (!$referencePosition) {
+            return [];
+        }
+
+        // Récupérer tous les postes de la même campagne sauf celui de référence
         $positions = $this->positionRepository->createQueryBuilder('p')
-            ->where('p != :referencePosition')
+            ->where('p.campaign = :campaign')
+            ->andWhere('p != :referencePosition')
             ->andWhere('p.is_deleted = false OR p.is_deleted IS NULL')
+            ->setParameter('campaign', $referencePosition->getCampaign())
             ->setParameter('referencePosition', $referencePosition)
             ->getQuery()
             ->getResult();
-
-        // Créer un tableau de choix pour le formulaire
+             
+        // Créer un tableau de choix pour le formulaire    
         $choices = [];
         foreach ($positions as $position) {
             $choices[$position->getName()] = $position->getName();
         }
 
+        // dump($choices);
         return $choices;
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        $positionChoices = $this->getPositionChoices();
+        $positionChoices = $this->getPositionChoices($options['ref']);
 
         $builder
             ->add('city', TextType::class, [
@@ -97,6 +101,9 @@ class EngagementType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => Engagement::class,
+            'ref' => null,
         ]);
+
+        $resolver->setAllowedTypes('ref', ['null', 'string']);
     }
 }

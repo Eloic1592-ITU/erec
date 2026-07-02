@@ -22,22 +22,31 @@ class EngagementController extends AbstractController
         $this->oracleService = $oracleService;
     }
 
-    #[Route('/engagement/nouveau', name: 'app_engagement_new', methods: ['GET', 'POST'])]
+    // #[Route('/engagement/nouveau', name: 'app_engagement_new', methods: ['GET', 'POST'])]
+    // #[IsGranted('ROLE_USER')]
+    #[Route('/engagement/nouveau/{ref}', name: 'app_engagement_new', methods: ['POST'])]
     #[IsGranted('ROLE_USER')]
-    public function new(Request $request, EntityManagerInterface $entityManager): Response
+    public function new(
+        Request $request, 
+        EntityManagerInterface $entityManager,
+        ?string $ref = null 
+    ): Response
     {
         $this->oracleService->setOracleSessionParams();
 
         $engagement = new Engagement();
 
-        $form = $this->createForm(EngagementType::class, $engagement);
+        // Passer ref au formulaire pour reconstruire les mêmes choix qu'à l'affichage
+        $form = $this->createForm(EngagementType::class, $engagement, [
+            'ref' => $ref,
+        ]);
         $form->handleRequest($request);
-        
+
         if ($form->isSubmitted() && $form->isValid()) {
 
             $engagement->setUser($this->getUser());
             $engagement->setDateEngagement(new \DateTime());
-            
+
             $entityManager->persist($engagement);
             $entityManager->flush();
 
@@ -45,8 +54,9 @@ class EngagementController extends AbstractController
                 return new JsonResponse([
                     'status' => 'success',
                     'message' => "Vos données ont bien été enregistrées.",
-                    'redirectUrl' => $this->generateUrl('app_engagement_edit', ['id' => $engagement->getId()]),
-                    'detailsUrl' => $this->generateUrl('app_details'),
+                    'redirectUrl' => $this->generateUrl('app_engagement_edit', ['id' => $engagement->getId(), 'ref' => $ref]),
+                    'detailsUrl' => $this->generateUrl('app_details', ['ref' => $ref]),
+                    
                 ]);
             }
         }
@@ -63,28 +73,52 @@ class EngagementController extends AbstractController
         }
     }
 
-    #[Route('/engagement/editer/{id}', name: 'app_engagement_edit', methods: ['POST'])]
+    #[Route('/engagement/editer/{id}/{ref}', name: 'app_engagement_edit', methods: ['POST'])]
     #[IsGranted('ROLE_USER')]
-    public function edit(int $id, Request $request, EntityManagerInterface $entityManager): Response
+    public function edit(
+        int $id,
+        Request $request,
+        EntityManagerInterface $entityManager,
+        ?string $ref = null
+    ): Response
     {
         $this->oracleService->setOracleSessionParams();
 
         $engagement = $entityManager->getRepository(Engagement::class)->find($id);
 
-        $form = $this->createForm(EngagementType::class, $engagement);
+        if (!$engagement) {
+            if ($request->isXmlHttpRequest()) {
+                return new JsonResponse([
+                    'status' => 'error',
+                    'message' => ["Engagement introuvable."],
+                ], Response::HTTP_NOT_FOUND);
+            }
+            throw $this->createNotFoundException('Engagement introuvable.');
+        }
+
+        // Sécurité : empêcher un user de modifier l'engagement d'un autre
+        if ($engagement->getUser() !== $this->getUser()) {
+            throw $this->createAccessDeniedException("Accès non autorisé.");
+        }
+
+        // Passer ref au formulaire pour reconstruire les mêmes choix
+        $form = $this->createForm(EngagementType::class, $engagement, [
+            'ref' => $ref,
+        ]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            
-            $entityManager->persist($engagement);
+
+            $engagement->setDateEngagement(new \DateTime());
+
             $entityManager->flush();
 
             if ($request->isXmlHttpRequest()) {
                 return new JsonResponse([
                     'status' => 'success',
-                    'message' => "Modification enregistrées.",
-                    'isEdit' => true,
-                    'detailsUrl' => $this->generateUrl('app_details'),
+                    'message' => "Vos données ont bien été enregistrées.",
+                    'redirectUrl' => $this->generateUrl('app_engagement_edit', ['id' => $engagement->getId(), 'ref' => $ref]),
+                    'detailsUrl' => $this->generateUrl('app_details', ['ref' => $ref]),
                 ]);
             }
         }

@@ -73,12 +73,8 @@
         <span role="status">Enregistrement...</span>
       </button>
 
-      <a 
-        {% if is_engagement_edit %} 
-          href="{{ path('app_details') }}" 
-        {% else %}
-          href="#" 
-        {% endif %}
+      <a
+        href={{ path('app_job_application_index') }}
         class="next-step btn btn-success d-flex align-items-center gap-2 {% if not is_engagement_edit %} disabled {% endif %}"
       >
         <i class="bx bx-send"></i> <span class="d-none d-lg-flex">Valider ma candidature</span>

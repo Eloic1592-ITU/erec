@@ -27,10 +27,12 @@
                     <button 
                         class="btn-action bg-primary" 
                         data-bs-toggle="modal" 
-                        data-bs-target="#"
+                        data-url="#"
                     >
+                     <a class="nav-link" href="{{ path('admin_position_per_campaign', {'id': campaign.getId()}) }}">
                         <i class='bx bx-info-circle me-2'></i> 
-                        <span>Détails</span>
+                        <span>Postes</span>
+                     </a>
                     </button>
                     <button 
                         class="btn-action bg-warning" 

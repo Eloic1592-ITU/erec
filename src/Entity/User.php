@@ -96,6 +96,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\JoinColumn(nullable: false)]
     private ?Position $reference_position = null;
 
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: UserPosition::class)]
+    private Collection $userPositions;
+
     #[ORM\Column(nullable: true)]
     private ?bool $is_deleted = null;
 

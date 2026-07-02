@@ -5,6 +5,7 @@ namespace App\Repository;
 use App\Entity\JobApplication;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use App\Entity\User;
 
 /**
  * @extends ServiceEntityRepository<JobApplication>
@@ -40,4 +41,16 @@ class JobApplicationRepository extends ServiceEntityRepository
     //            ->getOneOrNullResult()
     //        ;
     //    }
+
+    // JobApplicationRepository.php
+
+    public function findByUser(User $user): array
+    {
+        return $this->createQueryBuilder('ja')
+            ->where('ja.user = :user')
+            ->setParameter('user', $user)
+            ->orderBy('ja.id', 'DESC') 
+            ->getQuery()
+            ->getResult();
+    }
 }

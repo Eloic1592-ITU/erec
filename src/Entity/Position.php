@@ -7,11 +7,9 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use App\Entity\Campaign;
 use App\Entity\JobApplication;
-use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: PositionRepository::class)]
-#[ORM\UniqueConstraint(name: 'UNIQ_IDENTIFIER_REFERENCE', fields: ['reference'])]
 #[ORM\Table(name: '`EREC_POSITION`')]
 class Position
 {
@@ -37,7 +35,7 @@ class Position
 
  
     #[ORM\ManyToOne(targetEntity: Campaign::class, inversedBy: 'positions')]
-    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\JoinColumn(name: 'campaign_id', referencedColumnName: 'id', nullable: false)]
     private ?Campaign $campaign = null;
 
     // Il peut avoir  plusieurs candidatures (Job_application) pour un poste (Position)
@@ -50,12 +48,13 @@ class Position
     #[ORM\Column(type: 'oracle_date')]
     private ?\DateTimeInterface $closing_date = null;
 
-
+    #[ORM\OneToMany(mappedBy: 'position', targetEntity: UserPosition::class)]
+    private Collection $userPositions;
 
     public function __construct()
     {
         $this->users = new ArrayCollection();
-        $this->jobApplications = new ArrayCollection(); // manquant
+        $this->jobApplications = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -151,7 +150,7 @@ class Position
         return $this;
     }
 
-        public function addJobApplication(JobApplication $jobApplication): static
+    public function addJobApplication(JobApplication $jobApplication): static
     {
         if (!$this->jobApplications->contains($jobApplication)) {
             $this->jobApplications->add($jobApplication);

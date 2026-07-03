@@ -13,6 +13,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 use App\Repository\PositionRepository;
+use App\Repository\JobApplicationRepository;
 
 class JobApplicationController extends AbstractController
 {
@@ -54,7 +55,11 @@ class JobApplicationController extends AbstractController
     
     #[Route('/candidature/new/{ref}', name: 'app_job_application_new', methods: ['POST'])]
     #[IsGranted('ROLE_USER')]
-    public function new(Request $request, EntityManagerInterface $entityManager, PositionRepository $positionRepository, ?string $ref): Response
+    public function new(Request $request, EntityManagerInterface $entityManager, 
+        PositionRepository $positionRepository,
+        JobApplicationRepository $jobApplicationRepository,
+        ?string $ref
+    ): Response
     {
         $user = $this->getUser();
     
@@ -67,7 +72,19 @@ class JobApplicationController extends AbstractController
         if (!$position) {
             return $this->redirectToRoute('app_positions');
         }
-    
+
+        $existingjobApplication = $jobApplicationRepository->findOneByCampaignAndUser($position->getCampaign(), $user);
+
+        // Verifie si l'utilisateur a déjà postulé à un poste dans la campagne
+        if ($existingjobApplication) {
+            if ($request->isXmlHttpRequest()) {
+                return new JsonResponse([
+                    'status' => 'error',
+                    'message' => ["Vous avez déjà postulé au poste de: " . $existingjobApplication->getPosition()->getName() . " dans cette campagne."],
+                ]);
+            }
+        }
+
         $jobApplication = new JobApplication();
         $jobApplication->setPosition($position);
         $jobApplication->setCampaign($position->getCampaign());

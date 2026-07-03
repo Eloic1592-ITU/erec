@@ -6,6 +6,7 @@ use App\Entity\JobApplication;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use App\Entity\User;
+use App\Entity\Campaign;
 
 /**
  * @extends ServiceEntityRepository<JobApplication>
@@ -52,5 +53,18 @@ class JobApplicationRepository extends ServiceEntityRepository
             ->orderBy('ja.id', 'DESC') 
             ->getQuery()
             ->getResult();
+    }
+
+    // Verifie si l'utilisateur a déjà postulé à un poste dans la campagne
+    public function findOneByCampaignAndUser(Campaign $campaign, User $user): ?JobApplication
+    {
+        return $this->createQueryBuilder('ja')
+            ->join('ja.position', 'p')
+            ->where('ja.user = :user')
+            ->andWhere('p.campaign = :campaign')
+            ->setParameter('user', $user)
+            ->setParameter('campaign', $campaign)
+            ->getQuery()
+            ->getOneOrNullResult();
     }
 }

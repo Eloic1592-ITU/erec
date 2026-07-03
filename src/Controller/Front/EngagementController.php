@@ -22,8 +22,6 @@ class EngagementController extends AbstractController
         $this->oracleService = $oracleService;
     }
 
-    // #[Route('/engagement/nouveau', name: 'app_engagement_new', methods: ['GET', 'POST'])]
-    // #[IsGranted('ROLE_USER')]
     #[Route('/engagement/nouveau/{ref}', name: 'app_engagement_new', methods: ['POST'])]
     #[IsGranted('ROLE_USER')]
     public function new(

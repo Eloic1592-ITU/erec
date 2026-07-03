@@ -18,8 +18,9 @@ use Symfony\Component\Routing\Attribute\Route;
 #[Route('/pdf')]
 class PdfController extends AbstractController
 { 
-    #[Route('/imprimer-details', name: 'app_pdf_submission_details', methods: ['GET'])]
+    #[Route('/imprimer-details/{id}', name: 'app_pdf_submission_details', methods: ['GET'])]
     public function printDetails(
+        int $id,
         JobApplicationRepository $repository, 
         ProfileRepository $profileRepository, 
         EducationRepository $educationRepository,
@@ -31,7 +32,7 @@ class PdfController extends AbstractController
         EngagementRepository $engagementRepository,
     ): Response
     {
-        $jobApplication = $repository->findOneBy(['user' => $this->getUser()]);
+        $jobApplication = $repository->find($id);
         $profile = $profileRepository->findOneBy(['user' => $this->getUser()]);
         $educations = $educationRepository->findBy(['user' => $this->getUser()]);
         $certifications = $certificationRepository->findBy(['user' => $this->getUser()]);

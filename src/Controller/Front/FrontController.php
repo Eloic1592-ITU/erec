@@ -43,8 +43,14 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 #[Route('/')]
 class FrontController extends AbstractController 
 {
-    #[Route('/', name:'app_positions', methods:['GET'])]
-    public function position(EntityManagerInterface $entityManager, PositionRepository $positionRepository) : Response 
+    #[Route('/', name:'app_index', methods:['GET'])]
+    public function default() : Response 
+    {
+        return $this->redirectToRoute('app_marketing');
+    }
+
+    #[Route('/poste', name:'app_positions', methods:['GET'])]
+    public function position(EntityManagerInterface $entityManager) : Response 
     {
         // get All Positions
         $query = $entityManager->createQuery(
@@ -59,10 +65,9 @@ class FrontController extends AbstractController
             'positions' => $positions
         ]);
     }
-    #[Route('/{campaign_id}', name: 'app_positions_campaign', methods: ['GET'], requirements: ['campaign_id' => '\d+'])]
+    #[Route('/campagne/CAMP{campaign_id}/postes', name: 'app_positions_campaign', methods: ['GET'], requirements: ['campaign_id' => '\d+'])]
     public function position_campaign(
         EntityManagerInterface $entityManager, 
-        PositionRepository $positionRepository,
         ?int $campaign_id = null
     ): Response     
     {
@@ -95,7 +100,7 @@ class FrontController extends AbstractController
     }
 
     // Page d'accueil avec passage d'ID d'un poste
-    #[Route('/accueil/{ref}', name:'app_landing', methods:['GET'])]
+    #[Route('/campagne/CAMP{campaign_id}/postes/{ref}/postuler', name:'app_landing', methods:['GET'])]
     public function landing(string $ref, EntityManagerInterface $entityManager) : Response
     {
         $existingPosition = $entityManager->getRepository(Position::class)->findOneBy(['reference' => $ref]);
@@ -111,7 +116,7 @@ class FrontController extends AbstractController
                 if ($this->isGranted('ROLE_ADMIN')) {
                     return $this->redirectToRoute('admin_dashboard', [], Response::HTTP_SEE_OTHER);
                 } elseif ($this->isGranted('ROLE_USER') && ($oUser->getRoles() === ["ROLE_USER"])) {
-                    return $this->redirectToRoute('app_submission', [], Response::HTTP_SEE_OTHER);
+                    return $this->redirectToRoute('app_submission', ['ref' => $ref], Response::HTTP_SEE_OTHER);
                 }
             }
             return $this->render('front/marketing/index.html.twig', [
@@ -179,7 +184,7 @@ class FrontController extends AbstractController
             throw $this->createAccessDeniedException('Utilisateur invalide.');
         }
 
-        $jobApplication = $repository->find($id);
+        $jobApplication = $repository->findOneBy(['id' => $id,'user' => $user]);
 
         if (!$jobApplication) {
             throw $this->createNotFoundException('Candidature introuvable.');
@@ -506,10 +511,90 @@ class FrontController extends AbstractController
         ]);
     }
 
-    #[Route('/utilisateur/envoie-candidature/{id}', name: 'submit_application', methods: ['POST', 'GET'])]
+    // #[Route('/utilisateur/envoie-candidature/{id}', name: 'submit_application', methods: ['POST', 'GET'])]
+    // #[IsGranted('ROLE_USER')]
+    // public function submitApplication(
+    //     int $id,
+    //     EntityManagerInterface $entityManager, 
+    //     EmailService $emailService,
+    //     JobApplicationRepository $repository, 
+    //     ProfileRepository $profileRepository, 
+    //     EducationRepository $educationRepository,
+    //     CertificationRepository $certificationRepository,
+    //     InternshipRepository $internshipRepository,
+    //     WorkExperienceRepository $workExperienceRepository,
+    //     OtherInfoRepository $otherInfoRepository,
+    //     DocumentRepository $documentRepository,
+    //     EngagementRepository $engagementRepository,
+    // ): Response
+    // {
+    //     $user = $entityManager->getRepository(User::class)->find($id);
+
+    //     $jobApplication = $repository->findOneBy(['user' => $this->getUser()]);
+    //     $profile = $profileRepository->findOneBy(['user' => $this->getUser()]);
+    //     $educations = $educationRepository->findBy(['user' => $this->getUser()]);
+    //     $certifications = $certificationRepository->findBy(['user' => $this->getUser()]);
+    //     $internships = $internshipRepository->findBy(['user' => $this->getUser()]);
+    //     $workExperiences = $workExperienceRepository->findBy(['user' => $this->getUser()]);
+    //     $otherInfo = $otherInfoRepository->findOneBy(['user' => $this->getUser()]);
+    //     $document = $documentRepository->findOneBy(['user' => $this->getUser()]);
+    //     $engagement = $engagementRepository->findOneBy(['user' => $this->getUser()]);
+
+    //     // Vérifier si l'utilisateur existe
+    //     if (!$user || !$user instanceof PasswordAuthenticatedUserInterface) {
+    //         $this->addFlash('error', 'Accès non autorisé.');
+    //         return $this->redirectToRoute('app_home');
+    //     }
+
+    //     // Vérifier que l'utilisateur connecté correspond à l'utilisateur dont le profil est édité
+    //     if ($this->getUser() !== $user) {
+    //         $this->addFlash('error', 'Accès non autorisé.');
+    //         return $this->redirectToRoute('app_home');
+    //     }
+
+    //     // Vérification du type d'objet
+    //     if (!$user instanceof \App\Entity\User) {
+    //         throw new \Exception('User object is not an instance of App\Entity\User');
+    //     }
+
+    //     if (
+    //         $jobApplication && 
+    //         $profile && 
+    //         $educations && 
+    //         $otherInfo && 
+    //         $document && 
+    //         $engagement
+    //     ) {
+    //         $user->setHasSubmittedApplication(true);
+
+    //         $entityManager->persist($user);
+    //         $entityManager->flush();
+    
+    //         // Envoi de l'e-mail de notification
+    //         try {
+    //             $emailService->sendApplicationConfirmationEmail($user);
+    //             $this->addFlash(
+    //                 'success', 
+    //                 'Candidature envoyée avec succès.'
+    //             );
+    //         } catch (\Exception $e) {
+    //             $this->addFlash(
+    //                 'error', 
+    //                 "Erreur lors de l'envoi de l'e-mail de confirmation."
+    //             );
+    //         }
+
+    //         $this->addFlash('success', 'Candidature envoyée.');
+    //     }
+
+    //     return $this->redirectToRoute('app_home');
+    // }
+
+    #[Route('/utilisateur/envoie-candidature/{id}/position/{ref}', name: 'submit_application', methods: ['POST', 'GET'])]
     #[IsGranted('ROLE_USER')]
     public function submitApplication(
         int $id,
+        ?string $ref,
         EntityManagerInterface $entityManager, 
         EmailService $emailService,
         JobApplicationRepository $repository, 
@@ -521,11 +606,15 @@ class FrontController extends AbstractController
         OtherInfoRepository $otherInfoRepository,
         DocumentRepository $documentRepository,
         EngagementRepository $engagementRepository,
+        PositionRepository $positionRepository,
     ): Response
     {
         $user = $entityManager->getRepository(User::class)->find($id);
-
-        $jobApplication = $repository->findOneBy(['user' => $this->getUser()]);
+        $position = $positionRepository->findOneBy(['reference' => $ref]);
+        $jobApplication = $repository->findOneBy([
+            'user' => $user,
+            'position' => $position,
+        ]);
         $profile = $profileRepository->findOneBy(['user' => $this->getUser()]);
         $educations = $educationRepository->findBy(['user' => $this->getUser()]);
         $certifications = $certificationRepository->findBy(['user' => $this->getUser()]);

@@ -67,4 +67,15 @@ class JobApplicationRepository extends ServiceEntityRepository
             ->getQuery()
             ->getOneOrNullResult();
     }
+
+    public function findSubmitted(): array
+    {
+        return $this->createQueryBuilder('ja')
+            ->join('ja.user', 'u')
+            ->where('ja.hasSubmittedApplication = :status')
+            ->setParameter('status', true)
+            ->orderBy('ja.id', 'DESC')
+            ->getQuery()
+            ->getResult();
+    }
 }

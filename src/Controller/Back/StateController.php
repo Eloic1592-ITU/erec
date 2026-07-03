@@ -99,9 +99,10 @@ class StateController extends AbstractController
 
         // Préparez les données pour l'exportation
         $data = [];
-
-        foreach ($position->getUsers() as $user) {
-            if (!$user->getHasSubmittedApplication()) {
+        
+        foreach ($position->getJobApplications() as $jobApplication) {
+            $user = $jobApplication->getUser();
+            if (!$user || !$jobApplication->getHasSubmittedApplication()) {
                 continue;
             }
 
@@ -148,9 +149,9 @@ class StateController extends AbstractController
                     $i === 0 ? $calculateAge($user->getBirthDate()) : '',
                     $i === 0 ? $user->getProfile()->getPhone1() : '',
                     $i === 0 ? $user->getEmail() : '',
-                    $i === 0 ? $user->getJobApplication()->getPrimaryLocation() : '',
-                    $i === 0 ? $user->getJobApplication()->getSecondaryLocation() : '',
-                    $i === 0 ? $user->getJobApplication()->getTertiaryLocation() : '',
+                    $i === 0 ? $jobApplication->getPrimaryLocation() : '',
+                    $i === 0 ? $jobApplication->getSecondaryLocation() : '',
+                    $i === 0 ? $jobApplication->getTertiaryLocation() : '',
                     $i === 0 ? $user->getEngagement()->getSecondPosition() : '',
                     $i === 0 ? $user->getEngagement()->getThirdPosition() : '',
                     
@@ -182,10 +183,14 @@ class StateController extends AbstractController
                     '',
                     '',
                 ];
-
+                
+                // dd($row);
                 $data[] = $row;
+
             }
+            
         }
+        // dd($data);
 
         return $excelExportService->exportWithHeaders($headers, $data, 'poste_' . $position->getId() . '_candidats.xlsx');
     }

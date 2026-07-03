@@ -45,6 +45,10 @@ class JobApplication
     #[ORM\JoinColumn(name: 'position_id', referencedColumnName: 'id', nullable: false)]
     private ?Position $position = null;
 
+    // Cette colonne indique si la candidature a ete soumise (envoyer par mail a l'administrateur) ou non.
+    #[ORM\Column(type: 'boolean', options: ['default' => false])]
+    private bool $hasSubmittedApplication = false;
+
 
     public function getId(): ?int
     {
@@ -119,6 +123,16 @@ class JobApplication
     public function setPosition(?Position $position): static
     {
         $this->position = $position;
+
+        return $this;
+    }
+    public function getHasSubmittedApplication(): bool
+    {
+        return $this->hasSubmittedApplication;
+    }
+    public function setHasSubmittedApplication(bool $hasSubmittedApplication): static
+    {
+        $this->hasSubmittedApplication = $hasSubmittedApplication;
 
         return $this;
     }

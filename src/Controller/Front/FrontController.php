@@ -590,7 +590,7 @@ class FrontController extends AbstractController
     //     return $this->redirectToRoute('app_home');
     // }
 
-    #[Route('/utilisateur/envoie-candidature/{id}/position/{ref}', name: 'submit_application', methods: ['POST', 'GET'])]
+    #[Route('/utilisateur/envoie-candidature/{id}/poste/{ref}', name: 'submit_application', methods: ['POST', 'GET'])]
     #[IsGranted('ROLE_USER')]
     public function submitApplication(
         int $id,
@@ -649,9 +649,9 @@ class FrontController extends AbstractController
             $document && 
             $engagement
         ) {
-            $user->setHasSubmittedApplication(true);
+            $jobApplication->setHasSubmittedApplication(true);
 
-            $entityManager->persist($user);
+            $entityManager->persist($jobApplication);
             $entityManager->flush();
     
             // Envoi de l'e-mail de notification

@@ -116,16 +116,19 @@ class Position
         return $this;
     }
 
-    public function getSubmittedApplicationCount(): int
-    {
-        $count = 0;
-        foreach ($this->getUsers() as $user) {
-            if ($user->getHasSubmittedApplication()) {
-                $count++;
-            }
-        }
-        return $count;
-    }
+    // public function getSubmittedApplicationCount(): int
+    // {
+    //     $count = 0;
+    //     foreach ($this->getUsers() as $user) {
+    //         if ($user->getHasSubmittedApplication()) {
+    //             $count++;
+    //         }
+    //     }
+    //     return $count;
+    // }
+
+
+    
 
     public function isDeleted(): ?bool
     {
@@ -149,6 +152,26 @@ class Position
 
         return $this;
     }
+
+    /**
+     * @return Collection<int, User>
+     */
+    public function getJobApplications(): Collection
+    {
+        return $this->jobApplications;
+    }
+
+    public function getSubmittedApplicationCount(): int
+    {
+        $count = 0;
+        foreach ($this->jobApplications as $jobApplication) {
+            if ($jobApplication->getHasSubmittedApplication()) {
+                $count++;
+            }
+        }
+        return $count;
+    }
+
 
     public function addJobApplication(JobApplication $jobApplication): static
     {

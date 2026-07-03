@@ -6,6 +6,7 @@ use App\Entity\User;
 use App\Repository\DegreeRepository;
 use App\Repository\FieldOfStudyRepository;
 use App\Repository\PositionRepository;
+use App\Repository\JobApplicationRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -22,6 +23,7 @@ class CandidateController extends AbstractController
         FieldOfStudyRepository $fieldOfStudyRepository,
         DegreeRepository $degreeRepository,
         PositionRepository $positionRepository,
+        JobApplicationRepository $jobApplicationRepository,
     ) : Response 
     {   
         // Page Title
@@ -34,11 +36,11 @@ class CandidateController extends AbstractController
         ];
 
         // Requête DQL pour récupérer les utilisateurs ayant soumis leur candidature
-        $query = $entityManager->createQuery(
-            'SELECT u
-             FROM App\Entity\User u
-             WHERE u.hasSubmittedApplication = :status'
-        )->setParameter('status', true);
+        // $query = $entityManager->createQuery(
+        //     'SELECT u
+        //      FROM App\Entity\User u
+        //      WHERE u.hasSubmittedApplication = :status'
+        // )->setParameter('status', true);
 
         // Récupération des statistiques sur les domaines d'études
         $allfieldOfStudy = $fieldOfStudyRepository->findAll();
@@ -94,7 +96,7 @@ class CandidateController extends AbstractController
         // Tous les postes
         //$positions = $positionRepository->findAll();
 
-        $candidates = $query->getResult();
+        $candidates = $jobApplicationRepository->findSubmitted();
 
         return $this->render('back/candidate/index.html.twig', [
             'title' => $title,

@@ -78,4 +78,16 @@ class JobApplicationRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
     }
+
+    public function findCountSubmitted(): int
+    {
+        return $this->createQueryBuilder('ja')
+            ->select('COUNT(ja)')
+            ->join('ja.user', 'u')
+            ->where('ja.hasSubmittedApplication = :status')
+            ->setParameter('status', true)
+            ->getQuery()
+            ->getSingleScalarResult();
+    }
 }
+

@@ -13,6 +13,7 @@ use App\Repository\MaritalStatusRepository;
 use App\Repository\PositionRepository;
 use App\Repository\SkillRepository;
 use App\Repository\UserRepository;
+use App\Repository\JobApplicationRepository;
 use App\Repository\WorkExperienceRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -36,7 +37,8 @@ class BackController extends AbstractController
         LevelRepository $levelRepository,
         SkillRepository $skillRepository,
         CivilityRepository $civilityRepository,
-        MaritalStatusRepository $maritalStatusRepository
+        MaritalStatusRepository $maritalStatusRepository,
+        JobApplicationRepository $jobApplicationRepository,
     ) : Response 
     {   
         // Header Data
@@ -46,7 +48,7 @@ class BackController extends AbstractController
         $users = $userRepository->countAllUsers();
 
         // Nombre total des Candidats
-        $candidats = $userRepository->countAllUsersHasSubmitApplication();
+        $candidats = $jobApplicationRepository->findCountSubmitted();
 
         // Nombre total des diplômes
         $educations = $educationRepository->countAllEducation();

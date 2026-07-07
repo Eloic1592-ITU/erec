@@ -81,10 +81,10 @@ $(document).ready(function () {
             // Changer l'action du formulaire d'ajout en action pour le formulaire d'edition
             $("#engagement-form").attr("action", response.redirectUrl);
 
-            if (!response.isEdit) {
-              engagementNextBtn.removeClass('disabled');
-              engagementNextBtn.attr('href', response.detailsUrl);
-            }
+            // if (!response.isEdit) {
+            //   engagementNextBtn.removeClass('disabled');
+            //   engagementNextBtn.attr('href', response.detailsUrl);
+            // }
 
             engagementNextBtn.removeClass('disabled');
             engagementNextBtn.attr('href', response.detailsUrl);

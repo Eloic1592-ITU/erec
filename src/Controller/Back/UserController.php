@@ -6,6 +6,7 @@ use App\Entity\Position;
 use App\Entity\User;
 use App\Form\RegistrationType;
 use App\Repository\UserRepository;
+use App\Repository\JobApplicationRepository;
 use App\Service\EmailService;
 use App\Service\OracleService;
 use App\Utilities\PasswordGenerator;
@@ -31,7 +32,7 @@ class UserController extends AbstractController
 
     #[Route('/', name:'admin_user', methods:['GET'])]
     #[IsGranted('ROLE_ADMIN')]
-    public function index(UserRepository $userRepository, EntityManagerInterface $entityManager) : Response 
+    public function index(UserRepository $userRepository, EntityManagerInterface $entityManager, JobApplicationRepository $jobApplicationRepository) : Response 
     {   
         // Header Data
         $title = "Utilisateurs";
@@ -61,12 +62,7 @@ class UserController extends AbstractController
         ->getSingleScalarResult();
 
         // Compter le nombre d'utilisateurs avec le rôle ROLE_USER et hasSubmittedApplication = true
-        $submittedUserCount = $entityManager->createQuery(
-            'SELECT COUNT(u.id)
-            FROM App\Entity\User u
-            WHERE u.roles LIKE :role AND u.hasSubmittedApplication = true'
-        )->setParameter('role', '%"ROLE_USER"%')
-        ->getSingleScalarResult();
+        $submittedUserCount = $jobApplicationRepository->findCountSubmitted();
 
         // Calculer le nombre d'utilisateurs hors candidats
         $usersOnlyCount = $userCount - $submittedUserCount;

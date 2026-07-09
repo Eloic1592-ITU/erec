@@ -13,14 +13,14 @@ final class Version20260623084617 extends AbstractMigration
     {
         return 'Ajout campagnes, positions multiples par candidature, backfill des données existantes';
     }
-
+ 
     public function preUp(Schema $schema): void
     {
         parent::preUp($schema);
-
+ 
         $this->addSql("ALTER session SET NLS_DATE_FORMAT = 'YYYY-MM-DD HH24:MI:SS' NLS_TIMESTAMP_FORMAT = 'YYYY-MM-DD HH24:MI:SS' NLS_TIMESTAMP_TZ_FORMAT = 'YYYY-MM-DD HH24:MI:SS TZH:TZM'");
     }
-
+ 
     public function up(Schema $schema): void
     {
         // 1) Nouvelles tables (inchangé)
@@ -34,31 +34,37 @@ final class Version20260623084617 extends AbstractMigration
         $this->addSql('CREATE INDEX IDX_54113136DD842E46 ON "EREC_USER_POSITION" (position_id)');
         $this->addSql('ALTER TABLE "EREC_USER_POSITION" ADD CONSTRAINT FK_54113136A76ED395 FOREIGN KEY (user_id) REFERENCES "EREC_USER" (id)');
         $this->addSql('ALTER TABLE "EREC_USER_POSITION" ADD CONSTRAINT FK_54113136DD842E46 FOREIGN KEY (position_id) REFERENCES "EREC_POSITION" (id)');
-
+ 
+        // Backfill : chaque utilisateur existant avait une seule position (reference_position_id) ;
+        // on crée la ligne de liaison correspondante dans la nouvelle table many-to-many.
+        $this->addSql('INSERT INTO "EREC_USER_POSITION" (id, user_id, position_id) SELECT "EREC_USER_POSITION_id_seq".NEXTVAL, u.id, u.reference_position_id FROM EREC_USER u WHERE NOT EXISTS (SELECT 1 FROM "EREC_USER_POSITION" up WHERE up.user_id = u.id AND up.position_id = u.reference_position_id)');
+ 
+        // Note : date_engagement est un champ obligatoire (confirmé) -> pas de MODIFY,
+        // reste NOT NULL tel que créé en migration 1.
         $this->addSql('DROP INDEX uniq_4679e0caa76ed395');
-
+ 
         // 2) Nouvelles colonnes ajoutées EN NULLABLE d'abord (tables non vides en prod)
         $this->addSql('ALTER TABLE EREC_JOB_APPLICATION ADD (campaign_id NUMBER(10) DEFAULT NULL, position_id NUMBER(10) DEFAULT NULL)');
         $this->addSql('ALTER TABLE EREC_POSITION ADD (campaign_id NUMBER(10) DEFAULT NULL, closing_date DATE DEFAULT NULL)');
         $this->addSql('COMMENT ON COLUMN EREC_POSITION.closing_date IS \'(DC2Type:oracle_date)\'');
-
+ 
         // 3) Campagne "legacy" pour rattacher tout ce qui existait avant les campagnes
         $this->addSql("INSERT INTO \"EREC_CAMPAIGN\" (id, title, is_deleted, created_at) VALUES (\"EREC_CAMPAIGN_id_seq\".NEXTVAL, 'Campagne historique (avant migration)', 0, SYSDATE)");
-
+ 
         // 4) Backfill : positions et candidatures existantes rattachées à la campagne legacy
         $this->addSql("UPDATE EREC_POSITION SET campaign_id = (SELECT id FROM \"EREC_CAMPAIGN\" WHERE title = 'Campagne historique (avant migration)') WHERE campaign_id IS NULL");
         $this->addSql("UPDATE EREC_JOB_APPLICATION SET campaign_id = (SELECT id FROM \"EREC_CAMPAIGN\" WHERE title = 'Campagne historique (avant migration)') WHERE campaign_id IS NULL");
-
+ 
         // closing_date arbitraire dans le futur : à ajuster si tu veux que ces anciennes offres soient déjà closes
         $this->addSql("UPDATE EREC_POSITION SET closing_date = TO_DATE('2099-12-31 00:00:00','YYYY-MM-DD HH24:MI:SS') WHERE closing_date IS NULL");
-
+ 
         // 5) Backfill : position_id de la candidature = ancienne reference_position_id de l'utilisateur
         $this->addSql('UPDATE EREC_JOB_APPLICATION ja SET position_id = (SELECT u.reference_position_id FROM EREC_USER u WHERE u.id = ja.user_id) WHERE ja.position_id IS NULL');
-
+ 
         // 6) Une fois les données propres, on verrouille les contraintes NOT NULL
         $this->addSql('ALTER TABLE EREC_JOB_APPLICATION MODIFY (campaign_id NUMBER(10) NOT NULL, position_id NUMBER(10) NOT NULL)');
         $this->addSql('ALTER TABLE EREC_POSITION MODIFY (campaign_id NUMBER(10) NOT NULL, closing_date DATE NOT NULL)');
-
+ 
         // 7) Contraintes FK + index (inchangé)
         $this->addSql('ALTER TABLE EREC_JOB_APPLICATION ADD CONSTRAINT FK_4679E0CAF639F774 FOREIGN KEY (campaign_id) REFERENCES "EREC_CAMPAIGN" (id)');
         $this->addSql('ALTER TABLE EREC_JOB_APPLICATION ADD CONSTRAINT FK_4679E0CADD842E46 FOREIGN KEY (position_id) REFERENCES "EREC_POSITION" (id)');
@@ -71,33 +77,33 @@ final class Version20260623084617 extends AbstractMigration
         $this->addSql('ALTER INDEX uniq_identifier_reference RENAME TO UNIQ_E5D280D0AEA34913');
 
     }
-
+ 
     public function down(Schema $schema): void
     {
         $this->addSql('ALTER TABLE "EREC_JOB_APPLICATION" DROP CONSTRAINT FK_4679E0CAF639F774');
         $this->addSql('ALTER TABLE "EREC_JOB_APPLICATION" DROP CONSTRAINT FK_4679E0CADD842E46');
         $this->addSql('ALTER TABLE "EREC_POSITION" DROP CONSTRAINT FK_E5D280D0F639F774');
-
+ 
         $this->addSql('DROP INDEX IDX_4679E0CAA76ED395');
         $this->addSql('DROP INDEX IDX_4679E0CAF639F774');
         $this->addSql('DROP INDEX IDX_4679E0CADD842E46');
         $this->addSql('DROP INDEX uniq_user_campaign');
         $this->addSql('DROP INDEX IDX_E5D280D0F639F774');
         $this->addSql('ALTER INDEX uniq_e5d280d0aea34913 RENAME TO uniq_identifier_reference');
-
+ 
         $this->addSql('ALTER TABLE "EREC_JOB_APPLICATION" DROP (campaign_id, position_id)');
         $this->addSql('ALTER TABLE "EREC_POSITION" DROP (campaign_id, closing_date)');
         $this->addSql("CREATE UNIQUE INDEX uniq_4679e0caa76ed395 ON \"EREC_JOB_APPLICATION\" (USER_ID)");
-
+ 
         // Supprime la campagne legacy créée au up()
         $this->addSql("DELETE FROM \"EREC_CAMPAIGN\" WHERE title = 'Campagne historique (avant migration)'");
-
+ 
         $this->addSql('ALTER TABLE "EREC_USER_POSITION" DROP CONSTRAINT FK_54113136A76ED395');
         $this->addSql('ALTER TABLE "EREC_USER_POSITION" DROP CONSTRAINT FK_54113136DD842E46');
         $this->addSql('DROP SEQUENCE "EREC_CAMPAIGN_id_seq"');
         $this->addSql('DROP SEQUENCE "EREC_USER_POSITION_id_seq"');
         $this->addSql('DROP TABLE "EREC_CAMPAIGN"');
         $this->addSql('DROP TABLE "EREC_USER_POSITION"');
-
+ 
     }
 }

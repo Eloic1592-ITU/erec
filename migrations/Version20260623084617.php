@@ -35,7 +35,6 @@ final class Version20260623084617 extends AbstractMigration
         $this->addSql('ALTER TABLE "EREC_USER_POSITION" ADD CONSTRAINT FK_54113136A76ED395 FOREIGN KEY (user_id) REFERENCES "EREC_USER" (id)');
         $this->addSql('ALTER TABLE "EREC_USER_POSITION" ADD CONSTRAINT FK_54113136DD842E46 FOREIGN KEY (position_id) REFERENCES "EREC_POSITION" (id)');
 
-        $this->addSql('ALTER TABLE EREC_ENGAGEMENT MODIFY (date_engagement NULL)');
         $this->addSql('DROP INDEX uniq_4679e0caa76ed395');
 
         // 2) Nouvelles colonnes ajoutées EN NULLABLE d'abord (tables non vides en prod)
@@ -71,10 +70,6 @@ final class Version20260623084617 extends AbstractMigration
         $this->addSql('CREATE INDEX IDX_E5D280D0F639F774 ON EREC_POSITION (campaign_id)');
         $this->addSql('ALTER INDEX uniq_identifier_reference RENAME TO UNIQ_E5D280D0AEA34913');
 
-        // 8) Autres colonnes rendues nullable (inchangé, syntaxe corrigée)
-        $this->addSql('ALTER TABLE EREC_PROFILE MODIFY (cin_issue_date NULL)');
-        $this->addSql('ALTER TABLE EREC_USER MODIFY (birth_date NULL)');
-        $this->addSql('ALTER TABLE EREC_WORK_EXPERIENCE MODIFY (start_date NULL, end_date NULL)');
     }
 
     public function down(Schema $schema): void
@@ -104,9 +99,5 @@ final class Version20260623084617 extends AbstractMigration
         $this->addSql('DROP TABLE "EREC_CAMPAIGN"');
         $this->addSql('DROP TABLE "EREC_USER_POSITION"');
 
-        $this->addSql('ALTER TABLE "EREC_ENGAGEMENT" MODIFY (DATE_ENGAGEMENT DATE DEFAULT NULL)');
-        $this->addSql('ALTER TABLE "EREC_PROFILE" MODIFY (CIN_ISSUE_DATE DATE DEFAULT NULL)');
-        $this->addSql('ALTER TABLE "EREC_USER" MODIFY (BIRTH_DATE DATE DEFAULT NULL)');
-        $this->addSql('ALTER TABLE "EREC_WORK_EXPERIENCE" MODIFY (START_DATE DATE DEFAULT NULL, END_DATE DATE DEFAULT NULL)');
     }
 }

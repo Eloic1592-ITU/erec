@@ -327,6 +327,7 @@ class FrontController extends AbstractController
             'user' => $this->getUser(),
             'position' => $position,
         ]);
+        $existingjobApplication = $repository->findOneByCampaignAndUser($position->getCampaign(),  $this->getUser());
         $profile = $profileRepository->findOneBy(['user' => $this->getUser()]);
         $educations = $educationRepository->findBy(['user' => $this->getUser()]);
         $certifications = $certificationRepository->findBy(['user' => $this->getUser()]);
@@ -480,6 +481,7 @@ class FrontController extends AbstractController
             'jobApplicationForm' => $jobApplicationForm->createView(),
             'jobApplication' => $jobApplication,
             'is_job_application_edit' => $isJobApplicationEdit,
+            'existingjobapplication' => $existingjobApplication,
 
             'profileForm' => $profileForm->createView(),
             'profile' => $profile,
@@ -655,18 +657,18 @@ class FrontController extends AbstractController
             $entityManager->flush();
     
             // Envoi de l'e-mail de notification
-            try {
-                $emailService->sendApplicationConfirmationEmail($user);
-                $this->addFlash(
-                    'success', 
-                    'Candidature envoyée avec succès.'
-                );
-            } catch (\Exception $e) {
-                $this->addFlash(
-                    'error', 
-                    "Erreur lors de l'envoi de l'e-mail de confirmation."
-                );
-            }
+            // try {
+            //     $emailService->sendApplicationConfirmationEmail($user);
+            //     $this->addFlash(
+            //         'success', 
+            //         'Candidature envoyée avec succès.'
+            //     );
+            // } catch (\Exception $e) {
+            //     $this->addFlash(
+            //         'error', 
+            //         "Erreur lors de l'envoi de l'e-mail de confirmation."
+            //     );
+            // }
 
             $this->addFlash('success', 'Candidature envoyée.');
         }

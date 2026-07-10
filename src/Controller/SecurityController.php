@@ -249,7 +249,7 @@ class SecurityController extends AbstractController
 
                     $this->addFlash("success", "Inscription réussie. Votre mot de passe est envoyé par mail. Veuillez vous connecter.");
 
-                    return $this->redirectToRoute('app_login');
+                    return $this->redirectToRoute('app_first_login',['ref' => $ref]);
 
                 } catch (\Exception $e) {
                     $this->addFlash("error", "Une erreur est survenue lors de l'enregistrement. Veuillez réessayer plus tard.");

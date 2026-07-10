@@ -52,21 +52,21 @@ class PositionType extends AbstractType
                     'class' => "form-label m-0",
                 ],
             ])
-            ->add('closing_date', DateType::class, [
-                'widget' => 'single_text',
-                'label' => 'Date de clôture',
-                'required' => true,
-                'constraints' => [
-                    new Assert\NotBlank(['message' => 'Veuillez entrer une date de clôture du poste']),
-                ],
-                'attr' => [
-                    'class' => "form-control",
-                    'placeholder' => "Date de clôture",
-                ],
-                'label_attr' => [
-                    'class' => "form-label m-0",
-                ],
-            ])
+            // ->add('closing_date', DateType::class, [
+            //     'widget' => 'single_text',
+            //     'label' => 'Date de clôture',
+            //     'required' => true,
+            //     'constraints' => [
+            //         new Assert\NotBlank(['message' => 'Veuillez entrer une date de clôture du poste']),
+            //     ],
+            //     'attr' => [
+            //         'class' => "form-control",
+            //         'placeholder' => "Date de clôture",
+            //     ],
+            //     'label_attr' => [
+            //         'class' => "form-label m-0",
+            //     ],
+            // ])
             ->add('campaign', EntityType::class, [
                 'class' => Campaign::class,
                 'choice_label' => 'title',

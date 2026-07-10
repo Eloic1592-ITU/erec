@@ -55,6 +55,7 @@ class Position
     {
         $this->users = new ArrayCollection();
         $this->jobApplications = new ArrayCollection();
+        $this->closing_date = new \DateTime(); // valeur par défaut = aujourd'hui
     }
 
     public function getId(): ?int

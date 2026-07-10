@@ -24,6 +24,14 @@
         <h3 class="d-none d-lg-flex justify-content-center py-3 mb-4 border-full-dashed">
             Poste demandé
         </h3>
+        {% if existingjobapplication %}
+            <div class="col-lg-12">
+                <div class="alert alert-danger text-center" role="alert">
+                    <i class="bx bx-error-circle me-2"></i>
+                    Vous avez déjà envoyé votre candidature pour le poste de : <strong>{{existingjobapplication.getPosition().getName()}}</strong>
+                </div>
+            </div>
+        {% endif %}
         <div class="row">
             <div class="col-lg-4">
                 <div class="mb-3">

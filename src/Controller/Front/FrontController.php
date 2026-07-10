@@ -657,18 +657,18 @@ class FrontController extends AbstractController
             $entityManager->flush();
     
             // Envoi de l'e-mail de notification
-            // try {
-            //     $emailService->sendApplicationConfirmationEmail($user);
-            //     $this->addFlash(
-            //         'success', 
-            //         'Candidature envoyée avec succès.'
-            //     );
-            // } catch (\Exception $e) {
-            //     $this->addFlash(
-            //         'error', 
-            //         "Erreur lors de l'envoi de l'e-mail de confirmation."
-            //     );
-            // }
+            try {
+                $emailService->sendApplicationConfirmationEmail($user);
+                $this->addFlash(
+                    'success', 
+                    'Candidature envoyée avec succès.'
+                );
+            } catch (\Exception $e) {
+                $this->addFlash(
+                    'error', 
+                    "Erreur lors de l'envoi de l'e-mail de confirmation."
+                );
+            }
 
             $this->addFlash('success', 'Candidature envoyée.');
         }

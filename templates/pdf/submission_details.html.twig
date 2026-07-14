@@ -16,7 +16,7 @@
                         <p class="info-value">{{ jobApplication.getPrimaryLocation() }}</p>
                     </div>
                 </div>
-                {% if jobApplication.getSecondaryLocation() or jobApplication.getTertiaryLocation() %}
+                {#{% if jobApplication.getSecondaryLocation() or jobApplication.getTertiaryLocation() %}
                 <div class="info-group">
                     {% if jobApplication.getSecondaryLocation() %}
                     <div class="info">
@@ -31,7 +31,7 @@
                     </div>
                     {% endif %}
                 </div>
-                {% endif %}
+                {% endif %}#}
             </div>
         </div>
     </div>
@@ -113,10 +113,10 @@
                     </div>
                 </div>
                 <div class="info-group">
-                    <div class="info">
+                    {#<div class="info">
                         <p class="info-label">Nombre d'enfants</p>
                         <p class="info-value">{{ profile.getNumberOfChildren() }}</p>
-                    </div>
+                    </div>#}    
                     <div class="info">
                         <p class="info-label">Téléphone 1</p>
                         <p class="info-value">{{ profile.getPhone1() }}</p>
@@ -177,10 +177,10 @@
                     </div>
                 </div>
                 <div class="info-group">
-                    <div class="info">
+                    {#<div class="info">
                         <p class="info-label">Année d'obtention du diplôme</p>
                         <p class="info-value">{{ education.getGraduationYear() }}</p>
-                    </div>
+                    </div>#}
                 </div>
             </div>
             {% endfor %}
@@ -286,26 +286,26 @@
                         <p class="info-label">Fin</p>
                         <p class="info-value">{{ workExperience.getEndDate()|date('d/m/Y') }}</p>
                     </div>
-                    <div class="info">
+                    {#<div class="info">
                         <p class="info-label">Personne de référence</p>
                         <p class="info-value">{{ workExperience.getReferenceName() }}</p>
-                    </div>
+                    </div>#}
                 </div>
                 <div class="info-group">
-                    <div class="info">
+                    {#<div class="info">
                         <p class="info-label">Fonction de la personne de référence</p>
                         <p class="info-value">{{ workExperience.getReferencePosition() }}</p>
-                    </div>
-                    <div class="info">
+                    </div>#}
+                    {#<div class="info">
                         <p class="info-label">e-mail de la personne de référence</p>
                         <p class="info-value">{{ workExperience.getReferenceEmail() }}</p>
-                    </div>
+                    </div>#}
                 </div>
                 <div class="info-group">
-                    <div class="info">
+                    {#<div class="info">
                         <p class="info-label">Téléphone de la personne de référence</p>
                         <p class="info-value">{{ workExperience.getReferencePhone() }}</p>
-                    </div>
+                    </div>#}
                 </div>
             </div>
             {% endfor %}
@@ -566,7 +566,7 @@
     </div>
     {% endif %}
 
-    {% if engagement %}
+    {#{% if engagement %}
         {% if engagement.getSecondPosition() or engagement.getThirdPosition() %}
             <div class="p-4 p-lg-5 mb-4 bg-white rounded-2"> 
                 <div id="recap1" class="d-flex flex-column gap-2">
@@ -590,5 +590,5 @@
                 </div>
             </div>
         {% endif %}
-    {% endif %}
+    {% endif %}#}
 </div>

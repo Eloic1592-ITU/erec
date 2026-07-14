@@ -70,30 +70,30 @@ class EngagementType extends AbstractType
                     'placeholder' => 'Ville'
                 ],
             ])
-            ->add('second_position', ChoiceType::class, [
-                'choices' => $positionChoices,
-                'label' => '2ème poste souhaité',
-                'placeholder' => 'Choisissez un 2ème poste',
-                'required' => false,
-                'attr' => [
-                    'class' => "form-control form-select",
-                ],
-                'label_attr' => [
-                    'class' => "form-label",
-                ],
-            ])
-            ->add('third_position', ChoiceType::class, [
-                'choices' => $positionChoices,
-                'label' => '3ème poste souhaité',
-                'placeholder' => 'Choisissez un 3ème poste',
-                'required' => false,
-                'attr' => [
-                    'class' => "form-control form-select",
-                ],
-                'label_attr' => [
-                    'class' => "form-label",
-                ],
-            ])
+            // ->add('second_position', ChoiceType::class, [
+            //     'choices' => $positionChoices,
+            //     'label' => '2ème poste souhaité',
+            //     'placeholder' => 'Choisissez un 2ème poste',
+            //     'required' => false,
+            //     'attr' => [
+            //         'class' => "form-control form-select",
+            //     ],
+            //     'label_attr' => [
+            //         'class' => "form-label",
+            //     ],
+            // ])
+            // ->add('third_position', ChoiceType::class, [
+            //     'choices' => $positionChoices,
+            //     'label' => '3ème poste souhaité',
+            //     'placeholder' => 'Choisissez un 3ème poste',
+            //     'required' => false,
+            //     'attr' => [
+            //         'class' => "form-control form-select",
+            //     ],
+            //     'label_attr' => [
+            //         'class' => "form-label",
+            //     ],
+            // ])
         ;
     }
 

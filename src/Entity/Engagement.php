@@ -31,6 +31,12 @@ class Engagement
     #[ORM\JoinColumn(nullable: false)]
     private ?User $user = null;
 
+    public function __construct()
+    {
+        $this->second_position = "Aucun poste défini";
+        $this->third_position = "Aucun poste défini";
+    }
+
     public function getId(): ?int
     {
         return $this->id;

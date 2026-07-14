@@ -20,24 +20,53 @@ class OtherInfoController extends AbstractController
     {
         $otherInfo = new OtherInfo();
 
+        // 1. Intercepter les champs optionnels AVANT handleRequest
+        if ($request->isMethod('POST')) {
+            $data = $request->request->all('other_info');
+
+            $optionalFields = [
+                'microsoft_oneNote_level',
+                'microsoft_outlook_level',
+                'microsoft_publisher_level',
+                'microsoft_access_level',
+                'microsoft_visio_level',
+                'microsoft_project_level',
+            ];
+
+            foreach ($optionalFields as $field) {
+                if (empty($data[$field])) {
+                    $data[$field] = 'Non défini';
+                }
+            }
+
+            $request->request->set('other_info', $data);
+        }
+
+        // 2. Créer le formulaire et handleRequest
         $form = $this->createForm(OtherInfoType::class, $otherInfo);
         $form->handleRequest($request);
 
+        // 3. Vérifier si soumis et valide
         if ($form->isSubmitted() && $form->isValid()) {
 
             $otherInfo->setUser($this->getUser());
-            
             $entityManager->persist($otherInfo);
             $entityManager->flush();
 
-            return new JsonResponse([
-                'status' => 'success',
-                'message' => "Vos données ont bien été enregistrées.",
-                'redirectUrl' => $this->generateUrl('app_other_info_edit', ['id' => $otherInfo->getId()]),
-            ]);
+            if ($request->isXmlHttpRequest()) {
+                return new JsonResponse([
+                    'status' => 'success',
+                    'message' => "Vos données ont bien été enregistrées.",
+                    'redirectUrl' => $this->generateUrl('app_other_info_edit', ['id' => $otherInfo->getId()]),
+                ]);
+            }
+
+            //Cas non-AJAX après succès
+            return $this->redirectToRoute('app_submission');
         }
 
-        if ($form->isSubmitted() && !$form->isValid() && $request->isXmlHttpRequest()) {
+        // 4. Erreurs de validation
+        if ($request->isXmlHttpRequest()) {
             $formErrors = [];
             foreach ($form->getErrors(true) as $error) {
                 $formErrors[] = $error->getMessage();
@@ -48,6 +77,7 @@ class OtherInfoController extends AbstractController
             ]);
         }
 
+        //Cas non-AJAX, formulaire non soumis
         return new JsonResponse([
             'status' => 'error',
             'message' => 'Invalid request'

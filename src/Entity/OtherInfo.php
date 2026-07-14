@@ -90,6 +90,16 @@ class OtherInfo
     #[ORM\OneToOne(inversedBy: 'otherInfo', cascade: ['persist', 'remove'])]
     #[ORM\JoinColumn(nullable: false)]
     private ?User $user = null;
+    public function __construct()
+    {
+        $this->microsoft_oneNote_level = "Non défini";
+        $this->microsoft_outlook_level = "Non défini";
+        $this->microsoft_publisher_level = "Non défini";
+        $this->microsoft_access_level = "Non défini";
+        $this->microsoft_visio_level = "Non défini";
+        $this->microsoft_project_level = "Non défini";
+    }
+
 
     public function getId(): ?int
     {

@@ -111,7 +111,7 @@ class EducationType extends AbstractType
                 ],
             ])
             ->add('degreeFile', FileType::class, [
-                'label' => 'Joindre une copie du diplôme (.jpg .png .pdf)(Taille maximum: 1 MB)',
+                'label' => 'Joindre un certificat de scolarité (.jpg .png .pdf)(Taille maximum: 1 MB)',
                 'mapped' => false,
                 'constraints' => [
                     new Assert\NotBlank(['message' => 'Veuillez enregistrez une copie du diplôme.']),

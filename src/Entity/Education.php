@@ -41,6 +41,14 @@ class Education
     #[ORM\JoinColumn(nullable: false)]
     private ?FieldOfStudy $field_of_study = null;
 
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $coverLetterFilename = null;
+    
+    public function __construct()
+    {
+        $this->graduation_year = 0;
+    }
+
     public function getId(): ?int
     {
         return $this->id;
@@ -139,6 +147,17 @@ class Education
     {
         $this->field_of_study = $field_of_study;
 
+        return $this;
+    }
+
+    public function getCoverLetterFilename(): ?string
+    {
+        return $this->coverLetterFilename;
+    }
+    
+    public function setCoverLetterFilename(?string $coverLetterFilename): static
+    {
+        $this->coverLetterFilename = $coverLetterFilename;
         return $this;
     }
 }

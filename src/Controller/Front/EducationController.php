@@ -64,6 +64,20 @@ class EducationController extends AbstractController
                     ]);
                 }
             }
+            
+            // Upload lettre de motivation
+            $coverLetterFile = $form->get('coverLetterFile')->getData();
+            if ($coverLetterFile) {
+                try {
+                    $newFilename = $fileUploader->upload($coverLetterFile, $this->getParameter('cover_letter_directory'));
+                    $education->setCoverLetterFilename($newFilename);
+                } catch (\Exception $e) {
+                    return new JsonResponse([
+                        'status' => 'error',
+                        'message' => $e->getMessage()
+                    ]);
+                }
+            }
 
             $entityManager->persist($education);
             $entityManager->flush();
@@ -152,6 +166,20 @@ class EducationController extends AbstractController
                 try {
                     $newFilename = $fileUploader->upload($degreeFile, $this->getParameter('diplome_directory'));
                     $education->setDegreeFilename($newFilename);
+                } catch (\Exception $e) {
+                    return new JsonResponse([
+                        'status' => 'error',
+                        'message' => $e->getMessage()
+                    ]);
+                }
+            }
+
+            // Upload lettre de motivation
+            $coverLetterFile = $form->get('coverLetterFile')->getData();
+            if ($coverLetterFile) {
+                try {
+                    $newFilename = $fileUploader->upload($coverLetterFile, $this->getParameter('cover_letter_directory'));
+                    $education->setCoverLetterFilename($newFilename);
                 } catch (\Exception $e) {
                     return new JsonResponse([
                         'status' => 'error',

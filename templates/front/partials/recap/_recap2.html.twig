@@ -74,22 +74,23 @@
                 </div>
             </div>
             <div class="info-group">
-                <div class="info">
+                {#<div class="info">
                     <p class="info-label">Nombre d'enfants</p>
                     <p class="info-value">{{ profile.getNumberOfChildren() }}</p>
-                </div>
+                </div>#}
                 <div class="info">
                     <p class="info-label">Téléphone 1</p>
                     <p class="info-value">{{ profile.getPhone1() }}</p>
                 </div>
-            </div>
-            <div class="info-group">
                 {% if profile.getPhone2() %}
                 <div class="info">
                     <p class="info-label">Téléphone 2</p>
                     <p class="info-value">{{ profile.getPhone2() }}</p>
                 </div>
-                {% endif %}
+            {% endif %}
+            </div>
+            <div class="info-group">
+
                 <div class="info">
                     <p class="info-label">Courier électronique</p>
                     <p class="info-value">{{ app.user.getEmail() }}</p>

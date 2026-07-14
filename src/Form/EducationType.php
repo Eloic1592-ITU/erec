@@ -110,11 +110,33 @@ class EducationType extends AbstractType
             //         'class' => "form-label",
             //     ],
             // ])
-            ->add('degreeFile', FileType::class, [
-                'label' => 'Joindre un certificat de scolarité (.jpg .png .pdf)(Taille maximum: 1 MB)',
+            // ->add('degreeFile', FileType::class, [
+            //     'label' => 'Joindre un diplôme (.jpg .png .pdf)(Taille maximum: 1 MB)',
+            //     'mapped' => false,
+            //     'constraints' => [
+            //         new Assert\NotBlank(['message' => 'Veuillez enregistrez une copie du diplôme.']),
+            //         new Assert\File([
+            //             'maxSize' => '5M',
+            //             'mimeTypes' => [
+            //                 'image/jpeg',
+            //                 'image/png',
+            //                 'application/pdf',
+            //             ],
+            //             'mimeTypesMessage' => 'Veuillez télécharger un fichier au format .jpg, .png ou .pdf.',
+            //         ]),
+            //     ],
+            //     'attr' => [
+            //         'class' => "form-control",
+            //     ],
+            //     'label_attr' => [
+            //         'class' => "form-label",
+            //     ],
+            // ])
+            ->add('coverLetterFile', FileType::class, [
+                'label' => 'Joindre une lettre d\'introduction (.jpg .png .pdf)(Taille maximum: 1 MB)',
                 'mapped' => false,
                 'constraints' => [
-                    new Assert\NotBlank(['message' => 'Veuillez enregistrez une copie du diplôme.']),
+                    new Assert\NotBlank(['message' => 'Veuillez enregistrez une copie de votre lettre d\'introduction.']),
                     new Assert\File([
                         'maxSize' => '5M',
                         'mimeTypes' => [
@@ -132,11 +154,11 @@ class EducationType extends AbstractType
                     'class' => "form-label",
                 ],
             ])
-            ->add('coverLetterFile', FileType::class, [
-                'label' => 'Joindre une lettre d\'introduction (.jpg .png .pdf)(Taille maximum: 1 MB)',
+            ->add('schoolCertificateFile', FileType::class, [
+                'label' => 'Joindre un certificat  de scolarité (.jpg .png .pdf)(Taille maximum: 1 MB)',
                 'mapped' => false,
                 'constraints' => [
-                    new Assert\NotBlank(['message' => 'Veuillez enregistrez une copie de votre lettre d\'introduction.']),
+                    new Assert\NotBlank(['message' => 'Veuillez enregistrez un certificat de scolarité.']),
                     new Assert\File([
                         'maxSize' => '5M',
                         'mimeTypes' => [

@@ -43,9 +43,13 @@ class Education
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $coverLetterFilename = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $schoolCertificateFilename = null;  
     
     public function __construct()
     {
+        $this->degreeFilename= 'Aucune diplôme';
         $this->graduation_year = 0;
     }
 
@@ -158,6 +162,17 @@ class Education
     public function setCoverLetterFilename(?string $coverLetterFilename): static
     {
         $this->coverLetterFilename = $coverLetterFilename;
+        return $this;
+    }
+
+    public function getSchoolCertificateFilename(): ?string
+    {
+        return $this->schoolCertificateFilename;
+    }
+    
+    public function setSchoolCertificateFilename(?string $schoolCertificateFilename): static
+    {
+        $this->schoolCertificateFilename = $schoolCertificateFilename;
         return $this;
     }
 }

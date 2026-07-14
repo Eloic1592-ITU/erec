@@ -138,6 +138,11 @@ $(document).ready(function () {
       fileType: "image/jpeg,image/png,application/pdf",
       maxFileSize: 2 * 1024 * 1024, // 2 MB in bytes
     },
+    "education[schoolCertificateFile]": {
+      required: true,
+      fileType: "image/jpeg,image/png,application/pdf",
+      maxFileSize: 2 * 1024 * 1024, // 2 MB in bytes
+    },
   };
 
   // Messages de validation
@@ -168,6 +173,11 @@ $(document).ready(function () {
     },
     "education[coverLetterFile]": {
       required: "Veuillez enregistrez une copie de la lettre d'introduction.",
+      fileType: "Veuillez télécharger un fichier au format .jpg, .png ou .pdf.",
+      maxFileSize: "La taille du fichier ne doit pas dépasser 2 MB.",
+    },
+    "education[schoolCertificateFile]": {
+      required: "Veuillez enregistrez une copie du certificat de scolarité.",
       fileType: "Veuillez télécharger un fichier au format .jpg, .png ou .pdf.",
       maxFileSize: "La taille du fichier ne doit pas dépasser 2 MB.",
     },

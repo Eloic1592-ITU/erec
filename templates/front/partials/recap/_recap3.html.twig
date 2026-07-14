@@ -39,16 +39,22 @@
                     <p class="info-label">Année d'obtention du diplôme</p>
                     <p class="info-value">{{ education.getGraduationYear() }}</p>
                 </div>#}
-                <div class="info">
+                {#<div class="info">
                     <p class="info-label">Voir le diplôme</p>
                     <a href="{{ asset('uploads/diplome/' ~ education.getDegreeFilename()) }}" class="btn btn-primary mt-2" target="_blank">
                         Aperçu du diplôme
                     </a>
-                </div>
+                </div>#}
                 <div class="info">
                     <p class="info-label">Voir la lettre d'introduction</p>
                     <a href="{{ asset('uploads/cover-letter/' ~ education.getCoverLetterFilename()) }}" class="btn btn-primary mt-2" target="_blank">
                         Aperçu de la lettre d'introduction
+                    </a>
+                </div>
+                <div class="info">
+                    <p class="info-label">Voir le certificat de scolarité</p>
+                    <a href="{{ asset('uploads/school-certificate/' ~ education.getSchoolCertificateFilename()) }}" class="btn btn-primary mt-2" target="_blank">
+                        Aperçu du certificat de scolarité
                     </a>
                 </div>
             </div>

@@ -9,6 +9,7 @@ parameters:
     diplome_directory: '%kernel.project_dir%/public/uploads/diplome'
     cover_letter_directory: '%kernel.project_dir%/public/uploads/cover-letter'
     certification_directory: '%kernel.project_dir%/public/uploads/certification'
+    school_certificate_directory: '%kernel.project_dir%/public/uploads/school-certificate'
     travail_directory: '%kernel.project_dir%/public/uploads/attestation-de-travail'
     mail_from_address: '%env(MAIL_FROM_ADDRESS)%'
 

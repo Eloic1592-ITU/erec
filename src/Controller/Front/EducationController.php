@@ -52,18 +52,18 @@ class EducationController extends AbstractController
             $education->setUser($user);
 
             // Upload diplôme
-            $degreeFile = $form->get('degreeFile')->getData();
-            if ($degreeFile) {
-                try {
-                    $newFilename = $fileUploader->upload($degreeFile, $this->getParameter('diplome_directory'));
-                    $education->setDegreeFilename($newFilename);
-                } catch (\Exception $e) {
-                    return new JsonResponse([
-                        'status' => 'error',
-                        'message' => $e->getMessage()
-                    ]);
-                }
-            }
+            // $degreeFile = $form->get('degreeFile')->getData();
+            // if ($degreeFile) {
+            //     try {
+            //         $newFilename = $fileUploader->upload($degreeFile, $this->getParameter('diplome_directory'));
+            //         $education->setDegreeFilename($newFilename);
+            //     } catch (\Exception $e) {
+            //         return new JsonResponse([
+            //             'status' => 'error',
+            //             'message' => $e->getMessage()
+            //         ]);
+            //     }
+            // }
             
             // Upload lettre de motivation
             $coverLetterFile = $form->get('coverLetterFile')->getData();
@@ -71,6 +71,20 @@ class EducationController extends AbstractController
                 try {
                     $newFilename = $fileUploader->upload($coverLetterFile, $this->getParameter('cover_letter_directory'));
                     $education->setCoverLetterFilename($newFilename);
+                } catch (\Exception $e) {
+                    return new JsonResponse([
+                        'status' => 'error',
+                        'message' => $e->getMessage()
+                    ]);
+                }
+            }
+
+            // Upload certificat de scolarité
+            $schoolCertificateFile = $form->get('schoolCertificateFile')->getData();
+            if ($schoolCertificateFile) {
+                try {
+                    $newFilename = $fileUploader->upload($schoolCertificateFile, $this->getParameter('school_certificate_directory'));
+                    $education->setSchoolCertificateFilename($newFilename);
                 } catch (\Exception $e) {
                     return new JsonResponse([
                         'status' => 'error',
@@ -161,11 +175,25 @@ class EducationController extends AbstractController
             }
 
             // Upload diplôme
-            $degreeFile = $form->get('degreeFile')->getData();
-            if ($degreeFile) {
+            // $degreeFile = $form->get('degreeFile')->getData();
+            // if ($degreeFile) {
+            //     try {
+            //         $newFilename = $fileUploader->upload($degreeFile, $this->getParameter('diplome_directory'));
+            //         $education->setDegreeFilename($newFilename);
+            //     } catch (\Exception $e) {
+            //         return new JsonResponse([
+            //             'status' => 'error',
+            //             'message' => $e->getMessage()
+            //         ]);
+            //     }
+            // }
+
+            // Upload lettre de motivation
+            $coverLetterFile = $form->get('coverLetterFile')->getData();
+            if ($coverLetterFile) {
                 try {
-                    $newFilename = $fileUploader->upload($degreeFile, $this->getParameter('diplome_directory'));
-                    $education->setDegreeFilename($newFilename);
+                    $newFilename = $fileUploader->upload($coverLetterFile, $this->getParameter('cover_letter_directory'));
+                    $education->setCoverLetterFilename($newFilename);
                 } catch (\Exception $e) {
                     return new JsonResponse([
                         'status' => 'error',
@@ -174,12 +202,12 @@ class EducationController extends AbstractController
                 }
             }
 
-            // Upload lettre de motivation
-            $coverLetterFile = $form->get('coverLetterFile')->getData();
-            if ($coverLetterFile) {
+            // Upload certificat de scolarité
+            $schoolCertificateFile = $form->get('schoolCertificateFile')->getData();
+            if ($schoolCertificateFile) {
                 try {
-                    $newFilename = $fileUploader->upload($coverLetterFile, $this->getParameter('cover_letter_directory'));
-                    $education->setCoverLetterFilename($newFilename);
+                    $newFilename = $fileUploader->upload($schoolCertificateFile, $this->getParameter('school_certificate_directory'));
+                    $education->setSchoolCertificateFilename($newFilename);
                 } catch (\Exception $e) {
                     return new JsonResponse([
                         'status' => 'error',

@@ -45,10 +45,15 @@
               </div>
             </div>
             <div class="col-lg-6">
-              <div class="mb-3">
+              {#<div class="mb-3">
                 {{ form_label(educationForm.degreeFile) }} <span class="star">*</span>
                 {{ form_widget(educationForm.degreeFile) }}
                 {{ form_errors(educationForm.degreeFile) }}
+              </div>#}
+              <div class="mb-3">
+                {{ form_label(educationForm.schoolCertificateFile) }} <span class="star">*</span>
+                {{ form_widget(educationForm.schoolCertificateFile) }}
+                {{ form_errors(educationForm.schoolCertificateFile) }}
               </div>
             </div>
           </div>
@@ -147,10 +152,15 @@
           </div>
         </div>
         <div class="col-lg-6">
-          <div class="mb-3">
+          {#<div class="mb-3">
             {{ form_label(newEducationForm.degreeFile) }} <span class="star">*</span>
             {{ form_widget(newEducationForm.degreeFile) }}
             {{ form_errors(newEducationForm.degreeFile) }}
+          </div>#}
+          <div class="mb-3">
+            {{ form_label(newEducationForm.schoolCertificateFile) }} <span class="star">*</span>
+            {{ form_widget(newEducationForm.schoolCertificateFile) }}
+            {{ form_errors(newEducationForm.schoolCertificateFile) }}
           </div>
         </div>
       </div>

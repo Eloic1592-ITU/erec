@@ -33,11 +33,15 @@ class OtherInfoType extends AbstractType
             ->where('l.is_deleted = false OR l.is_deleted IS NULL')
             ->getQuery()
             ->getResult();
-
+    
         $choices = [];
         foreach ($levels as $level) {
             $choices[$level->getName()] = $level->getName();
         }
+    
+        // Ajoute "Non défini" sans toucher la base
+        $choices['Non défini'] = 'Non défini';
+    
         return $choices;
     }
 
@@ -240,10 +244,8 @@ class OtherInfoType extends AbstractType
                 'label' => 'Niveau Microsoft OneNote',
                 'choices' => $levelChoices,
                 'placeholder' => 'Choisissez un niveau',
-                'required' => true,
-                'constraints' => [
-                    new Assert\NotBlank(['message' => 'Veuillez choisir votre niveau Microsoft OneNote.']),
-                ],
+                'required' => false,
+                'choice_attr' => fn($choice) => $choice === 'Non défini' ? ['hidden' => true] : [],
                 'attr' => [
                     'class' => "form-control form-select",
                 ],
@@ -255,10 +257,8 @@ class OtherInfoType extends AbstractType
                 'label' => 'Niveau Microsoft Outlook',
                 'choices' => $levelChoices,
                 'placeholder' => 'Choisissez un niveau',
-                'required' => true,
-                'constraints' => [
-                    new Assert\NotBlank(['message' => 'Veuillez choisir votre niveau Microsoft Outlook.']),
-                ],
+                'required' => false,
+                'choice_attr' => fn($choice) => $choice === 'Non défini' ? ['hidden' => true] : [],
                 'attr' => [
                     'class' => "form-control form-select",
                 ],
@@ -270,10 +270,8 @@ class OtherInfoType extends AbstractType
                 'label' => 'Niveau Microsoft Publisher',
                 'choices' => $levelChoices,
                 'placeholder' => 'Choisissez un niveau',
-                'required' => true,
-                'constraints' => [
-                    new Assert\NotBlank(['message' => 'Veuillez choisir votre niveau Microsoft Publisher.']),
-                ],
+                'required' => false,
+                'choice_attr' => fn($choice) => $choice === 'Non défini' ? ['hidden' => true] : [],
                 'attr' => [
                     'class' => "form-control form-select",
                 ],
@@ -285,10 +283,8 @@ class OtherInfoType extends AbstractType
                 'label' => 'Niveau Microsoft Access',
                 'choices' => $levelChoices,
                 'placeholder' => 'Choisissez un niveau',
-                'required' => true,
-                'constraints' => [
-                    new Assert\NotBlank(['message' => 'Veuillez choisir votre niveau Microsoft Access.']),
-                ],
+                'required' => false,
+                'choice_attr' => fn($choice) => $choice === 'Non défini' ? ['hidden' => true] : [],
                 'attr' => [
                     'class' => "form-control form-select",
                 ],
@@ -300,10 +296,8 @@ class OtherInfoType extends AbstractType
                 'label' => 'Niveau Microsoft Visio',
                 'choices' => $levelChoices,
                 'placeholder' => 'Choisissez un niveau',
-                'required' => true,
-                'constraints' => [
-                    new Assert\NotBlank(['message' => 'Veuillez choisir votre niveau Microsoft Visio.']),
-                ],
+                'required' => false,
+                'choice_attr' => fn($choice) => $choice === 'Non défini' ? ['hidden' => true] : [],
                 'attr' => [
                     'class' => "form-control form-select",
                 ],
@@ -315,10 +309,8 @@ class OtherInfoType extends AbstractType
                 'label' => 'Niveau Microsoft Project',
                 'choices' => $levelChoices,
                 'placeholder' => 'Choisissez un niveau',
-                'required' => true,
-                'constraints' => [
-                    new Assert\NotBlank(['message' => 'Veuillez choisir votre niveau Microsoft Project.']),
-                ],
+                'required' => false,
+                'choice_attr' => fn($choice) => $choice === 'Non défini' ? ['hidden' => true] : [],
                 'attr' => [
                     'class' => "form-control form-select",
                 ],

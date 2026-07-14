@@ -50,22 +50,22 @@ $(document).ready(function () {
       required: true,
     },
     "other_info[microsoft_oneNote_level]": {
-      required: true,
+      required: false,
     },
     "other_info[microsoft_outlook_level]": {
-      required: true,
+      required: false,
     },
     "other_info[microsoft_publisher_level]": {
-      required: true,
+      required: false,
     },
     "other_info[microsoft_access_level]": {
-      required: true,
+      required: false,
     },
     "other_info[microsoft_visio_level]": {
-      required: true,
+      required: false,
     },
     "other_info[microsoft_project_level]": {
-      required: true,
+      required: false,
     },
   };
 
@@ -109,30 +109,6 @@ $(document).ready(function () {
     "other_info[microsoft_powerPoint_level]": {
       required:
         "Veuillez sélectionner le niveau de compétence pour Microsoft PowerPoint.",
-    },
-    "other_info[microsoft_oneNote_level]": {
-      required:
-        "Veuillez sélectionner le niveau de compétence pour Microsoft OneNote.",
-    },
-    "other_info[microsoft_outlook_level]": {
-      required:
-        "Veuillez sélectionner le niveau de compétence pour Microsoft Outlook.",
-    },
-    "other_info[microsoft_publisher_level]": {
-      required:
-        "Veuillez sélectionner le niveau de compétence pour Microsoft Publisher.",
-    },
-    "other_info[microsoft_access_level]": {
-      required:
-        "Veuillez sélectionner le niveau de compétence pour Microsoft Access.",
-    },
-    "other_info[microsoft_visio_level]": {
-      required:
-        "Veuillez sélectionner le niveau de compétence pour Microsoft Visio.",
-    },
-    "other_info[microsoft_project_level]": {
-      required:
-        "Veuillez sélectionner le niveau de compétence pour Microsoft Project.",
     },
   };
 
@@ -229,6 +205,15 @@ $(document).ready(function () {
   $("#other-info-form").validate({
     rules: otherInfoValidationRules,
     messages: otherInfoValidationMessages,
+    ignore: [
+        "#other_info_microsoft_oneNote_level",
+        "#other_info_microsoft_outlook_level",
+        "#other_info_microsoft_publisher_level",
+        "#other_info_microsoft_access_level",
+        "#other_info_microsoft_visio_level",
+        "#other_info_microsoft_project_level",
+    ],
+    
     errorElement: "div",
     errorClass: "invalid-feedback",
     errorPlacement: (error, element) => {

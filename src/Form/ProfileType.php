@@ -215,22 +215,16 @@ class ProfileType extends AbstractType
                     'class' => 'form-label',
                 ],
             ])
-            ->add('number_of_children', IntegerType::class, [
-                'label' => 'Nombre d\'enfants',
-                'required' => true,
-                'constraints' => [
-                    new Assert\NotBlank(['message' => 'Veuillez entrer le nombre d\'enfants.']),
-                    new Assert\Type(['type' => 'integer', 'message' => 'La valeur doit être un entier.']),
-                ],
-                'attr' => [
-                    'class' => "form-control",
-                    'min' => 0,
-                    'placeholder' => 'Nombre d\'enfants',
-                ],
-                'label_attr' => [
-                    'class' => "form-label",
-                ],
-            ])
+            // ->add('number_of_children', IntegerType::class, [
+            //     'label' => 'Nombre d\'enfants',
+            //     'required' => false,
+            //     'attr' => [
+            //         'class' => "form-control",
+            //     ],
+            //     'label_attr' => [
+            //         'class' => "form-label",
+            //     ],
+            // ])
             ->add('phone1', TelType::class, [
                 'label' => 'Téléphone 1',
                 'required' => true,

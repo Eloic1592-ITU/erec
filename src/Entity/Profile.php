@@ -63,6 +63,11 @@ class Profile
     #[ORM\JoinColumn(nullable: false)]
     private ?MaritalStatus $marital_status = null;
 
+    public function __construct()
+    {
+        $this->number_of_children = 0;
+    }
+
     public function getId(): ?int
     {
         return $this->id;

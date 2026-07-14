@@ -49,6 +49,15 @@ class WorkExperience
     #[ORM\Column(length: 255)]
     private ?string $workFilename = null;
 
+    public function __construct()
+    {
+        $this->reference_name = "Aucune personne";
+        $this->reference_email = "Aucun email";
+        $this->reference_position = "Aucun poste";
+        $this->reference_phone = "Aucun numero";
+    }
+
+
     public function getId(): ?int
     {
         return $this->id;

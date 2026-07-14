@@ -55,36 +55,36 @@ class JobApplicationType extends AbstractType
                     new Assert\NotBlank(['message' => "Veuillez entrer un lieu d'affectation."]),
                 ]
             ])
-            ->add('secondary_location', ChoiceType::class, [
-                'choices' => $locationOptions,
-                'label' => "2ème lieu d'affectation souhaité",
-                'placeholder' => "2ème lieu d'affectation souhaité",
-                'attr' => [
-                    'class' => "form-control form-select",
-                ],
-                'label_attr' => [
-                    'class' => "form-label",
-                ],
-                'required' => true,
-                'constraints' => [
-                    new Assert\NotBlank(['message' => "Veuillez entrer un lieu d'affectation."]),
-                ]
-            ])
-            ->add('tertiary_location', ChoiceType::class, [
-                'choices' => $locationOptions,
-                'label' => "3ème lieu d'affectation souhaité",
-                'placeholder' => "3ème lieu d'affectation souhaité",
-                'attr' => [
-                    'class' => "form-control form-select",
-                ],
-                'label_attr' => [
-                    'class' => "form-label",
-                ],
-                'required' => true,
-                'constraints' => [
-                    new Assert\NotBlank(['message' => "Veuillez entrer un lieu d'affectation."]),
-                ]
-            ])        
+            // ->add('secondary_location', ChoiceType::class, [
+            //     'choices' => $locationOptions,
+            //     'label' => "2ème lieu d'affectation souhaité",
+            //     'placeholder' => "2ème lieu d'affectation souhaité",
+            //     'attr' => [
+            //         'class' => "form-control form-select",
+            //     ],
+            //     'label_attr' => [
+            //         'class' => "form-label",
+            //     ],
+            //     'required' => true,
+            //     'constraints' => [
+            //         new Assert\NotBlank(['message' => "Veuillez entrer un lieu d'affectation."]),
+            //     ]
+            // ])
+            // ->add('tertiary_location', ChoiceType::class, [
+            //     'choices' => $locationOptions,
+            //     'label' => "3ème lieu d'affectation souhaité",
+            //     'placeholder' => "3ème lieu d'affectation souhaité",
+            //     'attr' => [
+            //         'class' => "form-control form-select",
+            //     ],
+            //     'label_attr' => [
+            //         'class' => "form-label",
+            //     ],
+            //     'required' => true,
+            //     'constraints' => [
+            //         new Assert\NotBlank(['message' => "Veuillez entrer un lieu d'affectation."]),
+            //     ]
+            // ])        
             ->add('position_name', TextType::class, [
                 'mapped' => false,
                 'data' => $position ? $position->getName() : '',

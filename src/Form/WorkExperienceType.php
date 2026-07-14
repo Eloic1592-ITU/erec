@@ -92,46 +92,46 @@ class WorkExperienceType extends AbstractType
                     'class' => "form-label",
                 ],
             ])
-            ->add('reference_name', TextType::class, [
-                'constraints' => [
-                    new Assert\NotBlank(['message' => 'Veuillez saisir le nom complet.']),
-                ],
-                'attr' => [
-                    'class' => "form-control",
-                    'placeholder' => 'Nom et prénom(s)',
-                ],
-            ])
-            ->add('reference_position', TextType::class, [
-                'constraints' => [
-                    new Assert\NotBlank(['message' => 'Veuillez saisir le poste.']),
-                ],
-                'attr' => [
-                    'class' => "form-control",
-                    'placeholder' => 'Fonction',
-                ],
-            ])
-            ->add('reference_email', EmailType::class, [
-                'constraints' => [
-                    new Assert\NotBlank(['message' => "Veuillez saisir l'adresse e-mail."]),
-                    new Assert\Email(['message' => 'Veuillez saisir un email valide.']),
-                ],
-                'attr' => [
-                    'class' => "form-control",
-                    'placeholder' => 'Adresse e-mail',
-                ],
-            ])
-            ->add('reference_phone', TelType::class, [
-                'constraints' => [
-                    new Assert\NotBlank(['message' => 'Veuillez saisir le numéro de téléphone.']),
-                ],
-                'attr' => [
-                    'class' => "form-control tel w-100",
-                    'placeholder' => 'Exemple : 034 xx xxx xx',
-                    'maxLength' => 13,
-                ],
-            ])
+            // ->add('reference_name', TextType::class, [
+            //     'constraints' => [
+            //         new Assert\NotBlank(['message' => 'Veuillez saisir le nom complet.']),
+            //     ],
+            //     'attr' => [
+            //         'class' => "form-control",
+            //         'placeholder' => 'Nom et prénom(s)',
+            //     ],
+            // ])
+            // ->add('reference_position', TextType::class, [
+            //     'constraints' => [
+            //         new Assert\NotBlank(['message' => 'Veuillez saisir le poste.']),
+            //     ],
+            //     'attr' => [
+            //         'class' => "form-control",
+            //         'placeholder' => 'Fonction',
+            //     ],
+            // ])
+            // ->add('reference_email', EmailType::class, [
+            //     'constraints' => [
+            //         new Assert\NotBlank(['message' => "Veuillez saisir l'adresse e-mail."]),
+            //         new Assert\Email(['message' => 'Veuillez saisir un email valide.']),
+            //     ],
+            //     'attr' => [
+            //         'class' => "form-control",
+            //         'placeholder' => 'Adresse e-mail',
+            //     ],
+            // ])
+            // ->add('reference_phone', TelType::class, [
+            //     'constraints' => [
+            //         new Assert\NotBlank(['message' => 'Veuillez saisir le numéro de téléphone.']),
+            //     ],
+            //     'attr' => [
+            //         'class' => "form-control tel w-100",
+            //         'placeholder' => 'Exemple : 034 xx xxx xx',
+            //         'maxLength' => 13,
+            //     ],
+            // ])
             ->add('workFile', FileType::class, [
-                'label' => "Joindre une copie d'attestation de travail (.jpg .png .pdf)(Taille maximum: 1 MB)",
+                'label' => "Insérer une copie d’attestation de travail/ Stage (.jpg .png .pdf)(Taille maximum: 1 MB)",
                 'mapped' => false,
                 'constraints' => [
                     /*new Assert\NotBlank(['message' => "Veuillez une copie d'attestation de travail."]),*/

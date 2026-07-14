@@ -49,6 +49,12 @@ class JobApplication
     #[ORM\Column(type: 'boolean', options: ['default' => false])]
     private bool $hasSubmittedApplication = false;
 
+    public function __construct()
+    {
+        $this->secondary_location = "Pas de second choix de lieu";
+        $this->tertiary_location = "Pas de troisième choix de lieu";
+    }
+
 
     public function getId(): ?int
     {

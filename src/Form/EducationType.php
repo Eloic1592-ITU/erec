@@ -97,24 +97,68 @@ class EducationType extends AbstractType
                     'class' => "form-label",
                 ],
             ])
-            ->add('graduation_year', TextType::class, [
-                'label' => 'Année de d\'obtention',
+            // ->add('graduation_year', TextType::class, [
+            //     'label' => 'Année de d\'obtention',
+            //     'constraints' => [
+            //         new Assert\NotBlank(['message' => 'L\'année de graduation ne doit pas être vide.']),
+            //     ],
+            //     'attr' => [
+            //         'class' => "form-control",
+            //         'placeholder' => 'Entrez l\'année d\'obtention'
+            //     ],
+            //     'label_attr' => [
+            //         'class' => "form-label",
+            //     ],
+            // ])
+            // ->add('degreeFile', FileType::class, [
+            //     'label' => 'Joindre un diplôme (.jpg .png .pdf)(Taille maximum: 1 MB)',
+            //     'mapped' => false,
+            //     'constraints' => [
+            //         new Assert\NotBlank(['message' => 'Veuillez enregistrez une copie du diplôme.']),
+            //         new Assert\File([
+            //             'maxSize' => '5M',
+            //             'mimeTypes' => [
+            //                 'image/jpeg',
+            //                 'image/png',
+            //                 'application/pdf',
+            //             ],
+            //             'mimeTypesMessage' => 'Veuillez télécharger un fichier au format .jpg, .png ou .pdf.',
+            //         ]),
+            //     ],
+            //     'attr' => [
+            //         'class' => "form-control",
+            //     ],
+            //     'label_attr' => [
+            //         'class' => "form-label",
+            //     ],
+            // ])
+            ->add('coverLetterFile', FileType::class, [
+                'label' => 'Joindre une lettre d\'introduction (.jpg .png .pdf)(Taille maximum: 1 MB)',
+                'mapped' => false,
                 'constraints' => [
-                    new Assert\NotBlank(['message' => 'L\'année de graduation ne doit pas être vide.']),
+                    new Assert\NotBlank(['message' => 'Veuillez enregistrez une copie de votre lettre d\'introduction.']),
+                    new Assert\File([
+                        'maxSize' => '5M',
+                        'mimeTypes' => [
+                            'image/jpeg',
+                            'image/png',
+                            'application/pdf',
+                        ],
+                        'mimeTypesMessage' => 'Veuillez télécharger un fichier au format .jpg, .png ou .pdf.',
+                    ]),
                 ],
                 'attr' => [
                     'class' => "form-control",
-                    'placeholder' => 'Entrez l\'année d\'obtention'
                 ],
                 'label_attr' => [
                     'class' => "form-label",
                 ],
             ])
-            ->add('degreeFile', FileType::class, [
-                'label' => 'Joindre une copie du diplôme (.jpg .png .pdf)(Taille maximum: 1 MB)',
+            ->add('schoolCertificateFile', FileType::class, [
+                'label' => 'Joindre un certificat  de scolarité (.jpg .png .pdf)(Taille maximum: 1 MB)',
                 'mapped' => false,
                 'constraints' => [
-                    new Assert\NotBlank(['message' => 'Veuillez enregistrez une copie du diplôme.']),
+                    new Assert\NotBlank(['message' => 'Veuillez enregistrez un certificat de scolarité.']),
                     new Assert\File([
                         'maxSize' => '5M',
                         'mimeTypes' => [

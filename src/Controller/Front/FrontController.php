@@ -337,7 +337,8 @@ class FrontController extends AbstractController
         $document = $documentRepository->findOneBy(['user' => $this->getUser()]);
         $engagement = $engagementRepository->findOneBy(['user' => $this->getUser()]);
 
-        // Job Application form setup
+        
+        // 1- Job Application form setup
         if ($jobApplication) {
             $jobApplicationForm = $this->createForm(JobApplicationType::class, $jobApplication, [
                 'action' => $this->generateUrl('app_job_application_edit', ['id' => $jobApplication->getId()]),
@@ -354,7 +355,7 @@ class FrontController extends AbstractController
             $isJobApplicationEdit = false;
         }
 
-        // Profile form setup
+        // 2- Profile form setup
         if ($profile) {
             $profileForm = $this->createForm(ProfileType::class, $profile, [
                 'action' => $this->generateUrl('app_profile_edit', ['id' => $profile->getId()]),
@@ -369,7 +370,7 @@ class FrontController extends AbstractController
             $isProfileEdit = false;
         }
 
-        // Education forms setup
+        // 3- Education forms setup
         $educationForms = [];
         foreach ($educations as $education) {
             $educationForms[] = $this->createForm(EducationType::class, $education, [
@@ -383,7 +384,7 @@ class FrontController extends AbstractController
             'method' => 'POST',
         ])->createView();
 
-        // Education forms setup
+        // 4- Certification forms setup
         $certificationForms = [];
         foreach ($certifications as $certification) {
             $certificationForms[] = $this->createForm(CertificationType::class, $certification, [
@@ -397,7 +398,7 @@ class FrontController extends AbstractController
             'method' => 'POST',
         ])->createView();
 
-        // Internship forms setup
+        // 5- Internship forms setup
         $internshipForms = [];
         foreach ($internships as $internship) {
             $internshipForms[] = $this->createForm(InternshipType::class, $internship, [
@@ -411,7 +412,7 @@ class FrontController extends AbstractController
             'method' => 'POST',
         ])->createView();
 
-        // WorkExperience forms setup
+        // 6- WorkExperience forms setup
         $workExperienceForms = [];
         foreach ($workExperiences as $workExperience) {
             $workExperienceForms[] = $this->createForm(WorkExperienceType::class, $workExperience, [
@@ -425,7 +426,7 @@ class FrontController extends AbstractController
             'method' => 'POST',
         ])->createView();
 
-        // Other Info form setup
+        // 7- Other Info form setup
         if ($otherInfo) {
             $otherInfoForm = $this->createForm(OtherInfoType::class, $otherInfo, [
                 'action' => $this->generateUrl('app_other_info_edit', ['id' => $otherInfo->getId()]),
@@ -440,7 +441,7 @@ class FrontController extends AbstractController
             $isOtherInfoEdit = false;
         }
 
-        // Document forms setup
+        // 8- Document forms setup
         if ($document) {
             $documentForm = $this->createForm(DocumentType::class, $document, [
                 'action' => $this->generateUrl('app_document_edit', ['id' => $document->getId()]),
@@ -455,7 +456,7 @@ class FrontController extends AbstractController
             $isDocumentEdit = false;
         } 
 
-        // Engagement forms setup
+        // 9- Engagement forms setup
         if ($engagement) {
             $engagementForm = $this->createForm(EngagementType::class, $engagement, [
                 'action' => $this->generateUrl('app_engagement_edit', ['id' => $engagement->getId(), 'ref' => $ref]),
@@ -470,43 +471,69 @@ class FrontController extends AbstractController
                 'ref' => $ref,
             ]);
             $isEngagementEdit = false;
-        }
+
+            
+        }       
+        // Liste des étapes
+        // $steps = [
+        //     ['number' => 1, 'key' => 'job_application',  'label' => 'Candidature'],
+        //     ['number' => 2, 'key' => 'profile',           'label' => 'Profil'],
+        //     ['number' => 3, 'key' => 'education',         'label' => 'Formation'],
+        //     ['number' => 4, 'key' => 'work_experience',   'label' => 'Expérience'],
+        //     ['number' => 5, 'key' => 'other_info',        'label' => 'Autres informations'],
+        //     ['number' => 6, 'key' => 'document',          'label' => 'Documents'],
+        //     ['number' => 7, 'key' => 'engagement',        'label' => 'Engagement'],
+        // ];
+
+        // Total des étapes
+        // $totalSteps = count($steps);
 
         // À exploiter dans la navbar [navbar.html.twig], au niveau du lien 'Nouvelle candidature'.
         $isSubmissionPage = true;
 
         return $this->render('front/submission/submission.html.twig', [
+            // 'steps' => $steps,
+            // 'total_steps' => $totalSteps,
             'is_submission_page' => $isSubmissionPage,
 
+            // Step 1
             'jobApplicationForm' => $jobApplicationForm->createView(),
             'jobApplication' => $jobApplication,
             'is_job_application_edit' => $isJobApplicationEdit,
             'existingjobapplication' => $existingjobApplication,
 
+            // Step 2
             'profileForm' => $profileForm->createView(),
             'profile' => $profile,
             'is_profile_edit' => $isProfileEdit,
 
+            // Step 3
             'educationForms' => $educationForms,
             'newEducationForm' => $newEducationForm,
 
+            // Step 4
             'certificationForms' => $certificationForms,
             'newCertificationForm' => $newCertificationForm,
 
+            // Step 5
             'internshipForms' => $internshipForms,
             'newInternshipForm' => $newInternshipForm,
 
+            // Step 6
             'workExperienceForms' => $workExperienceForms,
             'newWorkExperienceForm' => $newWorkExperienceForm,
 
+            // Step 7
             'otherInfoForm' => $otherInfoForm->createView(),
             'otherInfo' => $otherInfo,
             'is_other_info_edit' => $isOtherInfoEdit,
 
+            // Step 8
             'documentForm' => $documentForm->createView(),
             'document' => $document,
             'is_document_edit' => $isDocumentEdit,
 
+            // Step 9
             'engagementForm' => $engagementForm->createView(),
             'engagement' => $engagement,
             'is_engagement_edit' => $isEngagementEdit,

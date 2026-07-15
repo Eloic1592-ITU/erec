@@ -47,8 +47,8 @@
             </div>
             <div class="step-container d-none d-lg-flex justify-content-between">
             
-              {# Anciennes étapes #}
-              <div class="step-circle"><span>1</span></div>
+              {# Anciennes étapes (Candidat en CDD OU CDI) #}
+              {#<div class="step-circle"><span>1</span></div>
               <div class="step-circle"><span>2</span></div>
               <div class="step-circle"><span>3</span></div>
               <div class="step-circle"><span>4</span></div>
@@ -56,22 +56,76 @@
               <div class="step-circle"><span>6</span></div>
               <div class="step-circle"><span>7</span></div>
               <div class="step-circle"><span>8</span></div>
-              <div class="step-circle"><span>9</span></div> 
-              
+              <div class="step-circle"><span>9</span></div> #}
 
+              {# Nouvelles étapes (Candidat en alternance) #}
+              <div class="step-circle"><span>1</span></div>
+              <div class="step-circle"><span>2</span></div>
+              <div class="step-circle"><span>3</span></div>
+              <div class="step-circle"><span>4</span></div>
+              <div class="step-circle"><span>5</span></div>
+              <div class="step-circle"><span>6</span></div>
+              <div class="step-circle"><span>7</span></div>
             </div>
           </div>
           <div id="multi-step-form">
-            {# Anciennes étapes #}
-            {{ include('front/partials/steps/_step1.html.twig') }}
-            {{ include('front/partials/steps/_step2.html.twig') }}
-            {{ include('front/partials/steps/_step3.html.twig') }}
-            {{ include('front/partials/steps/_step4.html.twig') }}
-            {{ include('front/partials/steps/_step5.html.twig') }}
-            {{ include('front/partials/steps/_step6.html.twig') }}
-            {{ include('front/partials/steps/_step7.html.twig') }}
-            {{ include('front/partials/steps/_step8.html.twig') }}
-            {{ include('front/partials/steps/_step9.html.twig') }}
+            {% set activeStepKeys = steps|map(s => s.key) %}
+
+            {% if 'job_application' in activeStepKeys %}
+                {% set currentStep = steps|filter(s => s.key == 'job_application')|first %}
+                {% include 'front/partials/steps/_step1.html.twig' with {
+                    'step_number': currentStep.number,
+                    'total_steps': total_steps
+                } %}
+            {% endif %}
+              
+            {% if 'profile' in activeStepKeys %}
+                {% set currentStep = steps|filter(s => s.key == 'profile')|first %}
+                {% include 'front/partials/steps/_step2.html.twig' with {
+                    'step_number': currentStep.number,
+                    'total_steps': total_steps
+                } %}
+            {% endif %}
+              
+            {% if 'education' in activeStepKeys %}
+                {% set currentStep = steps|filter(s => s.key == 'education')|first %}
+                {% include 'front/partials/steps/_step3.html.twig' with {
+                    'step_number': currentStep.number,
+                    'total_steps': total_steps
+                } %}
+            {% endif %}
+              
+            {% if 'work_experience' in activeStepKeys %}
+                {% set currentStep = steps|filter(s => s.key == 'work_experience')|first %}
+                {% include 'front/partials/steps/_step6.html.twig' with {
+                    'step_number': currentStep.number,
+                    'total_steps': total_steps
+                } %}
+            {% endif %}
+              
+            {% if 'other_info' in activeStepKeys %}
+                {% set currentStep = steps|filter(s => s.key == 'other_info')|first %}
+                {% include 'front/partials/steps/_step7.html.twig' with {
+                    'step_number': currentStep.number,
+                    'total_steps': total_steps
+                } %}
+            {% endif %}
+              
+            {% if 'document' in activeStepKeys %}
+                {% set currentStep = steps|filter(s => s.key == 'document')|first %}
+                {% include 'front/partials/steps/_step8.html.twig' with {
+                    'step_number': currentStep.number,
+                    'total_steps': total_steps
+                } %}
+            {% endif %}
+              
+            {% if 'engagement' in activeStepKeys %}
+                {% set currentStep = steps|filter(s => s.key == 'engagement')|first %}
+                {% include 'front/partials/steps/_step9.html.twig' with {
+                    'step_number': currentStep.number,
+                    'total_steps': total_steps
+                } %}
+            {% endif %}
             
           </div>
         </div>
@@ -84,6 +138,19 @@
 
 {# ---------------------------- JS ---------------------------- #}
 {% block javascripts %}
+  {# Nombre total d'etapes de la candidature #}
+  <script>
+    const TOTAL_STEPS = {{ total_steps }};
+    const STEP_NUMBERS = {
+        job_application: {{ steps|filter(s => s.key == 'job_application')|first ? steps|filter(s => s.key == 'job_application')|first.number : 0 }},
+        profile: {{ steps|filter(s => s.key == 'profile')|first ? steps|filter(s => s.key == 'profile')|first.number : 0 }},
+        education: {{ steps|filter(s => s.key == 'education')|first ? steps|filter(s => s.key == 'education')|first.number : 0 }},
+        work_experience: {{ steps|filter(s => s.key == 'work_experience')|first ? steps|filter(s => s.key == 'work_experience')|first.number : 0 }},
+        other_info: {{ steps|filter(s => s.key == 'other_info')|first ? steps|filter(s => s.key == 'other_info')|first.number : 0 }},
+        document: {{ steps|filter(s => s.key == 'document')|first ? steps|filter(s => s.key == 'document')|first.number : 0 }},
+        engagement: {{ steps|filter(s => s.key == 'engagement')|first ? steps|filter(s => s.key == 'engagement')|first.number : 0 }},
+    };
+  </script>
   {# jQuery v1.11.1 #}
   <script src="{{ asset('vendor/jquery/jquery.min.js') }}" {{ add_nonce()|raw }}></script>
 

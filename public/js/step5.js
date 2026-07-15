@@ -2,7 +2,7 @@
 
 $(document).ready(function () {
   // Yes or No Controller
-  initFormItemController(5);
+  // initFormItemController(5);
 
   // Next Button
   const internshipNextBtn = $("#internship-actions .next-step");

@@ -2,7 +2,7 @@
 
 $(document).ready(function () {
   // Yes or No Controller
-  initFormItemController(4);
+  // initFormItemController(4);
 
   // Next Button
   const certificationNextBtn = $("#certification-actions .next-step");

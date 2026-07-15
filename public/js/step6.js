@@ -1,11 +1,29 @@
 // Step 6 Script
 
 $(document).ready(function () {
+  // Numero de l'etape
+  const stepNum = typeof STEP_NUMBERS !== 'undefined' 
+    ? STEP_NUMBERS.work_experience 
+    : 4
+
   // Yes or No Controller
-  initFormItemController(6);
+  initFormItemController(stepNum);
+  // initFormItemController(6);
 
   // Next Button
-  const workExperienceNextBtn = $("#work-experience-actions .next-step");
+  // const workExperienceNextBtn = $("#work-experience-actions .next-step");
+   const workExperienceNextBtn = $(`#work-experience-actions .next-step`);
+
+    // Gestion du bouton "Non" → activer le bouton Continuer
+    $(document).on('click', '.show-alert-btn', function() {
+        workExperienceNextBtn.prop('disabled', false);
+        workExperienceNextBtn.removeClass('disabled');
+    });
+
+    // Gestion du bouton "Oui" → désactiver le bouton Continuer jusqu'à ajout
+    $(document).on('click', '.form-items-btn', function() {
+        updateWorkExperienceListUI();
+    });
 
   // List Title
   const workExperienceListTitle = "Mes postes enregistrés";
@@ -417,8 +435,12 @@ $(document).ready(function () {
           // Émettre un événement 'workExperiencesCleared'
           EventBus.emit("workExperiencesCleared");
 
-          $(`.step-6 .yon`).show();
-          $(`.step-6 .form-items`).hide();
+          // $(`.step-6 .yon`).show();
+          // $(`.step-6 .form-items`).hide();
+
+          $(`.step-${stepNum} .yon`).show();
+          $(`.step-${stepNum} .form-items`).hide();
+
 
           await showAlert("", response.message, "success");
         } else {

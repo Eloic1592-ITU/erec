@@ -19,12 +19,16 @@
 	    {% if app.user is defined and app.user.id is defined and app.user.id is not null %}
                 <h5 class="text-success mb-3 text-center">Veuillez reconfirmer votre choix de poste</h5>
             {% endif %}
-            {% for position in positions %}  
-                <a class="position" href="{{ url('app_landing', { 'campaign_id': position.getCampaign().getId(), 'ref': position.getReference() }) }}">
-                    {{ position.getName() }}
-                    <i class='bx bx-right-arrow-alt'></i>
-                </a>   
-            {% endfor %}    
+                {% if positions is empty %}
+                    <p class="text-muted text-center">Aucun poste disponible pour cette campagne.</p>
+                {% else %}
+                    {% for position in positions %}
+                        <a class="position" href="{{ url('app_landing', { 'campaign_id': position.getCampaign().getId(), 'ref': position.getReference() }) }}">
+                            {{ position.getName() }}
+                            <i class='bx bx-right-arrow-alt'></i>
+                        </a>
+                    {% endfor %}
+                {% endif %}
         </div>
     </div>
     

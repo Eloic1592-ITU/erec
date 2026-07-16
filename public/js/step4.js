@@ -1,11 +1,28 @@
 // Step 4 Script
 
 $(document).ready(function () {
+  // Numero de l'etape
+  const stepNum = typeof STEP_NUMBERS !== 'undefined'
+     ? STEP_NUMBERS.certification
+     : 4;
+   
   // Yes or No Controller
+    initFormItemController(stepNum);
   // initFormItemController(4);
 
   // Next Button
   const certificationNextBtn = $("#certification-actions .next-step");
+
+    // Gestion du bouton "Non" → activer le bouton Continuer
+    $(document).on('click', `.step-${stepNum} .show-alert-btn`, function() {
+        certificationNextBtn.prop('disabled', false);
+        certificationNextBtn.removeClass('disabled');
+    });
+
+    // Gestion du bouton "Oui" → désactiver le bouton Continuer jusqu'à ajout
+    $(document).on('click', `.step-${stepNum} .form-items-btn`, function() {
+        updateCertificationListUI();
+    });
 
   // List Title
   const certificationListTitle = "Mes Certifications / Attestations enregistrées";
@@ -296,8 +313,11 @@ $(document).ready(function () {
           // Émettre un événement 'certificationsCleared'
           EventBus.emit("certificationsCleared");
 
-          $(`.step-4 .yon`).show();
-          $(`.step-4 .form-items`).hide();
+          // $(`.step-4 .yon`).show();
+          // $(`.step-4 .form-items`).hide();
+          
+          $(`.step-${stepNum} .yon`).show();
+          $(`.step-${stepNum} .form-items`).hide();
 
           await showAlert("", response.message, "success");
         } else {

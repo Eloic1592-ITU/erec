@@ -89,9 +89,9 @@ class FrontController extends AbstractController
         $positions = $query->getResult();
     
         // Si aucune position trouvée pour cette campagne
-        if (empty($positions)) {
-            throw $this->createNotFoundException('Aucun poste pour cette campagne.');
-        }
+        // if (empty($positions)) {
+        //     throw $this->createNotFoundException('Aucun poste pour cette campagne.');
+        // }
     
         return $this->render('front/position/index.html.twig', [
             'positions' => $positions,
@@ -323,6 +323,7 @@ class FrontController extends AbstractController
         //     return $this->redirectToRoute('app_positions');
         // }
         $position = $positionRepository->findOneBy(['reference' => $ref]);
+        
         $jobApplication = $repository->findOneBy([
             'user' => $this->getUser(),
             'position' => $position,
@@ -384,33 +385,33 @@ class FrontController extends AbstractController
             'method' => 'POST',
         ])->createView();
 
-        // // 4- Certification forms setup
-        // $certificationForms = [];
-        // foreach ($certifications as $certification) {
-        //     $certificationForms[] = $this->createForm(CertificationType::class, $certification, [
-        //         'action' => $this->generateUrl('app_certification_edit', ['id' => $certification->getId()]),
-        //         'method' => 'POST',
-        //     ])->createView();
-        // }
+        // 4- Certification forms setup
+        $certificationForms = [];
+        foreach ($certifications as $certification) {
+            $certificationForms[] = $this->createForm(CertificationType::class, $certification, [
+                'action' => $this->generateUrl('app_certification_edit', ['id' => $certification->getId()]),
+                'method' => 'POST',
+            ])->createView();
+        }
 
-        // $newCertificationForm = $this->createForm(CertificationType::class, new Certification(), [
-        //     'action' => $this->generateUrl('app_certification_new'),
-        //     'method' => 'POST',
-        // ])->createView();
+        $newCertificationForm = $this->createForm(CertificationType::class, new Certification(), [
+            'action' => $this->generateUrl('app_certification_new'),
+            'method' => 'POST',
+        ])->createView();
 
-        // // 5- Internship forms setup
-        // $internshipForms = [];
-        // foreach ($internships as $internship) {
-        //     $internshipForms[] = $this->createForm(InternshipType::class, $internship, [
-        //         'action' => $this->generateUrl('app_internship_edit', ['id' => $internship->getId()]),
-        //         'method' => 'POST',
-        //     ])->createView();
-        // }
+        // 5- Internship forms setup
+        $internshipForms = [];
+        foreach ($internships as $internship) {
+            $internshipForms[] = $this->createForm(InternshipType::class, $internship, [
+                'action' => $this->generateUrl('app_internship_edit', ['id' => $internship->getId()]),
+                'method' => 'POST',
+            ])->createView();
+        }
 
-        // $newInternshipForm = $this->createForm(InternshipType::class, new Internship(), [
-        //     'action' => $this->generateUrl('app_internship_new'),
-        //     'method' => 'POST',
-        // ])->createView();
+        $newInternshipForm = $this->createForm(InternshipType::class, new Internship(), [
+            'action' => $this->generateUrl('app_internship_new'),
+            'method' => 'POST',
+        ])->createView();
 
         // 6- WorkExperience forms setup
         $workExperienceForms = [];
@@ -473,20 +474,37 @@ class FrontController extends AbstractController
             $isEngagementEdit = false;
 
             
-        }       
+        }
+
+        // Type de contrat
+        $typeContrat = $position?->getCampaign()?->getContractType();
+        // dd($typeContrat);
+
         // Liste des étapes
         $steps = [
-            ['number' => 1, 'key' => 'job_application',  'label' => 'Candidature'],
-            ['number' => 2, 'key' => 'profile',           'label' => 'Profil'],
-            ['number' => 3, 'key' => 'education',         'label' => 'Formation'],
-            ['number' => 4, 'key' => 'work_experience',   'label' => 'Expérience'],
-            ['number' => 5, 'key' => 'other_info',        'label' => 'Autres informations'],
-            ['number' => 6, 'key' => 'document',          'label' => 'Documents'],
-            ['number' => 7, 'key' => 'engagement',        'label' => 'Engagement'],
+            ['number' => 1, 'key' => 'job_application', 'label' => 'Candidature'],
+            ['number' => 2, 'key' => 'profile',          'label' => 'Profil'],
+            ['number' => 3, 'key' => 'education',        'label' => 'Formation'],
         ];
 
-        // Total des étapes
+        //Etape 4 - Certification — selon type de contrat
+        if ($typeContrat->isCertificationRequired()) {
+            $steps[] = ['number' => count($steps) + 1, 'key' => 'certification', 'label' => 'Certification'];
+        }
+
+        //Etape 5 - Internship — selon type de contrat
+        if ($typeContrat->isInternshipRequired()) {
+            $steps[] = ['number' => count($steps) + 1, 'key' => 'internship', 'label' => 'Stage'];
+        }
+
+        $steps[] = ['number' => count($steps) + 1, 'key' => 'work_experience', 'label' => 'Expérience'];
+        $steps[] = ['number' => count($steps) + 1, 'key' => 'other_info',      'label' => 'Autres informations'];
+        $steps[] = ['number' => count($steps) + 1, 'key' => 'document',        'label' => 'Documents'];
+        $steps[] = ['number' => count($steps) + 1, 'key' => 'engagement',      'label' => 'Engagement'];
+
+        // Nombre total des etapes
         $totalSteps = count($steps);
+        // dd($totalSteps);
 
         // À exploiter dans la navbar [navbar.html.twig], au niveau du lien 'Nouvelle candidature'.
         $isSubmissionPage = true;
@@ -511,13 +529,13 @@ class FrontController extends AbstractController
             'educationForms' => $educationForms,
             'newEducationForm' => $newEducationForm,
 
-            // // Step 4 (desactivé)
-            // 'certificationForms' => $certificationForms,
-            // 'newCertificationForm' => $newCertificationForm,
+            // Step 4 (desactivé selon le type de contrat)
+            'certificationForms' => $certificationForms,
+            'newCertificationForm' => $newCertificationForm,
 
-            // Step 5 (desactivé)
-            // 'internshipForms' => $internshipForms,
-            // 'newInternshipForm' => $newInternshipForm,
+            // Step 5 (desactivé selon le type de contrat)
+            'internshipForms' => $internshipForms,
+            'newInternshipForm' => $newInternshipForm,
 
             // Step 6
             'workExperienceForms' => $workExperienceForms,

@@ -1,0 +1,81 @@
+<table id="data-list" class="table table-striped nowrap" style="width: 100%">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Code</th>
+            <th>Libellé</th>
+            <th>Certification - Stage</th>
+            <th>Statut</th>
+            <th>Actions</th>
+            <th></th> {# colonne sacrifiée pour le responsive #}
+        </tr>
+    </thead>
+    <tbody>
+        {% for contractType in contractTypes %}
+            <tr>
+                <td>CONT{{ contractType.getId() }}</td>
+                <td>{{ contractType.getCode() }}</td>
+                <td>{{ contractType.getLabel() }}</td>
+                <td>
+                    {% if contractType.isCertificationRequired() %}
+                        <span class="badge text-bg-success rounded-pill">Obligatoire</span>
+                    {% else %}
+                        <span class="badge text-bg-secondary rounded-pill">Non requis</span>
+                    {% endif %}
+                    {% if contractType.isInternshipRequired() %}
+                        <span class="badge text-bg-success rounded-pill">Obligatoire</span>
+                    {% else %}
+                        <span class="badge text-bg-secondary rounded-pill">Non requis</span>
+                    {% endif %}
+                </td>
+                <td>
+                    {% if not contractType.isDeleted() %}
+                        <span class="badge text-bg-success rounded-pill">Activé</span>
+                    {% else %}
+                        <span class="badge text-bg-danger rounded-pill">Désactivé</span>
+                    {% endif %}
+                </td>
+                <td>
+                    <div class="d-flex justify-content-end gap-1">
+                        <button 
+                            class="btn-action bg-warning"
+                            data-bs-toggle="modal"
+                            data-bs-target="#contractType-{{ contractType.getId() }}"
+                        >
+                            <i class="bx bx-edit"></i>
+                            <span>Modifier</span>
+                        </button>
+                        {% if not contractType.isDeleted() %}
+                            <button
+                                class="btn-action btn-state bg-danger delete-contractType"
+                                data-state="désactiver ce type de contrat"
+                                data-url="{{ path('admin_contract_type_disable', {'id': contractType.getId()}) }}"
+                            >
+                                <span>Désactiver</span>
+                            </button>
+                        {% else %}
+                            <button
+                                class="btn-action btn-state bg-success delete-contractType"
+                                data-state="réactiver ce type de contrat"
+                                data-url="{{ path('admin_contract_type_activate', {'id': contractType.getId()}) }}"
+                            >
+                                <span>Activer</span>
+                            </button>
+                        {% endif %}
+                    </div>
+                </td>
+                <td></td> {# td vide — colonne sacrifiée pour le responsive #}
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+
+{# Modal for Adding new item #}
+{{ include('back/partials/modals/_newContractType.html.twig') }}
+
+
+{# Modals for Editing each items #}
+{% for contractTypeForm in contractTypeForms %}
+    {{ include('back/partials/modals/_editContractType.html.twig') }}
+{% endfor %}

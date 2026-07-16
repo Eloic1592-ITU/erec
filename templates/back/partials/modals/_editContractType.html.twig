@@ -1,0 +1,89 @@
+<!-- Edit Contract Type -->
+
+<div
+  id="contractType-{{ contractTypeForm.vars.value.id }}"
+  class="modal modal-sm fade"
+  data-bs-backdrop="static"
+  data-bs-keyboard="false"
+  tabindex="-1"
+  aria-hidden="true"
+>
+  {{ form_start(contractTypeForm, {
+    'attr': {
+      'id': 'contractType-' ~ contractTypeForm.vars.value.id,
+      'class': 'needs-validation',
+      'novalidate': '',
+    }
+  }) }}
+
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+
+        <div class="modal-header px-4">
+          Type de contrat
+          <button 
+            type="button" 
+            class="btn-close" 
+            data-bs-dismiss="modal" 
+            aria-label="Close">
+          </button>
+        </div>
+
+
+        <div class="modal-body text-start p-3">
+          {{ form_widget(contractTypeForm.code) }}
+        </div>
+
+
+        <div class="modal-body text-start p-3">
+          {{ form_widget(contractTypeForm.label) }}
+        </div>
+
+
+        <div class="modal-body text-start p-3">
+          {{ form_widget(contractTypeForm.description) }}
+        </div>
+
+
+        <div class="modal-body text-start p-3">
+          <div class="form-check">
+            {{ form_widget(contractTypeForm.certificationRequired) }}
+            {{ form_label(contractTypeForm.certificationRequired) }}
+          </div>
+        </div>
+
+
+        <div class="modal-body text-start p-3">
+          <div class="form-check">
+            {{ form_widget(contractTypeForm.internshipRequired) }}
+            {{ form_label(contractTypeForm.internshipRequired) }}
+          </div>
+        </div>
+
+
+        {#<div class="modal-body text-start p-3">
+          <div class="form-check">
+            {{ form_widget(contractTypeForm.is_deleted) }}
+            {{ form_label(contractTypeForm.is_deleted) }}
+          </div>
+        </div>#}
+
+
+        <div class="modal-footer d-flex flex-nowrap gap-1 border-0 pb-4 px-4 pt-0">
+
+          <button 
+            type="submit" 
+            class="btn btn-primary w-100 d-flex justify-content-center align-items-center gap-2 m-0"
+          >
+            <i class="bx bx-check"></i>
+            <span>Enregistrer</span>
+          </button>
+
+        </div>
+
+      </div>
+    </div>
+
+  {{ form_end(contractTypeForm) }}
+
+</div>

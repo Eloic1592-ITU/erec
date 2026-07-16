@@ -12,6 +12,7 @@ use App\Entity\Skill;
 use App\Entity\Civility;
 use App\Entity\MaritalStatus;
 use App\Entity\Campaign;
+use App\Entity\ContractType;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ManagerRegistry;
 use Doctrine\Persistence\ObjectManager;
@@ -37,6 +38,9 @@ class AppFixtures extends Fixture
         // Set the Oracle session date formats
         $this->connection->executeQuery("ALTER SESSION SET NLS_DATE_FORMAT = 'YYYY-MM-DD HH24:MI:SS' NLS_TIMESTAMP_FORMAT = 'YYYY-MM-DD HH24:MI:SS' NLS_TIMESTAMP_TZ_FORMAT = 'YYYY-MM-DD HH24:MI:SS TZH:TZM'");
 
+        $this->loadContractType($manager);
+        $manager->flush();
+        
         $this->loadCampaign($manager);
         $this->loadPosition($manager);
         
@@ -312,10 +316,56 @@ private function loadPosition(ObjectManager $manager): void
             $campaign->setDescription('Description de la campagne : ' . $title);
             $campaign->setDeleted(false);
 
+            // Set le type de contrat a une campagne
+            $campaign->setContractType($this->getReference('contract_type_0', ContractType::class));
+
             $manager->persist($campaign);
 
             // Référence pour pouvoir lier les Position à cette campagne dans loadPosition()
             $this->addReference('campaign_' . $index, $campaign);
+        }
+    }
+
+     // Chargement des donnees de test pour l'entité Type Contrat 
+    private function loadContractType(ObjectManager $manager): void
+    {
+        $contractTypes = [
+            [
+                'code' => 'CDI',
+                'label' => 'Contrat à Durée Indéterminée',
+                'description' => 'Contrat permanent sans durée définie',
+                'certificationRequired' => true,
+                'internshipRequired' => false,
+            ],
+            [
+                'code' => 'CDD',
+                'label' => 'Contrat à Durée Déterminée',
+                'description' => 'Contrat avec une durée définie',
+                'certificationRequired' => true,
+                'internshipRequired' => false,
+            ],
+            [
+                'code' => 'ALTERNANCE',
+                'label' => 'Alternance',
+                'description' => 'Formation combinant études et expérience professionnelle',
+                'certificationRequired' => true,
+                'internshipRequired' => true,
+            ],
+        ];
+
+        foreach ($contractTypes as $index => $data) {
+            $contractType = new ContractType();
+            $contractType->setCode($data['code']);
+            $contractType->setLabel($data['label']);
+            $contractType->setDescription($data['description']);
+            $contractType->setCertificationRequired($data['certificationRequired']);
+            $contractType->setInternshipRequired($data['internshipRequired']);
+            $contractType->setDeleted(false);
+
+            $manager->persist($contractType);
+
+            //Référence pour lier les Campaign à ce ContractType
+            $this->addReference('contract_type_' . $index, $contractType);
         }
     }
 }

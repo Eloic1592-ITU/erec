@@ -9,6 +9,8 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
 use App\Entity\Position;
 use App\Entity\JobApplication;
+// use App\Enum\TypeContrat;
+use App\Entity\ContractType;
 
 #[ORM\Entity(repositoryClass: CampaignRepository::class)]
 #[ORM\Table(name: '`EREC_CAMPAIGN`')]
@@ -48,6 +50,12 @@ class Campaign
      */
     #[ORM\OneToMany(targetEntity: JobApplication::class, mappedBy: 'campaign', orphanRemoval: true)]
     private Collection $jobApplications;
+
+    // Le type de contrat pour une campagne
+    #[ORM\ManyToOne(targetEntity: ContractType::class)]
+    #[ORM\JoinColumn(name: 'contract_type_id', referencedColumnName: 'id', nullable: false)]
+    private ?ContractType $contractType = null;
+
 
     public function __construct()
     {
@@ -187,6 +195,17 @@ class Campaign
             }
         }
 
+        return $this;
+    }
+    public function getContractType(): ?ContractType
+    {
+        return $this->contractType;
+    }
+    
+    public function setContractType(?ContractType $contractType): static
+    {
+        $this->contractType = $contractType;
+    
         return $this;
     }
 }

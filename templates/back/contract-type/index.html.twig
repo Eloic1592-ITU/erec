@@ -1,0 +1,48 @@
+{# ---------------------------- Layout ---------------------------- #}
+{% extends 'back/layouts/base.html.twig' %}
+
+{# ---------------------------- Title ---------------------------- #}
+{% block title %}
+    Dashboard | Type de contrat
+{% endblock %}
+
+{# ---------------------------- CSS ---------------------------- #}
+{% block stylesheets %}
+  <link rel="stylesheet" href="{{ asset('css/back/user.css') }}" />
+{% endblock %}
+
+{# ---------------------------- Body ---------------------------- #}
+{% block body %}
+    
+  {{ include('back/partials/_header.html.twig') }}
+
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="card">
+          <div class="card-header d-flex align-items-center justify-content-between">
+            <h3 class="card-title">Liste des contrats</h3>
+            <button 
+              data-bs-toggle="modal" 
+              data-bs-target="#contractType-modal"
+              class="btn btn-primary btn-sm d-flex align-items-center gap-1"
+            >
+              <i class="bx bx-plus"></i> 
+              Ajouter
+            </button>
+          </div>
+          <div class="card-body p-0">
+            {{ include('back/partials/tables/contract-type/_index.html.twig') }}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+    
+{% endblock %}
+
+{# ---------------------------- JS ---------------------------- #}
+{% block javascripts %}
+  {# ... #}
+{% endblock %}
+

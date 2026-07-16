@@ -54,7 +54,7 @@ class CampaignController extends AbstractController
         ]);
     }
 
-    #[Route('/new', name: 'admin_campaign_new', methods: ['GET', 'POST'])]
+    #[Route('/nouveau', name: 'admin_campaign_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
         $campaign = new Campaign();
@@ -67,6 +67,7 @@ class CampaignController extends AbstractController
             $entityManager->persist($campaign);
             $entityManager->flush();
 
+            $this->addFlash("success", "Données enregistrées.");
             return $this->redirectToRoute('admin_campaign', [], Response::HTTP_SEE_OTHER);
         }
 
@@ -118,7 +119,7 @@ class CampaignController extends AbstractController
     }
 
 
-    #[Route('/{id}/edit', name: 'admin_campaign_edit', methods: ['GET', 'POST'])]
+    #[Route('/editer/{id}', name: 'admin_campaign_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Campaign $campaign, EntityManagerInterface $entityManager): Response
     {
         $form = $this->createForm(CampaignType::class, $campaign);
@@ -127,6 +128,7 @@ class CampaignController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->flush();
 
+            $this->addFlash("success", "Données enregistrées.");
             return $this->redirectToRoute('admin_campaign', [], Response::HTTP_SEE_OTHER);
         }
 

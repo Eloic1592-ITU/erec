@@ -8,9 +8,9 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
-use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
-use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use App\Entity\ContractType;
 class CampaignType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
@@ -41,6 +41,24 @@ class CampaignType extends AbstractType
                 ],
                 'label_attr' => [
                     'class' => 'form-label',
+                ],
+            ])
+            ->add('contractType', EntityType::class, [
+                'class' => ContractType::class,
+                'choice_label' => 'label',
+                'label' => 'Type de contrat',
+                'placeholder' => 'Choisissez un type de contrat',
+                'required' => true,
+                'attr' => [
+                    'class' => 'form-control form-select',
+                ],
+                'label_attr' => [
+                    'class' => 'form-label',
+                ],
+                'constraints' => [
+                    new Assert\NotBlank([
+                        'message' => 'Type de contrat obligatoire'
+                    ])
                 ],
             ]);
             

@@ -325,6 +325,14 @@ $(document).ready(function () {
           minlength: 2,
           maxlength: 255,
       },
+      "campaign[description]": {
+          required: true,
+          minlength: 2,
+          maxlength: 255,
+      },
+      "campaign[contractType]": {
+          required: true,
+      },
     };
 
     // Messages de validation
@@ -334,9 +342,51 @@ $(document).ready(function () {
             minlength: "Le titre doit comporter au moins 2 caractères.",
             maxlength: "Le titre ne peut pas dépasser 255 caractères.",
         },
+        "campaign[description]": {
+            required: "Veuillez saisir une description.",
+            minlength: "Le titre doit comporter au moins 2 caractères.",
+            maxlength: "Le titre ne peut pas dépasser 255 caractères.",
+        },
+        "campaign[contractType]": {
+            required: "Veuillez séléctionner un type de contrat.",
+        },
+
     };
 
     CUDReferentiel("campaign", campaignValidationRules, campaignValidationMessages);
+    
+
+    // CRUD Contrat type
+    
+    // Règles de validation
+    const contractTypeValidationRules = {
+      "contract_type[code]": {
+          required: true,
+          minlength: 2,
+          maxlength: 255,
+      },
+      "contract_type[label]": {
+          required: true,
+          minlength: 2,
+          maxlength: 255,
+      },
+    };
+
+    // Messages de validation
+    const contractTypeValidationMessages = {
+        "contract_type[code]": {
+            required: "Veuillez saisir un code.",
+            minlength: "Le titre doit comporter au moins 2 caractères.",
+            maxlength: "Le titre ne peut pas dépasser 255 caractères.",
+        },
+        "contract_type[label]": {
+            required: "Veuillez saisir le nom du contrat.",
+            minlength: "Le titre doit comporter au moins 2 caractères.",
+            maxlength: "Le titre ne peut pas dépasser 255 caractères.",
+        }
+    };
+
+     CUDReferentiel("contractType", contractTypeValidationRules, contractTypeValidationMessages);
 
     // Users Switch State 
     updateReferentielState("user");

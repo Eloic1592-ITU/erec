@@ -1,11 +1,29 @@
 // Step 5 Script
 
 $(document).ready(function () {
+  // Numero de l'etape
+  const stepNum = typeof STEP_NUMBERS !== 'undefined'
+    ? STEP_NUMBERS.internship
+    : 5;
+
   // Yes or No Controller
   // initFormItemController(5);
+   initFormItemController(stepNum);
 
   // Next Button
   const internshipNextBtn = $("#internship-actions .next-step");
+    
+    // Gestion du bouton "Non" → activer le bouton Continuer
+    $(document).on('click', `.step-${stepNum} .show-alert-btn`, function() {
+        internshipNextBtn.prop('disabled', false);
+        internshipNextBtn.removeClass('disabled');
+    });
+
+    // Gestion du bouton "Oui" → désactiver le bouton Continuer jusqu'à ajout
+    $(document).on('click', `.step-${stepNum} .form-items-btn`, function() {
+        updateInternshipListUI();
+    });
+
 
   // List Title
   const internshipListTitle = "Mes stages enregistrés";
@@ -263,8 +281,11 @@ $(document).ready(function () {
           // Émettre un événement 'internshipsCleared'
           EventBus.emit("internshipsCleared");
 
-          $(`.step-5 .yon`).show();
-          $(`.step-5 .form-items`).hide();
+          // $(`.step-5 .yon`).show();
+          // $(`.step-5 .form-items`).hide();
+
+          $(`.step-${stepNum} .yon`).show();
+          $(`.step-${stepNum} .form-items`).hide();
 
           await showAlert("", response.message, "success");
         } else {

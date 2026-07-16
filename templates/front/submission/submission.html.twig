@@ -59,13 +59,9 @@
               <div class="step-circle"><span>9</span></div> #}
 
               {# Nouvelles étapes (Candidat en alternance) #}
-              <div class="step-circle"><span>1</span></div>
-              <div class="step-circle"><span>2</span></div>
-              <div class="step-circle"><span>3</span></div>
-              <div class="step-circle"><span>4</span></div>
-              <div class="step-circle"><span>5</span></div>
-              <div class="step-circle"><span>6</span></div>
-              <div class="step-circle"><span>7</span></div>
+                {% for step in steps %}
+                    <div class="step-circle"><span>{{ step.number }}</span></div>
+                {% endfor %}
             </div>
           </div>
           <div id="multi-step-form">
@@ -90,6 +86,22 @@
             {% if 'education' in activeStepKeys %}
                 {% set currentStep = steps|filter(s => s.key == 'education')|first %}
                 {% include 'front/partials/steps/_step3.html.twig' with {
+                    'step_number': currentStep.number,
+                    'total_steps': total_steps
+                } %}
+            {% endif %}
+            
+            {% if 'certification' in activeStepKeys %}
+                {% set currentStep = steps|filter(s => s.key == 'certification')|first %}
+                {% include 'front/partials/steps/_step4.html.twig' with {
+                    'step_number': currentStep.number,
+                    'total_steps': total_steps
+                } %}
+            {% endif %}
+
+            {% if 'internship' in activeStepKeys %}
+                {% set currentStep = steps|filter(s => s.key == 'internship')|first %}
+                {% include 'front/partials/steps/_step5.html.twig' with {
                     'step_number': currentStep.number,
                     'total_steps': total_steps
                 } %}
@@ -139,18 +151,20 @@
 {# ---------------------------- JS ---------------------------- #}
 {% block javascripts %}
   {# Nombre total d'etapes de la candidature #}
-  <script>
-    const TOTAL_STEPS = {{ total_steps }};
-    const STEP_NUMBERS = {
-        job_application: {{ steps|filter(s => s.key == 'job_application')|first ? steps|filter(s => s.key == 'job_application')|first.number : 0 }},
-        profile: {{ steps|filter(s => s.key == 'profile')|first ? steps|filter(s => s.key == 'profile')|first.number : 0 }},
-        education: {{ steps|filter(s => s.key == 'education')|first ? steps|filter(s => s.key == 'education')|first.number : 0 }},
-        work_experience: {{ steps|filter(s => s.key == 'work_experience')|first ? steps|filter(s => s.key == 'work_experience')|first.number : 0 }},
-        other_info: {{ steps|filter(s => s.key == 'other_info')|first ? steps|filter(s => s.key == 'other_info')|first.number : 0 }},
-        document: {{ steps|filter(s => s.key == 'document')|first ? steps|filter(s => s.key == 'document')|first.number : 0 }},
-        engagement: {{ steps|filter(s => s.key == 'engagement')|first ? steps|filter(s => s.key == 'engagement')|first.number : 0 }},
-    };
-  </script>
+    <script>
+        const TOTAL_STEPS = {{ total_steps }};
+        const STEP_NUMBERS = {
+            job_application: {{ steps|filter(s => s.key == 'job_application')|first ? steps|filter(s => s.key == 'job_application')|first.number : 0 }},
+            profile: {{ steps|filter(s => s.key == 'profile')|first ? steps|filter(s => s.key == 'profile')|first.number : 0 }},
+            education: {{ steps|filter(s => s.key == 'education')|first ? steps|filter(s => s.key == 'education')|first.number : 0 }},
+            certification: {{ steps|filter(s => s.key == 'certification')|first ? steps|filter(s => s.key == 'certification')|first.number : 0 }},
+            internship: {{ steps|filter(s => s.key == 'internship')|first ? steps|filter(s => s.key == 'internship')|first.number : 0 }},
+            work_experience: {{ steps|filter(s => s.key == 'work_experience')|first ? steps|filter(s => s.key == 'work_experience')|first.number : 0 }},
+            other_info: {{ steps|filter(s => s.key == 'other_info')|first ? steps|filter(s => s.key == 'other_info')|first.number : 0 }},
+            document: {{ steps|filter(s => s.key == 'document')|first ? steps|filter(s => s.key == 'document')|first.number : 0 }},
+            engagement: {{ steps|filter(s => s.key == 'engagement')|first ? steps|filter(s => s.key == 'engagement')|first.number : 0 }},
+        };
+    </script>
   {# jQuery v1.11.1 #}
   <script src="{{ asset('vendor/jquery/jquery.min.js') }}" {{ add_nonce()|raw }}></script>
 
